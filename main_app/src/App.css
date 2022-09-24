@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter&family=Raleway&display=swap');
+
+.App{
+  font-family: 'Inter';
+  font-style: normal;
+  
+}
+.footer{
+  bottom: 0;
+}
+
+.header{
+  position: relative;
+  z-index: 1;
+  top: 0;
+}

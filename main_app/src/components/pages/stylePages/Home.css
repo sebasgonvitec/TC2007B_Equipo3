@@ -1,0 +1,73 @@
+.banner{
+    position: relative;
+    text-align: center;  
+    justify-content: center;
+    align-items: center;
+    height: 34.83vw;
+    width: 100%;
+
+}
+
+.contentBanner{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding-top: 6.66vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 4.16vw;
+    color: #FFFFFF;
+}
+
+.backgroundImg{
+    width: 100%;
+}
+
+.logobanner{
+    width: 56.91vw;
+    height:auto;
+}
+
+.options{
+    display: flex;
+    align-items: center;
+}
+
+.optionsContainer{
+    width: 93.33vw;
+    height: 38.66vw;
+    background: #F2F2F2;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 40px auto 40px auto;
+    font-size: 2vw;
+    color: #625E5E;
+}
+
+.btn{
+    width: 18vw;
+    height: 18vw;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin:40px;
+    font-size: 2.2vw;
+    color:#FFFFFF;
+}
+
+.icono{
+    width: 7.8vw;
+    padding:10px;
+    height: auto;
+}
