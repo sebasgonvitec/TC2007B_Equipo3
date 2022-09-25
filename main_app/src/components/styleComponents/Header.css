@@ -32,7 +32,7 @@ a:visited{
 }
 
 .optionsBox{
-    width: 400px;
+    width: 33.3vw;
     display: flex;
     align-items: center;
     justify-content: space-around;
