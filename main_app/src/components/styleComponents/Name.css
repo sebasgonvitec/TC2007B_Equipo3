@@ -1,0 +1,14 @@
+.titulo{
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 3vw;
+}
+
+.descripcion{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.7vw;
+    color: #625E5E;
+}

@@ -1,0 +1,13 @@
+.optionsContainer{
+    height: 63.41vw;
+    width: 90.6vw;
+    margin-bottom: 70px;
+    background: #F2F2F2;
+    border-radius: 10px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-content: space-around;
+}

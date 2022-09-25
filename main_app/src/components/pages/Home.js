@@ -1,11 +1,13 @@
 import './stylePages/Home.css'
 import ImgBackground from '../../img/background.png'
 import LogoBanner from '../../img/logo_banner.svg'
+
 import { Link } from "react-router-dom"
 import { IoIosArrowDown } from "react-icons/io";
 import { BiSearch } from "react-icons/bi";
 import { BsUpload } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
+
 
 function Home(){
     return(
