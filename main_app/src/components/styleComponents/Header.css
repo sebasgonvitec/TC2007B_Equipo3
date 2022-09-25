@@ -22,9 +22,13 @@
 
 }
 
-.userIcon{
-    width: 37.5px;
-    height: auto;
+a:link{
+    text-decoration: none; 
+    
+}
+
+a:visited{
+    color:#5E5E5E;
 }
 
 .optionsBox{

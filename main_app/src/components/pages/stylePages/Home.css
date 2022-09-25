@@ -5,7 +5,6 @@
     align-items: center;
     height: 34.83vw;
     width: 100%;
-
 }
 
 .contentBanner{
@@ -25,21 +24,12 @@
     color: #FFFFFF;
 }
 
-.backgroundImg{
-    width: 100%;
-}
-
-.logobanner{
-    width: 56.91vw;
-    height:auto;
-}
-
 .options{
     display: flex;
     align-items: center;
 }
 
-.optionsContainer{
+#optionsContainer{
     width: 93.33vw;
     height: 38.66vw;
     background: #F2F2F2;
@@ -49,21 +39,29 @@
     align-items: center;
     flex-direction: column;
     margin: 40px auto 40px auto;
-    font-size: 2vw;
+    font-size: 1.8vw;
     color: #625E5E;
 }
 
+.arrow:visited{
+    color:white;
+}
+
 .btn{
-    width: 18vw;
-    height: 18vw;
+    width: 16vw;
+    height: 16vw;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin:40px;
-    font-size: 2.2vw;
+    margin:3.3vw;
+    font-size: 2vw;
     color:#FFFFFF;
+}
+
+.btn:visited{
+    color: white;
 }
 
 .icono{
@@ -71,3 +69,4 @@
     padding:10px;
     height: auto;
 }
+
