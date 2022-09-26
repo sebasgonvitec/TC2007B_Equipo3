@@ -7,10 +7,12 @@ import { Descargar } from "../components/Descargar";
 import DescargarArchivo from "../components/DescargarArchivo";
 import SubirArchivo from "../components/SubirArchivo";
 import { DownloadProvider } from "../DownloadContext";
+import { UploadProvider } from "../UploadContext";
 
 
 const AppRouter = () => (
     <DownloadProvider>
+    <UploadProvider>
     <BrowserRouter>
         <div className="container">
             <Header />
@@ -18,13 +20,14 @@ const AppRouter = () => (
                 <Routes>
                     <Route path="/" element={<App />}/>
                     <Route path="/subir" element={<Subir />} />
-                    <Route path="/descargar" element={<Descargar />} />
                     <Route path="/subirArchivo" element={<SubirArchivo />} />
+                    <Route path="/descargar" element={<Descargar />} />
                     <Route path="/descargarArchivo" element={<DescargarArchivo />} />
                 </Routes>
             </div>
         </div>    
     </BrowserRouter>
+    </UploadProvider>
     </DownloadProvider>
 );
 

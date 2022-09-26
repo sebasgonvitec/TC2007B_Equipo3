@@ -6,11 +6,16 @@ import { Grid, GridColumn } from "@progress/kendo-react-grid";
 import { process } from "@progress/kendo-data-query";
 import {IntlProvider, LocalizationProvider,loadMessages} from "@progress/kendo-react-intl";
 import esMessages from "../language/es.json";
+import { Link } from "react-router-dom";
+import { useContext } from "react";
+import UploadContext  from "../UploadContext";
 
 const URI = 'http://localhost:1337/';
 
 function Subir() {
 
+    const { updateUpload } = useContext(UploadContext);
+    
     const [data, setData] = useState([]);
     useEffect( () => {
         getData()
@@ -80,7 +85,11 @@ function Subir() {
         const { dataItem } = props;
         return(
             <td>
-                <button onClick={() => {console.log(dataItem)}}>Abrir</button>
+                <Link to='/subirArchivo'>
+                <button onClick={
+                    () => updateUpload(dataItem)
+                    }>Abrir</button>
+                </Link>
             </td>
         );
     };
@@ -109,6 +118,7 @@ function Subir() {
                 </Grid>   
             </IntlProvider>
         </LocalizationProvider>
+        <button>Crear Expediente</button>
         </>
     );
 }

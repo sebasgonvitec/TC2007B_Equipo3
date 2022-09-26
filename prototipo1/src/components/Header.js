@@ -21,12 +21,6 @@ const Header = () => {
             <Link to='/descargar'>
                 Descargar
             </Link>
-            <Link to='/subirArchivo'>
-                Subir Archivo
-            </Link>
-            <Link to='/descargarArchivo'>
-                Descargar Archivo
-            </Link>
         </nav>
     </div>)
 }

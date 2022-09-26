@@ -11,10 +11,6 @@ import DownloadContext from "../DownloadContext";
 import { Link } from "react-router-dom";
 
 const URI = 'http://localhost:1337/';
-//const URI_DOWNLOAD = 'http://localhost:1337/descargarArchivos?nombre=';
-
-//let clickValue;
-//let clicked = false;
 
 function Descargar(){
 
@@ -91,7 +87,7 @@ function Descargar(){
             <td>
                 <Link to='/descargarArchivo'>
                     <button onClick={
-                        () => updateDownload(dataItem.nombre)
+                        () => updateDownload(dataItem)
                     }>Abrir</button>
                 </Link>
             </td>

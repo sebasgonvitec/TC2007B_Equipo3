@@ -3,7 +3,7 @@ import { createContext, useState } from "react";
 const DownloadContext = createContext();
 
 export function DownloadProvider({ children }) {
-  const [download, setDownload] = useState(null);
+  const [download, setDownload] = useState();
 
     const updateDownload = (value) => {
         setDownload(value);

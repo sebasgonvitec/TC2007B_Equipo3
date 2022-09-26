@@ -8,12 +8,18 @@ import {IntlProvider, LocalizationProvider,loadMessages} from "@progress/kendo-r
 import esMessages from "../language/es.json";
 import { useContext } from "react";
 import DownloadContext from "../DownloadContext";
+import downloadjs from 'downloadjs';
+import fileDownload from 'js-file-download';
 
-let URI = 'http://localhost:1337/descargarArchivos?nombre='
+
+let URI = 'http://localhost:1337/descargarArchivos/download'
+let URI_TEST = 'http://localhost:1337/descargarArchivos'
 
 function DescargarArchivo(){
     
     const { download } = useContext(DownloadContext);
+
+    const [errorMsg, setErrorMsg] = useState('');
 
     const [data, setData] = useState([]);
     useEffect( () => {
@@ -22,7 +28,8 @@ function DescargarArchivo(){
 
     //Funcion para obtener los datos de la DB
     const getData = async () => {
-        const res = await axios.get(URI+download)
+        //const res = await axios.get(URI+download.nombre)
+        const res = await axios.get(URI_TEST, { params: { expediente: download._id }})
         setData(res.data)
     }
 
@@ -36,7 +43,47 @@ function DescargarArchivo(){
         setDataState(event.dataState);
         setResult(process(data, event.dataState));
     }
+    const downloadFile2 = (id, nombre) =>{
+        axios({
+            url: URI,
+            method: 'GET',
+            responseType: 'blob',
+            params: { id: id, nombre: nombre } // important
+        }).then((res)=>{
+            fileDownload(res.data, nombre+".pdf");
+        })
+    }
 
+    // const downloadFile = async (nombre) => {
+    //     try{
+    //         const result = await axios.get(URI, { params: { nombre: nombre } }, { 
+    //             responseType: 'blob'
+    //          });
+    //         return downloadjs(result.data, nombre, 'application/pdf');
+    //         // await axios.post(URI, {nombre: nombre}, {
+    //         //     headers: {
+    //         //         'Content-Type': 'application/json'
+    //         //     },
+    //         // }).then((response) => {
+    //         //     //download(response.data, nombre+".pdf", "application/pdf");
+    //         //     //console.log(response.data);
+    //         //     //var arrBuffer = base64ToArrayBuffer(response.data)
+    //         //     var blob = new Blob([response.data], { type: 'application/pdf'})
+    //         //     console.log(response.data)
+    //         //     downloadjs(blob, nombre+".pdf", "application/pdf");
+                
+    //         // });
+    //         // //console.log(result.data);
+    //         // //const split = path.split('/');
+    //         // //const filename = split[split.length - 1];
+    //         // setErrorMsg('');
+    //         // //return download(result.data, filename, mimetype);
+    //     } catch (error){
+    //         if(error.response && error.response.status === 404){
+    //             setErrorMsg('Error al descargar el archivo');
+    //         }
+    //     }
+    // }
     //Personalizar filtros para la tabla
     const filterOperators = {
         text: [
@@ -84,7 +131,11 @@ function DescargarArchivo(){
         const { dataItem } = props;
         return(
             <td>
-                <button onClick={() => {console.log(dataItem)}}>Abrir</button>
+                <button onClick={(e) => {
+                    e.preventDefault();
+                    downloadFile2(dataItem._id, dataItem.nombre);
+                    }}>Descargar</button>
+                <button onClick={() => console.log(dataItem._id)}>Info</button>
             </td>
         );
     };
@@ -93,6 +144,15 @@ function DescargarArchivo(){
         <>
         <h1>Descargar Archivos</h1>
         <p>Seleccione el archivo que desea descargar</p>
+        
+        <div>
+            <h2>Informacion del expediente</h2>
+            <p>Nombre: {download.nombre}</p>
+            <p>Numero: {download.numero}</p>
+            <p>Expediente: {download.expediente}</p>
+            <p>Actor: {download.actor}</p>
+        </div>
+        {errorMsg && <div className="error">{errorMsg}</div>}
         <LocalizationProvider language="es-ES"> 
             <IntlProvider locale="es">
 
@@ -104,15 +164,13 @@ function DescargarArchivo(){
                     {...dataState}
                 >
                     <GridColumn field="nombre" title="Nombre" />
-                    <GridColumn field="numero" title="Número" />
-                    <GridColumn field="expediente" title="Expediente" />
-                    <GridColumn field="actor" title="Actor" />
-                    <GridColumn field="estatus" title="Estatus" />
+                    <GridColumn field="folio" title="Folio" />
                     <GridColumn cell={MyCommandCell}  width="100px"/>
 
                 </Grid>   
             </IntlProvider>
         </LocalizationProvider>
+        <a></a>
         </>
     );
 }
