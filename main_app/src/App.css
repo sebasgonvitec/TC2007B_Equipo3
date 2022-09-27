@@ -1,14 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter&family=Raleway:wght@400;700&display=swap');
 .App{
   font-family: 'Inter';
-  font-style: normal;
-  
-}
-
-
-.footer{
-  bottom: 0;
-  
+  font-style: normal;  
 }
 
 .header{

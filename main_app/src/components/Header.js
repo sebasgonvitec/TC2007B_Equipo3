@@ -1,7 +1,6 @@
 import './styleComponents/Header.css'
 import { Link } from "react-router-dom"
 import logoAO from '../img/logo_ao.png'
-import userIcon from '../img/userIcon.svg'
 import { CgProfile } from "react-icons/cg";
 
 function Header(){

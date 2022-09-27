@@ -5,13 +5,13 @@ import { AiOutlineFolder } from "react-icons/ai";
 function OptionBox(props){
     return(
         <div className="container">
-            <div style={{width:"13.8vw", height:"25vw", background:"#45B2E6"}}>
-                <AiOutlineFolder />
-            </div>
+            {props.colorbox}
             <div className="content">
-                <p>{props.titulo}</p>
-                <p>{props.descripcion}</p>
-                <Btn name="Seleccionar"/>
+                <p style={{fontWeight:'700', fontSize:'1.2vw'}} >{props.titulo}</p>
+                <p style={{fontSize:'1vw'}}>{props.descripcion}</p>
+                <Btn
+                    page={props.page}
+                    name="Seleccionar"/>
             </div>
         </div>
     );

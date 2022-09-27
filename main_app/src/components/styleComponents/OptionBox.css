@@ -1,15 +1,24 @@
 .container{
-    height: 25vw;
-    width: 27.6vw;
+    height: 20vw;
+    width: 22.6vw;
     background: #E3E3E3;
     border-radius: 5px;
     display: flex;
     flex-direction: row;
+    margin: 2.5vw;
+    margin-bottom: 1.25vw;
 }
 
 .content{
     display: flex;
     flex-direction: column;
-    width:13.8vw;
+    justify-content: space-between;
+    align-items: center;
+    width:11.3vw;
+    text-align: center;
+    font-family: 'Raleway';
+    color: #6C6C6C;
+    margin: 1.7vw;
+    
    
 }
