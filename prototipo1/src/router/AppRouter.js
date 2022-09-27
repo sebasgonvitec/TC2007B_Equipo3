@@ -6,8 +6,10 @@ import Subir from "../components/Subir";
 import { Descargar } from "../components/Descargar";
 import DescargarArchivo from "../components/DescargarArchivo";
 import SubirArchivo from "../components/SubirArchivo";
+import CrearExpediente from "../components/CrearExpediente";
 import { DownloadProvider } from "../DownloadContext";
 import { UploadProvider } from "../UploadContext";
+
 
 
 const AppRouter = () => (
@@ -23,6 +25,7 @@ const AppRouter = () => (
                     <Route path="/subirArchivo" element={<SubirArchivo />} />
                     <Route path="/descargar" element={<Descargar />} />
                     <Route path="/descargarArchivo" element={<DescargarArchivo />} />
+                    <Route path="/crearExpediente" element={<CrearExpediente />} />
                 </Routes>
             </div>
         </div>    

@@ -34,6 +34,17 @@ app.get("/", function(req, res){
     });
 })
 
+app.post("/crearExpediente", function(req, res){
+    let aInsertar = {nombre:req.body.nombre, numero:req.body.numero, expediente:req.body.expediente, actor:req.body.actor, estatus:req.body.estatus, fecha:req.body.fecha}
+    db.collection("nulidad").insertOne(aInsertar, function(err, result){
+        if(err){
+            handleError(res, err.message, "Failed to create new expediente");
+        }else{
+            res.status(200).json(result);
+        }
+    });
+})
+
 //Mostrar archivos de un expediente en especifico
 app.get("/descargarArchivos", function(req, res){
     db.collection("pruebaUpload").find({ "expediente": req.query.expediente }).toArray(function(err, result){

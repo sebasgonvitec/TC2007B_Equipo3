@@ -119,7 +119,7 @@ function Subir() {
                 </Grid>   
             </IntlProvider>
         </LocalizationProvider>
-        <button>Crear Expediente</button>
+        <Link to='/crearExpediente'>Crear nuevo expediente</Link>
         </>
     );
 }
