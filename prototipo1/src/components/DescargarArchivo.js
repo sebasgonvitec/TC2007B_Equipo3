@@ -8,7 +8,8 @@ import {IntlProvider, LocalizationProvider,loadMessages} from "@progress/kendo-r
 import esMessages from "../language/es.json";
 import { useContext } from "react";
 import DownloadContext from "../DownloadContext";
-import downloadjs from 'downloadjs';
+import { filterBy } from "@progress/kendo-data-query";
+// import downloadjs from 'downloadjs';
 import fileDownload from 'js-file-download';
 
 
@@ -84,6 +85,8 @@ function DescargarArchivo(){
     //         }
     //     }
     // }
+
+
     //Personalizar filtros para la tabla
     const filterOperators = {
         text: [
@@ -123,7 +126,7 @@ function DescargarArchivo(){
         ],
     };
     
-      //cargar los mensajes/etiquetas para filtros en español
+    //cargar los mensajes/etiquetas para filtros en español
     loadMessages(esMessages, "es-ES"); 
 
     // Componente de boton para acciones en cada fila
@@ -165,7 +168,8 @@ function DescargarArchivo(){
                 >
                     <GridColumn field="nombre" title="Nombre" />
                     <GridColumn field="folio" title="Folio" />
-                    <GridColumn cell={MyCommandCell}  width="100px"/>
+                    <GridColumn field="fecha" title="Fecha" />
+                    <GridColumn cell={MyCommandCell} width="300px" filterable={false}/>
 
                 </Grid>   
             </IntlProvider>

@@ -6,6 +6,11 @@ import Dropzone from 'react-dropzone';
 
 let URI = 'http://localhost:1337/subirArchivo?';
 
+const date = new Date();
+let day = date.getDate();
+let month = date.getMonth() + 1; // 0-11
+let year = date.getFullYear();
+
 const SubirArchivo = () => {
 
     //Import upload from UploadContext to specify expediente
@@ -54,6 +59,7 @@ const SubirArchivo = () => {
                     formData.append('archivo', archivo);
                     formData.append('nombre', state.nombre);
                     formData.append('folio', state.folio);
+                    formData.append('fecha', `${day}/${month}/${year}`);
                     formData.append('expediente', upload._id);
 
                     setErrorMsg('');

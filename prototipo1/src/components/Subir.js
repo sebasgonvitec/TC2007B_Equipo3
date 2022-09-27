@@ -113,7 +113,8 @@ function Subir() {
                     <GridColumn field="expediente" title="Expediente" />
                     <GridColumn field="actor" title="Actor" />
                     <GridColumn field="estatus" title="Estatus" />
-                    <GridColumn cell={MyCommandCell}  width="100px"/>
+                    <GridColumn field="fecha" title="Fecha"/>
+                    <GridColumn cell={MyCommandCell}  width="100px" filterable={false}/>
 
                 </Grid>   
             </IntlProvider>

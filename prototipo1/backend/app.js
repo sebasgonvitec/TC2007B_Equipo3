@@ -89,7 +89,7 @@ app.post("/subirArchivo", uploads.single("archivo"), (req, res)=>{
     inputFS.pipe(cipher).pipe(outputFS)
     outputFS.on("finish", ()=>{
         fs.unlinkSync(__dirname + "/.temp/" + req.file.filename)
-        let aInsertar = {nombre:req.body.nombre, folio:req.body.folio, archivo: rutaDefinitiva, expediente: req.body.expediente}
+        let aInsertar = {nombre:req.body.nombre, folio:req.body.folio, archivo: rutaDefinitiva, fecha: req.body.fecha, expediente: req.body.expediente}
         console.log(req.body);
         db.collection("pruebaUpload").insertOne(aInsertar, (err, res)=>{
             if(err) throw err;
