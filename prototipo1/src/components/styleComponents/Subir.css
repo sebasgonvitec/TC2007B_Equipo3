@@ -1,0 +1,26 @@
+nav {
+    display: flex;
+    justify-content: flex-start;
+}
+
+a{
+    margin: 10px;
+}
+
+.upload-section{
+    display: flex;
+    height: 200px;
+    margin-bottom: 10px;
+}
+
+.drop-zone {
+    margin-bottom: 10px;
+    padding: 40px 10px;
+    height: inherit;
+    border: 2px dashed #e9ebeb;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}

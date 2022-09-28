@@ -3,6 +3,7 @@ import React, { useRef, useState } from "react";
 import { useContext } from "react";
 import UploadContext  from "../UploadContext";
 import Dropzone from 'react-dropzone';
+import '../components/styleComponents/Subir.css'
 
 let URI = 'http://localhost:1337/subirArchivo?';
 

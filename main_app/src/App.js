@@ -2,7 +2,7 @@ import './App.css';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 //componentes
-import Header from './components/Header'
+import HeaderGina from './components/HeaderGina'
 import Footer from './components/Footer'
 
 //paginas
@@ -20,7 +20,7 @@ function App() {
     <div className="App">
       
       <BrowserRouter>
-        <Header className="header"/> {/* header de navegación constante en todas las páginas */}
+        <HeaderGina className="header"/> {/* header de navegación constante en todas las páginas */}
           <Routes >
             <Route path='' element={<Navigate to="/home" replace={true} />}/>    {/* la página default será Home, Navigate sirve para redireccionar */}
             <Route path='/home' element={<Home />} />

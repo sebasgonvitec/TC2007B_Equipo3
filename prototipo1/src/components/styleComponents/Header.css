@@ -1,0 +1,41 @@
+.header{
+    position: sticky;
+    height: 75px;
+    width: 100%;
+    border-bottom: 1.5px solid #E5E5E5;
+    font-style: normal;
+    color: #5E5E5E;
+    font-weight: 400;
+    font-size: 17px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background:white;
+}
+
+.logoAO{
+    position: absolute;
+    width: 220px;
+    height: auto;
+    padding-top: 5px;
+    padding-left: 20px;
+
+}
+
+a:link{
+    color:#5E5E5E;
+    text-decoration: none; 
+    
+}
+
+a:visited{
+    color:#5E5E5E;
+}
+
+.optionsBox{
+    width: 33.3vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding:10px;
+}
