@@ -13,6 +13,8 @@ import { Descargar } from "../components/Descargar";
 import DescargarArchivo from "../components/DescargarArchivo";
 import SubirArchivo from "../components/SubirArchivo";
 import CrearExpediente from "../components/CrearExpediente";
+import Register from "../components/Register";
+import AccountsTable from '../components/AccountsTable';
 import { DownloadProvider } from "../DownloadContext";
 import { UploadProvider } from "../UploadContext";
 //import Home from "../components/pages/Home";
@@ -39,6 +41,8 @@ function AppRouter() {
                     <Route path="/descargar" element={<Descargar />} />
                     <Route path="/descargarArchivo" element={<DescargarArchivo />} />
                     <Route path="/crearExpediente" element={<CrearExpediente />} />
+                    <Route path="/registro" element={<Register />} />
+                    <Route path="/usuarios" element={<AccountsTable />} />
                 </Routes>
         <Footer />
     </BrowserRouter>

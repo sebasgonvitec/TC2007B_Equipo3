@@ -7,6 +7,7 @@ const multer = require('multer');
 const crypto = require('crypto');
 const path = require('path');
 const mongo = require('mongodb');
+const bcrypt=require("bcrypt")
 
 const app = express(); //intacia de express
 
@@ -18,7 +19,7 @@ const uploads = multer({dest: ".temp"}) // definir multer para que guarde los ar
 
 function connectToDB(){
     //let client = new MongoClient("mongodb://localhost/demoDB2"); // string de conexion dice que vamos a usar mongo en localhost (default) y la db demoDB2
-    let client = new MongoClient("mongodb://127.0.0.1:27017/demoDB2");
+    let client = new MongoClient("mongodb://127.0.0.1:27017/demoDB");
     client.connect();
     db = client.db();
 }
@@ -108,6 +109,52 @@ app.post("/subirArchivo", uploads.single("archivo"), (req, res)=>{
         })
     })
     res.status(200).json({message:"Archivo subido correctamente"});
+})
+
+app.get("/tablaCuentas", function(req, res) {
+    db.collection("accounts").find({}).toArray(function(err, result){
+        if(err) {
+            handleError(res, err.message, "Failed to get accounts");
+        }
+        else {
+            res.status(200).send(result);
+        }
+    })
+})
+
+app.delete("/borrarCuenta", function(req, res) {
+    db.collection("accounts").deleteOne({"_id": mongo.ObjectId(req.query.id)}, (err, result) => {
+        if (err) throw err;
+    })
+})
+ 
+app.post("/crearCuenta", (req, res)=>{
+    let user=req.body.usuario;
+    let pass=req.body.password;
+    let area=req.body.area;
+    let name=req.body.nombre;
+    let nulidad=req.body.nulidad;
+    let investigacion=req.body.investigacion;
+    let otros=req.body.otros;
+
+    console.log("usuario recibido")
+
+    db.collection("accounts").findOne({usuario:user}, (err, result)=>{
+    if(result!=null){
+        console.log("El usuario ya existe")
+        throw new Error('El usuario ya existe')
+    }
+    
+    else{
+        bcrypt.hash(pass, 10, (err, hash)=>{
+        let aAgregar={usuario:user, password:hash, nombre:name, area:area, nulidad:nulidad, investigacion:investigacion, otros:otros}
+        db.collection("accounts").insertOne(aAgregar, (err, result)=>{
+            if (err) throw err;
+            console.log("Usuario agregado")
+        })
+        })
+    }
+})
 })
 
 app.listen(1337, () => {
