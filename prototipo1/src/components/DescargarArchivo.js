@@ -13,8 +13,8 @@ import { filterBy } from "@progress/kendo-data-query";
 import fileDownload from 'js-file-download';
 
 
-let URI = 'http://localhost:1337/descargarArchivos/download'
-let URI_TEST = 'http://localhost:1337/descargarArchivos'
+let URI = 'https://localhost/descargarArchivos/download'
+let URI_TEST = 'https://localhost/descargarArchivos'
 
 function DescargarArchivo(){
     

@@ -5,7 +5,7 @@ import UploadContext  from "../UploadContext";
 import Dropzone from 'react-dropzone';
 import '../components/styleComponents/Subir.css'
 
-let URI = 'http://localhost:1337/subirArchivo?';
+let URI = 'https://localhost/subirArchivo?';
 
 const date = new Date();
 let day = date.getDate();

@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import { useContext } from "react";
 import UploadContext  from "../UploadContext";
 
-const URI = 'http://localhost:1337/';
+const URI = 'https://localhost/';
 
 function Subir() {
 

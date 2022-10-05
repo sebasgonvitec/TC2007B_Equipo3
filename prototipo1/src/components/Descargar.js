@@ -10,7 +10,7 @@ import { useContext } from "react";
 import DownloadContext from "../DownloadContext";
 import { Link } from "react-router-dom";
 
-const URI = 'http://localhost:1337/';
+const URI = 'https://localhost/';
 
 function Descargar(){
 

@@ -7,8 +7,8 @@ import { process } from "@progress/kendo-data-query";
 import {IntlProvider, LocalizationProvider,loadMessages} from "@progress/kendo-react-intl";
 import esMessages from "../language/es.json";
 
-const URI = 'http://localhost:1337/tablaCuentas'
-const URI_delete = 'http://localhost:1337/borrarCuenta'
+const URI = 'https://localhost/tablaCuentas'
+const URI_delete = 'https://localhost/borrarCuenta'
 
 const AccountsTable = () => {
    

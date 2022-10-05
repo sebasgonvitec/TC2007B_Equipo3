@@ -11,6 +11,7 @@ const bcrypt=require("bcrypt")
 const session=require("express-session")
 const MongoStore= require("connect-mongo")
 const app = express(); //intacia de express
+const https = require('https');
 
 app.use(bodyParser.json()); // definir body-parser como json
 app.use(bodyParser.urlencoded({ extended: true })); // decirle a la app que use body-parser
@@ -199,7 +200,15 @@ app.post("/crearCuenta", (req, res)=>{
 })
 })
 
-app.listen(1337, () => {
-    connectToDB();
-    console.log("Server running on port 1337....");
+// app.listen(1337, () => {
+//     connectToDB();
+//     console.log("Server running on port 1337....");
+// });
+
+https.createServer({
+    cert: fs.readFileSync("../Cert/app.cer"),
+    key: fs.readFileSync('../Cert/app.key')
+}, app).listen(443, () =>{
+   connectToDB()
+    console.log('Server started on port 443...');
 });

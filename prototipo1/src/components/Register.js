@@ -3,7 +3,7 @@ import React from "react";
 import axios from "axios";
 import { useState } from "react"
 
-const URI = "http://localhost:1337/crearCuenta";
+const URI = "https://localhost/crearCuenta";
 
 const Register = () => {
     

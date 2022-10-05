@@ -6,7 +6,7 @@ import { useState } from "react"
 import { redirect } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 
-const URI = "http://localhost:1337/login";
+const URI = "https://localhost/login";
 
 const Login = () => {
     
@@ -25,7 +25,6 @@ const Login = () => {
             ...state,
             [event.target.name]: event.target.value,
         });
-        console.log(state.nombre);
     }
 
     const handleOnSubmit = async (event) => {
@@ -35,7 +34,6 @@ const Login = () => {
                 const formData = {
                     usuario:state.usuario, 
                     password:state.password};
-                console.log(formData);
 
                 setErrorMsg('');
                 await axios.post(URI, formData, {

@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import { useState } from "react"
 
-const URI = "http://localhost:1337/crearExpediente";
+const URI = "https://localhost/crearExpediente";
 
 const date = new Date();
 let day = date.getDate();
