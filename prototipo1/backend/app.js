@@ -8,21 +8,63 @@ const crypto = require('crypto');
 const path = require('path');
 const mongo = require('mongodb');
 const bcrypt=require("bcrypt")
-
+const session=require("express-session")
+const MongoStore= require("connect-mongo")
 const app = express(); //intacia de express
 
 app.use(bodyParser.json()); // definir body-parser como json
 app.use(bodyParser.urlencoded({ extended: true })); // decirle a la app que use body-parser
 app.use(cors()); // decirle a la app que use cors
 
+const DB_URL = "mongodb://127.0.0.1:27017/demoDB";
+
+app.use(session({
+    secret: "secret",
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({mongoUrl: DB_URL})
+}))
+
 const uploads = multer({dest: ".temp"}) // definir multer para que guarde los archivos en la carpeta .temp
 
 function connectToDB(){
     //let client = new MongoClient("mongodb://localhost/demoDB2"); // string de conexion dice que vamos a usar mongo en localhost (default) y la db demoDB2
-    let client = new MongoClient("mongodb://127.0.0.1:27017/demoDB");
+    let client = new MongoClient(DB_URL);
     client.connect();
     db = client.db();
 }
+
+app.post("/login", (req, res)=>{
+    let user=req.body.usuario;
+    let pass=req.body.password;
+
+    db.collection("accounts").findOne({usuario:user}, (err, result)=>{
+      if(result!=null){
+        bcrypt.compare(pass, result.password, (err, resultB)=>{
+          if(resultB){
+            res.json(result)
+            // req.session.usuario=user;
+            // res.redirect('/home');
+          }else{
+            console.log("Credenciales Incorrectas")
+            res.json(null)
+            // res.redirect('http://localhost:3000/login');
+          }
+        })
+      }else{
+        console.log("Credenciales Incorrectas")
+        res.json(null)
+        // res.redirect('http://localhost:3000/login');
+      }
+    })
+  })
+
+  
+// app.get("/logout", (req, res)=>{
+//     req.session.destroy();
+//     res.redirect("/home");
+// })
+
 
 app.get("/", function(req, res){
     db.collection("nulidad").find({}).toArray(function(err, result){

@@ -14,9 +14,12 @@ import DescargarArchivo from "../components/DescargarArchivo";
 import SubirArchivo from "../components/SubirArchivo";
 import CrearExpediente from "../components/CrearExpediente";
 import Register from "../components/Register";
+import Login from '../components/Login';
+import Profile from '../components/Profile';
 import AccountsTable from '../components/AccountsTable';
 import { DownloadProvider } from "../DownloadContext";
 import { UploadProvider } from "../UploadContext";
+import { SessionProvider } from '../SessionContext';
 //import Home from "../components/pages/Home";
 import Home from "../components/pages/Home";
 import UploadMain from "../components/pages/UploadMain";
@@ -29,6 +32,7 @@ function AppRouter() {
     <div className="App">
     <DownloadProvider>
     <UploadProvider>
+    <SessionProvider>
     <BrowserRouter>
             <HeaderGina className="header" />
                 <Routes>
@@ -41,11 +45,14 @@ function AppRouter() {
                     <Route path="/descargar" element={<Descargar />} />
                     <Route path="/descargarArchivo" element={<DescargarArchivo />} />
                     <Route path="/crearExpediente" element={<CrearExpediente />} />
+                    <Route path="/login" element={<Login />} />
                     <Route path="/registro" element={<Register />} />
+                    <Route path="/perfil" element={<Profile />} />
                     <Route path="/usuarios" element={<AccountsTable />} />
                 </Routes>
         <Footer />
     </BrowserRouter>
+    </SessionProvider>
     </UploadProvider>
     </DownloadProvider>
     </div>
