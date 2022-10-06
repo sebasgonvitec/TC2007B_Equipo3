@@ -1,9 +1,10 @@
 import React from "react";
 import SessionContext from "../SessionContext";
+import axios from "axios";
 import { useContext } from "react";
-import { useState } from "react"
-import { redirect } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
+
+const URI = 'https://localhost/logout'
 
 const Profile = () => {
     
@@ -18,12 +19,12 @@ const Profile = () => {
                 <p>Usuario: {session.usuario}</p>
                 
                 <h5>Privilegios de Visibilidad</h5>
-                <p>Juicios Nulidad: {session.nulidad == "true" ? "si" : "no"}</p>
-                <p>Carpetas de Investigación: {session.investigacion == "true" ? "si" : "no"}</p>
-                <p>Expedientes Otros: {session.otros == "true" ? "si" : "no"}</p>
+                <p>Juicios Nulidad: {session.nulidad === "true" ? "si" : "no"}</p>
+                <p>Carpetas de Investigación: {session.investigacion === "true" ? "si" : "no"}</p>
+                <p>Expedientes Otros: {session.otros === "true" ? "si" : "no"}</p>
 
                 <button onClick={() => {
-                    updateSession(null);
+                    updateSession(null); //borrar registro del front
                     navigate("/login");
                 }}>logout</button><br/>
         </body>

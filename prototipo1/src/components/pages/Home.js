@@ -15,7 +15,7 @@ import { Navigate } from 'react-router-dom';
 function Home(){
 
     const { session } = useContext(SessionContext);
-
+    
     if(session != null)
     {
         return(
@@ -53,7 +53,7 @@ function Home(){
         );
     }
     else {
-        return <Navigate to="/login" replace />;;
+        return <Navigate to="/login" replace />;
     }
 }
 

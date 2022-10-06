@@ -10,7 +10,7 @@ import { useContext } from "react";
 import DownloadContext from "../DownloadContext";
 import { Link } from "react-router-dom";
 
-const URI = 'https://localhost/';
+const URI = 'https://localhost/nulidad';
 
 function Descargar(){
 

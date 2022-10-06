@@ -9,22 +9,39 @@ import esMessages from "../language/es.json";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import UploadContext  from "../UploadContext";
+import SessionContext from "../SessionContext";
+import { useNavigate } from 'react-router-dom';
 
-const URI = 'https://localhost/';
+const URI = 'https://localhost/nulidad';
 
 function Subir() {
 
     const { updateUpload } = useContext(UploadContext);
+    const { session } = useContext(SessionContext);
+    const navigate = useNavigate();
     
     const [data, setData] = useState([]);
     useEffect( () => {
         getData()
     }, [])
 
-    //Funcion para obtener los datos de la DB
     const getData = async () => {
-        const res = await axios.get(URI)
-        setData(res.data)
+
+        const config = {
+            headers:{
+              token: localStorage.getItem('JWT_token'),
+            }
+        };
+        await axios.get(URI, config).then((res) => {
+            if(res.data !== null){
+                setData(res.data)   
+            }
+            else {
+                navigate('/login')
+            }
+        })
+        
+           
     }
 
     //Estados de la data en la tabla al momento de utilizar filtros

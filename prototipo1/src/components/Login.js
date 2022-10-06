@@ -41,8 +41,9 @@ const Login = () => {
                         'Content-Type': 'application/json',
                     }
                 }).then((res) => {
-                    updateSession(res.data);
-                    navigate('/home')
+                    updateSession(res.data); //store token
+                    localStorage.setItem('JWT_token', res.data)
+                    navigate("/home")
                 })
                   
         } else {
