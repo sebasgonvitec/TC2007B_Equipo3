@@ -1,17 +1,23 @@
-import axios from 'axios'
-import React from 'react'
-import { useState, useEffect } from 'react'
+import React from "react";
+import axios from 'axios';
+import { useState, useEffect } from "react";
 import "@progress/kendo-theme-material/dist/all.css";
 import { Grid, GridColumn } from "@progress/kendo-react-grid";
 import { process } from "@progress/kendo-data-query";
 import {IntlProvider, LocalizationProvider,loadMessages} from "@progress/kendo-react-intl";
 import esMessages from "../language/es.json";
-import { useNavigate } from 'react-router-dom';
+import { useContext } from "react";
+import DownloadContext from "../DownloadContext";
+import SessionContext from "../SessionContext";
+import { Link } from "react-router-dom";
+import { useNavigate, Navigate } from 'react-router-dom';
 
-const URI = 'https://localhost/tablaCuentas'
-const URI_delete = 'https://localhost/borrarCuenta'
+const URI = 'https://localhost/investigacion';
 
-const AccountsTable = () => {
+function DescargarInv(){
+
+    const { updateDownload } = useContext(DownloadContext);
+    const { session } = useContext(SessionContext);
     const navigate = useNavigate();
 
     const [data, setData] = useState([]);
@@ -21,19 +27,24 @@ const AccountsTable = () => {
 
     //Funcion para obtener los datos de la DB
     const getData = async () => {
-        const res = await axios.get(URI, {
-            headers: {
-                'Content-Type': 'application/json',
-                token: localStorage.getItem('JWT_token')
+        const config = {
+            headers:{
+              token: localStorage.getItem('JWT_token'),
+            }
+        };
+        await axios.get(URI, config).then((res) => {
+            if(res.data !== null){
+                setData(res.data)   
+            }
+            else {
+                navigate('/login')
             }
         })
-        setData(res.data)
     }
 
     //Estados de la data en la tabla al momento de utilizar filtros
     const [dataState, setDataState] = React.useState()
     const [result, setResult] = React.useState(data);
-    console.log(result)
     useEffect(() => { setResult(data)}, [data] )
    
 
@@ -45,7 +56,7 @@ const AccountsTable = () => {
     //Personalizar filtros para la tabla
     const filterOperators = {
         text: [
-            { text: 'grid.filterContainsOperator', operator: 'contains'},
+            { text: 'grid.filterContainsOperator', operator: 'contains', messages:'heey' },
             { text: 'grid.filterNotContainsOperator', operator: 'doesnotcontain' },
             { text: 'grid.filterEqOperator', operator: 'eq' },
             { text: 'grid.filterNotEqOperator', operator: 'neq' },
@@ -80,70 +91,58 @@ const AccountsTable = () => {
           {text: "grid.filterEqOperator", operator: "eq"}
         ],
       };
+    
+      //cargar los mensajes/etiquetas para filtros en español
+      loadMessages(esMessages, "es-ES"); 
 
-      
-    //cargar los mensajes/etiquetas para filtros en español
-    loadMessages(esMessages, "es-ES"); 
 
-    // Componente de boton para editar cuenta
-    const EditButton = (props) => {
+    const BotonSubir = (props) => {
         const { dataItem } = props;
         return(
             <td>
-                <button onClick={(e) => {
-                    e.preventDefault();
-                    navigate("/editarUsuario")
-                }}>Editar</button>
+                <Link to='/descargarArchivo'>
+                    <button onClick={
+                        () => updateDownload(dataItem)
+                    }>Abrir</button>
+                </Link>
             </td>
         );
     };
 
-    // Componente de boton para editar cuenta
-    const DeleteButton = (props) => {
-        const { dataItem } = props;
-        return(
-            <td>
-                <button onClick={(e) => {
-                    e.preventDefault();
-                    axios({
-                        url: URI_delete,
-                        method: 'DELETE',
-                        params: { id: dataItem._id} // important
-                    })
-                    window.location.reload(false);
-                }}>Borrar</button>
-            </td>
+    if(session != null)
+    {
+        return (
+            <>
+            <h1>Descargar Expediente</h1>
+            <p>Seleccione expediente para descargar un archivo</p>
+            <LocalizationProvider language="es-ES"> 
+                <IntlProvider locale="es">
+
+                    <Grid
+                        data={result}
+                        filterable={true}
+                        onDataStateChange={onDataStateChange}
+                        filterOperators={filterOperators}
+                        {...dataState}
+                    
+                    >
+                        <GridColumn field="nombre" title="Nombre" />
+                        <GridColumn field="numero" title="Número" />
+                        <GridColumn field="carpeta_inv" title="Carpeta de Investigacion" />
+                        <GridColumn field="denunciante" title="Denunciante" />
+                        <GridColumn field="estatus" title="Estatus"/>
+                        <GridColumn field="fecha" title="Fecha"/>
+                        <GridColumn cell={BotonSubir}  width="100px" filterable={false}/>
+
+                    </Grid>   
+                </IntlProvider>
+            </LocalizationProvider>
+            </>
         );
-    };
-
-
-    return(
-        <LocalizationProvider language="es-ES"> 
-            <IntlProvider locale="es">
-
-                <Grid
-                    data={result}
-                    filterable={true}
-                    onDataStateChange={onDataStateChange}
-                    filterOperators={filterOperators}
-                    {...dataState}
-                
-                >
-                    <GridColumn field="usuario" title="Usuario" />
-                    <GridColumn field="nombre" title="Nombre" />
-                    <GridColumn field="area" title="Area" />
-                    <GridColumn field="nulidad" title="Juicios de Nulidad"/>
-                    <GridColumn field="investigacion" title="Carpetas de Investigacion"/>
-                    <GridColumn field="otros" title="Expedientes Otros"/>
-                    <GridColumn title="Editar Usuario" cell={EditButton} filterable={false}/>
-                    <GridColumn title="Borrar Usuario" cell={DeleteButton} filterable={false}/>
-
-                </Grid>   
-            </IntlProvider>
-        </LocalizationProvider>
-    );
+    }
+    else {
+        return <Navigate to="/login" replace />;
+    }
 }
 
-export default AccountsTable;
-
-
+export default DescargarInv;

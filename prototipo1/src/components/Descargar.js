@@ -8,13 +8,17 @@ import {IntlProvider, LocalizationProvider,loadMessages} from "@progress/kendo-r
 import esMessages from "../language/es.json";
 import { useContext } from "react";
 import DownloadContext from "../DownloadContext";
+import SessionContext from "../SessionContext";
 import { Link } from "react-router-dom";
+import { useNavigate, Navigate } from 'react-router-dom';
 
 const URI = 'https://localhost/nulidad';
 
 function Descargar(){
 
     const { updateDownload } = useContext(DownloadContext);
+    const { session } = useContext(SessionContext);
+    const navigate = useNavigate();
 
     const [data, setData] = useState([]);
     useEffect( () => {
@@ -23,8 +27,19 @@ function Descargar(){
 
     //Funcion para obtener los datos de la DB
     const getData = async () => {
-            const res = await axios.get(URI)
-            setData(res.data)
+        const config = {
+            headers:{
+              token: localStorage.getItem('JWT_token'),
+            }
+        };
+        await axios.get(URI, config).then((res) => {
+            if(res.data !== null){
+                setData(res.data)   
+            }
+            else {
+                navigate('/login')
+            }
+        })
     }
 
     //Estados de la data en la tabla al momento de utilizar filtros
@@ -93,34 +108,41 @@ function Descargar(){
             </td>
         );
     };
-    return (
-        <>
-        <h1>Descargar Expediente</h1>
-        <p>Seleccione expediente para descargar un archivo</p>
-        <LocalizationProvider language="es-ES"> 
-            <IntlProvider locale="es">
 
-                <Grid
-                    data={result}
-                    filterable={true}
-                    onDataStateChange={onDataStateChange}
-                    filterOperators={filterOperators}
-                    {...dataState}
-                
-                >
-                    <GridColumn field="nombre" title="Nombre" />
-                    <GridColumn field="numero" title="Número" />
-                    <GridColumn field="expediente" title="Expediente" />
-                    <GridColumn field="actor" title="Actor" />
-                    <GridColumn field="estatus" title="Estatus"/>
-                    <GridColumn field="fecha" title="Fecha"/>
-                    <GridColumn cell={BotonSubir}  width="100px" filterable={false}/>
+    if(session != null)
+    {
+        return (
+            <>
+            <h1>Descargar Expediente</h1>
+            <p>Seleccione expediente para descargar un archivo</p>
+            <LocalizationProvider language="es-ES"> 
+                <IntlProvider locale="es">
 
-                </Grid>   
-            </IntlProvider>
-        </LocalizationProvider>
-        </>
-    );
+                    <Grid
+                        data={result}
+                        filterable={true}
+                        onDataStateChange={onDataStateChange}
+                        filterOperators={filterOperators}
+                        {...dataState}
+                    
+                    >
+                        <GridColumn field="nombre" title="Nombre" />
+                        <GridColumn field="numero" title="Número" />
+                        <GridColumn field="expediente" title="Expediente" />
+                        <GridColumn field="actor" title="Actor" />
+                        <GridColumn field="estatus" title="Estatus"/>
+                        <GridColumn field="fecha" title="Fecha"/>
+                        <GridColumn cell={BotonSubir}  width="100px" filterable={false}/>
+
+                    </Grid>   
+                </IntlProvider>
+            </LocalizationProvider>
+            </>
+        );
+    }
+    else {
+        return <Navigate to="/login" replace />;
+    }
 }
 
 export {Descargar};

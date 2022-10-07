@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import { useContext } from "react";
 import UploadContext  from "../UploadContext";
 import SessionContext from "../SessionContext";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
 
 const URI = 'https://localhost/nulidad';
 
@@ -26,7 +26,6 @@ function Subir() {
     }, [])
 
     const getData = async () => {
-
         const config = {
             headers:{
               token: localStorage.getItem('JWT_token'),
@@ -40,8 +39,6 @@ function Subir() {
                 navigate('/login')
             }
         })
-        
-           
     }
 
     //Estados de la data en la tabla al momento de utilizar filtros
@@ -110,35 +107,40 @@ function Subir() {
             </td>
         );
     };
-    
-    return (
-        <>
-        <h1>Subir archivos</h1>
-        <p>Seleccione expediente para subir un archivo</p>
-        <LocalizationProvider language="es-ES"> 
-            <IntlProvider locale="es">
+    if(session != null)
+    {
+        return (
+            <>
+            <h1>Subir archivos</h1>
+            <p>Seleccione expediente para subir un archivo</p>
+            <LocalizationProvider language="es-ES"> 
+                <IntlProvider locale="es">
 
-                <Grid
-                    data={result}
-                    filterable={true}
-                    onDataStateChange={onDataStateChange}
-                    filterOperators={filterOperators}
-                    {...dataState}
-                >
-                    <GridColumn field="nombre" title="Nombre" />
-                    <GridColumn field="numero" title="Número" />
-                    <GridColumn field="expediente" title="Expediente" />
-                    <GridColumn field="actor" title="Actor" />
-                    <GridColumn field="estatus" title="Estatus" />
-                    <GridColumn field="fecha" title="Fecha"/>
-                    <GridColumn cell={MyCommandCell}  width="100px" filterable={false}/>
+                    <Grid
+                        data={result}
+                        filterable={true}
+                        onDataStateChange={onDataStateChange}
+                        filterOperators={filterOperators}
+                        {...dataState}
+                    >
+                        <GridColumn field="nombre" title="Nombre" />
+                        <GridColumn field="numero" title="Número" />
+                        <GridColumn field="expediente" title="Expediente" />
+                        <GridColumn field="actor" title="Actor" />
+                        <GridColumn field="estatus" title="Estatus" />
+                        <GridColumn field="fecha" title="Fecha"/>
+                        <GridColumn cell={MyCommandCell}  width="100px" filterable={false}/>
 
-                </Grid>   
-            </IntlProvider>
-        </LocalizationProvider>
-        <Link to='/crearExpediente'>Crear nuevo expediente</Link>
-        </>
-    );
+                    </Grid>   
+                </IntlProvider>
+            </LocalizationProvider>
+            <Link to='/crearExpediente'>Crear nuevo expediente</Link>
+            </>
+        );
+    }
+    else {
+        return <Navigate to="/login" replace />;
+    }
 }
 
 export default Subir;

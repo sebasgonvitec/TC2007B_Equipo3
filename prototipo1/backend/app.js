@@ -1,3 +1,17 @@
+/*
+ * API para la gestión del sistema de archivos
+ *  
+ * Autores:
+ * - Andreína Isabel Sanánez
+ * - Sebastián González
+ * - Francisco Salcedo
+ * - Andrea Diego
+ * - Regina Rodríguez
+ * 
+ * 10/6/2022 
+ * 
+ */
+
 const { MongoClient } = require('mongodb');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -8,40 +22,37 @@ const crypto = require('crypto');
 const path = require('path');
 const mongo = require('mongodb');
 const bcrypt=require("bcrypt")
-const MongoStore= require("connect-mongo")
+const MongoStore = require("connect-mongo")
 const app = express(); //intacia de express
 const https = require('https');
-const jwt=require('jsonwebtoken');
-const cookieParser=require('cookie-parser');
+const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
 
+//Dependecias de la app
 app.use(bodyParser.json()); // definir body-parser como json
 app.use(bodyParser.urlencoded({ extended: true })); // decirle a la app que use body-parser
 app.use(cookieParser())
+app.use(cors());
 
-// app.use(cors()); // decirle a la app que use cors
-var corsOptions = {
-    origin: '*',
-    credentials: true,
-    exposedHeaders: ["set-cookie"],
-};
-    
-app.use(cors(corsOptions));
+//Path a la base de datos
+const DB_URL = "mongodb://127.0.0.1:27017/AO_DB";
 
-const DB_URL = "mongodb://127.0.0.1:27017/demoDB";
+// definir multer para que guarde los archivos en la carpeta .temp
+const uploads = multer({dest: ".temp"})
 
-const uploads = multer({dest: ".temp"}) // definir multer para que guarde los archivos en la carpeta .temp
-
+//Conexión a la base de datos
 function connectToDB(){
     let client = new MongoClient(DB_URL);
     client.connect();
     db = client.db();
 }
 
+//Endpoint Login
 app.post("/login", (req, res)=>{
     let user=req.body.usuario;
     let pass=req.body.password;
 
-    db.collection("accounts").findOne({usuario:user}, (err, result)=>{
+    db.collection("usuarios").findOne({usuario:user}, (err, result)=>{
       if(result!=null){
         bcrypt.compare(pass, result.password, (err, resultB)=>{
           if(resultB){
@@ -63,9 +74,10 @@ app.post("/login", (req, res)=>{
         res.json(null) //indicar en front credenciales incorrectas
       }
     })
-  })
+})
 
-  app.get("/nulidad", function(req, res){
+//Endpoint para extraer expedientes de collecion nulidad
+app.get("/nulidad", function(req, res){
     jwt.verify(req.headers.token, "secretKey", (err, userId) => {
         if(err){
             res.json(null) 
@@ -85,142 +97,227 @@ app.post("/login", (req, res)=>{
     })    
 })
 
-
-app.post("/crearExpediente", function(req, res){
-    let aInsertar = {nombre:req.body.nombre, numero:req.body.numero, expediente:req.body.expediente, actor:req.body.actor, estatus:req.body.estatus, fecha:req.body.fecha}
-    db.collection("nulidad").insertOne(aInsertar, function(err, result){
+//Endpoint para crear expedientes de collecion nulidad
+app.post("/crearExpedienteNul", function(req, res){
+    jwt.verify(req.headers.token, "secretKey", (err, userId) => {
         if(err){
-            handleError(res, err.message, "Failed to create new expediente");
-        }else{
-            res.status(200).json(result);
+            res.json(null)
         }
-    });
-})
-
-//Mostrar archivos de un expediente en especifico
-app.get("/descargarArchivos", function(req, res){
-        db.collection("pruebaUpload").find({ "expediente": req.query.expediente }).toArray(function(err, result){
+        else { 
+            let aInsertar = {
+                nombre:req.body.nombre,
+                numero:req.body.numero,
+                expediente:req.body.expediente,
+                actor:req.body.actor,
+                estatus:req.body.estatus,
+                fecha:req.body.fecha
+            };
+            db.collection("nulidad").insertOne(aInsertar, function(err, result){
             if(err){
-                handleError(res, err.message, "Failed to get documentos de expediente");
+                handleError(res, err.message, "Failed to create new expediente");
             }else{
                 res.status(200).json(result);
             }
-        }); 
+        })
+        }   
+    });
+});
+
+//Endpoint para extraer expedientes de collecion investigacion
+app.get("/investigacion", function(req, res){
+    jwt.verify(req.headers.token, "secretKey", (err, userId) => {
+        if(err){
+            res.json(null) 
+        }
+        else {
+            console.log(userId)
+            db.collection("investigacion").find({}).toArray(function(err, result){
+                if(err){
+                    handleError(res, err.message, "Failed to get Carpetas de Investigación");
+                }else{
+                    res.status(200).json(result);
+                    
+                }
+            });
+
+        }
+    })    
+})
+
+//Endpoint para crear expedientes de collecion investigacion
+app.post("/crearExpedienteInv", function(req, res){
+    jwt.verify(req.headers.token, "secretKey", (err, userId) => {
+        if(err){
+            res.json(null)
+        }
+        else { 
+            let aInsertar = {
+                nombre:req.body.nombre,
+                numero:req.body.numero,
+                carpeta_inv:req.body.carpeta_inv,
+                denunciante:req.body.denunciante,
+                estatus:req.body.estatus,
+                fecha:req.body.fecha
+            };
+            db.collection("investigacion").insertOne(aInsertar, function(err, result){
+            if(err){
+                handleError(res, err.message, "Failed to create new expediente");
+            }else{
+                res.status(200).json(result);
+            }
+            });
+        }   
+    });
+});
+
+
+//Mostrar archivos de un expediente en especifico
+// La coleccion "pruebaUpload" almacena todos los archivos de todos los expedientes
+app.get("/descargarArchivos", function(req, res){
+    jwt.verify(req.headers.token, "secretKey", (err, userId) => {
+        if(err){
+            res.json(null)
+        }else{
+            db.collection("archivos").find({ "expediente": req.query.expediente }).toArray(function(err, result){
+                if(err){
+                    handleError(res, err.message, "Failed to get documentos de expediente");
+                }else{
+                    res.status(200).json(result);
+                }
+            }); 
+        }
+    });
 });
 
 //Descargar archivos por el nombre
 app.get("/descargarArchivos/download", async (req, res) => {
-    if(req.headers.referer){
-        db.collection("pruebaUpload").findOne({"_id": mongo.ObjectId(req.query.id)}, function(err, result){
-            if(err){
-                handleError(res, err.message, "Failed to get documentos de expediente");
-            }else{
-                console.log(__dirname + "/.storage/" + req.query.nombre);
-                let temporal = __dirname + "/.temp/" + req.query.nombre + ".pdf";
-                let inputFS = fs.createReadStream(__dirname + result.archivo)
-                let outputFS = fs.createWriteStream(temporal)
-    
-                let key = "abcabcabcabcabcabcabcabcabcabc12" //Not to be done, key usually goes encrypted as well 32 bytes(256 bits) 
-                let iv = "abcabcabcabcabc1" //(initialization vector) 16 bytes
-    
-                let cipher = crypto.createDecipheriv("aes-256-cbc", key, iv)
-                inputFS.pipe(cipher).pipe(outputFS)
-                outputFS.on("finish", ()=>{
-                    console.log(temporal);
-                    res.set({
-                        'Content-Type': 'application/pdf'
+    jwt.verify(req.headers.token, "secretKey", (err, userId) => {
+        if(err){
+            res.json(null)
+        }else{
+            db.collection("archivos").findOne({"_id": mongo.ObjectId(req.query.id)}, function(err, result){
+                if(err){
+                    handleError(res, err.message, "Failed to get documentos de expediente");
+                }else{
+                    console.log(__dirname + "/.storage/" + req.query.nombre);
+                    let temporal = __dirname + "/.temp/" + req.query.nombre + ".pdf";
+                    let inputFS = fs.createReadStream(__dirname + result.path)
+                    let outputFS = fs.createWriteStream(temporal)
+        
+                    let key = "abcabcabcabcabcabcabcabcabcabc12" //Not to be done, key usually goes encrypted as well 32 bytes(256 bits) 
+                    let iv = "abcabcabcabcabc1" //(initialization vector) 16 bytes
+        
+                    let cipher = crypto.createDecipheriv("aes-256-cbc", key, iv)
+                    inputFS.pipe(cipher).pipe(outputFS)
+                    outputFS.on("finish", ()=>{
+                        console.log(temporal);
+                        res.set({
+                            'Content-Type': 'application/pdf'
+                        })
+                        res.download(temporal, function(err){
+                            if(err) throw err;
+                            fs.unlinkSync(temporal);
+                        })
                     })
-                    res.download(temporal, function(err){
-                        if(err) throw err;
-                        fs.unlinkSync(temporal);
-                    })
-                })
-            }
-        }); 
-    }
-    else{
-        res.send("Unauthorized Access");
-    }
+                }
+            });
+        }
+    });
 });
 
 app.post("/subirArchivo", uploads.single("archivo"), (req, res)=>{
-    console.log(__dirname + "/.storage/" + req.body.nombre);
-    let rutaDefinitiva = "/.storage/" + req.body.nombre;
-    let inputFS = fs.createReadStream(__dirname + "/.temp/" + req.file.filename)
-    let outputFS = fs.createWriteStream(__dirname + "/.storage/" + req.body.nombre)
+    jwt.verify(req.headers.token, "secretKey", (err, userId) => {
+        if(err){
+            res.json(null)
+        }else
+        {
+            console.log(__dirname + "/.storage/" + req.body.nombre);
+            let rutaDefinitiva = "/.storage/" + req.body.nombre;
+            let inputFS = fs.createReadStream(__dirname + "/.temp/" + req.file.filename)
+            let outputFS = fs.createWriteStream(__dirname + "/.storage/" + req.body.nombre)
 
-    let key = "abcabcabcabcabcabcabcabcabcabc12" //Not to be done, key usually goes encrypted as well 32 bytes(256 bits) 
-    let iv = "abcabcabcabcabc1"
+            let key = "abcabcabcabcabcabcabcabcabcabc12" //Not to be done, key usually goes encrypted as well 32 bytes(256 bits) 
+            let iv = "abcabcabcabcabc1"
 
-    let cipher = crypto.createCipheriv("aes-256-cbc", key, iv)
-    inputFS.pipe(cipher).pipe(outputFS)
-    outputFS.on("finish", ()=>{
-        fs.unlinkSync(__dirname + "/.temp/" + req.file.filename)
-        let aInsertar = {nombre:req.body.nombre, folio:req.body.folio, archivo: rutaDefinitiva, fecha: req.body.fecha, expediente: req.body.expediente}
-        console.log(req.body);
-        db.collection("pruebaUpload").insertOne(aInsertar, (err, res)=>{
-            if(err) throw err;
-            console.log(res);
-        })
-    })
+            let cipher = crypto.createCipheriv("aes-256-cbc", key, iv)
+            inputFS.pipe(cipher).pipe(outputFS)
+            outputFS.on("finish", ()=>{
+                fs.unlinkSync(__dirname + "/.temp/" + req.file.filename)
+                let aInsertar = {nombre:req.body.nombre, folio:req.body.folio, path: rutaDefinitiva, fecha: req.body.fecha, expediente: req.body.expediente}
+                console.log(req.body);
+                db.collection("archivos").insertOne(aInsertar, (err, res)=>{
+                    if(err) throw err;
+                console.log(res);
+                });
+            });
     res.status(200).json({message:"Archivo subido correctamente"});
+        }
+    });
 })
 
 app.get("/tablaCuentas", function(req, res) {
-    db.collection("accounts").find({}).toArray(function(err, result){
-        if(err) {
-            handleError(res, err.message, "Failed to get accounts");
+    jwt.verify(req.headers.token, "secretKey", (err, userId) => {
+        if(err){
+            res.json(null)
+        }else{
+            db.collection("usuarios").find({}).toArray(function(err, result){
+                if(err) {
+                    handleError(res, err.message, "Failed to get accounts");
+                }
+                else {
+                    res.status(200).send(result);
+                }
+            })
         }
-        else {
-            res.status(200).send(result);
-        }
-    })
-})
+    });
+});
 
 app.delete("/borrarCuenta", function(req, res) {
-    if(req.headers.referer){
-        db.collection("accounts").deleteOne({"_id": mongo.ObjectId(req.query.id)}, (err, result) => {
-            if (err) throw err;
-        })
-    }
-    else{
-        res.send("Unauthorized Access");
-    }
+    jwt.verify(req.headers.token, "secretKey", (err, userId) => {
+        if(err){
+            res.json(null)
+        }else{
+            db.collection("usuarios").deleteOne({"_id": mongo.ObjectId(req.query.id)}, (err, result) => {
+                if (err) throw err;
+            })
+        }
+    });
 })
  
 app.post("/crearCuenta", (req, res)=>{
-    let user=req.body.usuario;
-    let pass=req.body.password;
-    let area=req.body.area;
-    let name=req.body.nombre;
-    let nulidad=req.body.nulidad;
-    let investigacion=req.body.investigacion;
-    let otros=req.body.otros;
+    // jwt.verify(req.headers.token, "secretKey", (err, userId) => {
+    //     if(err){
+    //         res.json(null)
+    //     }else {
+            let user=req.body.usuario;
+            let pass=req.body.password;
+            let area=req.body.area;
+            let name=req.body.nombre;
+            let nulidad=req.body.nulidad;
+            let investigacion=req.body.investigacion;
+            let otros=req.body.otros;
 
-    console.log("usuario recibido")
+            console.log("usuario recibido")
 
-    db.collection("accounts").findOne({usuario:user}, (err, result)=>{
-    if(result!=null){
-        console.log("El usuario ya existe")
-        throw new Error('El usuario ya existe')
-    }
+            db.collection("usuarios").findOne({usuario:user}, (err, result)=>{
+            if(result!=null){
+                console.log("El usuario ya existe")
+                throw new Error('El usuario ya existe')
+            }
     
-    else{
-        bcrypt.hash(pass, 10, (err, hash)=>{
-        let aAgregar={usuario:user, password:hash, nombre:name, area:area, nulidad:nulidad, investigacion:investigacion, otros:otros}
-        db.collection("accounts").insertOne(aAgregar, (err, result)=>{
-            if (err) throw err;
-            console.log("Usuario agregado")
-        })
-        })
-    }
-})
-})
-
-// app.listen(1337, () => {
-//     connectToDB();
-//     console.log("Server running on port 1337....");
-// });
+            else{
+                bcrypt.hash(pass, 10, (err, hash)=>{
+                let aAgregar={usuario:user, password:hash, nombre:name, area:area, nulidad:nulidad, investigacion:investigacion, otros:otros}
+                db.collection("usuarios").insertOne(aAgregar, (err, result)=>{
+                    if (err) throw err;
+                    console.log("Usuario agregado")
+                    });
+                });
+                }
+            })
+        //}
+    //});
+});
 
 https.createServer({
     cert: fs.readFileSync("../Cert/app.cer"),

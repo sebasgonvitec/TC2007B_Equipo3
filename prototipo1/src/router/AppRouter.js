@@ -24,7 +24,11 @@ import { SessionProvider } from '../SessionContext';
 import Home from "../components/pages/Home";
 import UploadMain from "../components/pages/UploadMain";
 import SearchMain from "../components/pages/SearchMain";
-
+import CrearExpedienteInv from '../components/CrearExpedienteInv';
+import SubirInv from '../components/SubirInv';
+import DescargarInv from '../components/DescargarInv';
+import PortalAdmin from '../components/PortalAdmin';
+import EditarUsuario from '../components/EditarUsuario';
 
 
 function AppRouter() {
@@ -36,19 +40,27 @@ function AppRouter() {
     <BrowserRouter>
             <HeaderGina className="header" />
                 <Routes>
+                    <Route path="/login" element={<Login />} />
                     <Route path="/" element={<Navigate to="/home" replace={true} />}/>
                     <Route path="/home" element={<Home />} />
-                    <Route path='/uploadmain' element={<UploadMain />} />
-                    <Route path='/searchmain' element={<SearchMain />} />
+                    <Route path="/uploadmain" element={<UploadMain />} />
+                    <Route path="/searchmain" element={<SearchMain />} />
+
                     <Route path="/subir" element={<Subir />} />
+                    <Route path="/subirInv" element={<SubirInv />}/>
                     <Route path="/subirArchivo" element={<SubirArchivo />} />
-                    <Route path="/descargar" element={<Descargar />} />
-                    <Route path="/descargarArchivo" element={<DescargarArchivo />} />
                     <Route path="/crearExpediente" element={<CrearExpediente />} />
-                    <Route path="/login" element={<Login />} />
+                    <Route path="/crearExpedienteInv" element={<CrearExpedienteInv />}/>
+
+                    <Route path="/descargar" element={<Descargar />} />
+                    <Route path="/descargarInv" element={<DescargarInv />}/>
+                    <Route path="/descargarArchivo" element={<DescargarArchivo />} />
+
                     <Route path="/registro" element={<Register />} />
                     <Route path="/perfil" element={<Profile />} />
-                    <Route path="/usuarios" element={<AccountsTable />} />
+                    <Route path="/tablaUsuarios" element={<AccountsTable />} />
+                    <Route path="/portalAdmin" element={<PortalAdmin />} />
+                    <Route path="/editarUsuario" element={<EditarUsuario />} />
                 </Routes>
         <Footer />
     </BrowserRouter>

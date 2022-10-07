@@ -5,88 +5,128 @@ import { AiOutlineFolder } from "react-icons/ai";
 import { BsArchive } from "react-icons/bs";
 import { TbReportAnalytics } from "react-icons/tb";
 import { BiCommentDetail } from "react-icons/bi";
+import { Navigate } from 'react-router-dom';
+import { useContext } from "react";
+import SessionContext from "../../SessionContext";
+import UploadContext from '../../UploadContext';
+import { Link } from "react-router-dom";
+import '../styleComponents/OptionBox.css';
+import '../styleComponents/Btn.css'
 
 function UploadMain(){
-    return( 
-        <div style={{marginLeft:"5.8vw"}}>
-            <Name 
-                titulo="Subir Archivos"
-                descripcion="Selecciona el tipo de archivo que quieres subir"
-            />
+    
+    const { session } = useContext(SessionContext);
 
-            <div className="optionsContainer">
-                <OptionBox
-                    colorbox={
-                        <div className='colorBox' style={{background:'#45B2E6'}}>
-                            {<AiOutlineFolder className="icon" style={{width:'8.3vw', height:'auto'}}/>}
-                        </div>
-                    }
-                    titulo="JUICIO DE NULIDAD"
-                    descripcion="Pequeña descripcion en este espacio que pueda describir de lo que se trata esta seccion"
-                    page="/subir"
+    const { updateUpload } = useContext(UploadContext);
+
+    if(session != null)
+    {
+        return( 
+            <div style={{marginLeft:"5.8vw"}}>
+                <Name 
+                    titulo="Subir Archivos"
+                    descripcion="Selecciona el tipo de archivo que quieres subir"
                 />
 
-                <OptionBox
-                    colorbox={
-                        <div className='colorBox' style={{background:'#8B2E87'}}>
-                            {<BsArchive className="icon" style={{width:'8.3vw', height:'auto'}}/>}
-                        </div>
-                    }
-                    titulo="CARPETA DE INVESTIGACIÓN"
-                    descripcion="Pequeña descripcion en este espacio que pueda describir de lo que se trata esta seccion"
-                    page="/subir"
-                />
+                <div className="optionsContainer">
+                    <OptionBox
+                        colorbox={
+                            <div className='colorBox' style={{background:'#45B2E6'}}>
+                                {<AiOutlineFolder className="icon" style={{width:'8.3vw', height:'auto'}}/>}
+                            </div>
+                        }
+                        titulo="JUICIO DE NULIDAD"
+                        descripcion="Pequeña descripcion en este espacio que pueda describir de lo que se trata esta seccion"
+                        page="/subir"
+                    />
 
-                <OptionBox
-                    colorbox={
+                    <OptionBox
+                        colorbox={
+                            <div className='colorBox' style={{background:'#8B2E87'}}>
+                                {<BsArchive className="icon" style={{width:'8.3vw', height:'auto'}}/>}
+                            </div>
+                        }
+                        titulo="CARPETA DE INVESTIGACIÓN"
+                        descripcion="Pequeña descripcion en este espacio que pueda describir de lo que se trata esta seccion"
+                        page="/subirInv"
+                    />
+
+                    <div className="container">
+            
                         <div className='colorBox' style={{background:'#66C214'}}>
-                            {<TbReportAnalytics className="icon" style={{width:'8.3vw', height:'auto'}}/>}
+                             {<TbReportAnalytics className="icon" style={{width:'8.3vw', height:'auto'}}/>}
                         </div>
-                    }
-                    titulo="TITULO 3"
-                    descripcion="Pequeña descripcion en este espacio que pueda describir de lo que se trata esta seccion"
-                    page="/subir"
-                />
-
-                <OptionBox
-                    colorbox={
-                        <div className='colorBox' style={{background:'#FFA928'}}>
-                            {<BiCommentDetail className="icon" style={{width:'8.3vw', height:'auto'}}/>}
+                        <div className="content">
+                            <p style={{fontWeight:'700', fontSize:'1.2vw'}} >OTROS</p>
+                            <p style={{fontSize:'1vw'}}>Pequeña descripcion en este espacio que pueda describir de lo que se trata esta seccion</p>
+                            <div >
+                                <Link to="/subirArchivo" >
+                                <div className="button" onClick={
+                                    () => {
+                                        updateUpload({_id:"000000000000000000000000"});
+                                    }
+                                }>Seleccionar</div>
+                                </Link>
+                            </div>
                         </div>
-                    }
-                    titulo="TITULO 4"
-                    descripcion="Pequeña descripcion en este espacio que pueda describir de lo que se trata esta seccion"
-                    page="/subir"
-                />
+                    </div>
+                    {/* <OptionBox
+                        colorbox={
+                            <div className='colorBox' style={{background:'#66C214'}}>
+                                {<TbReportAnalytics className="icon" style={{width:'8.3vw', height:'auto'}}/>}
+                            </div>
+                        }
+                        titulo="OTROS"
+                        descripcion="Pequeña descripcion en este espacio que pueda describir de lo que se trata esta seccion"
+                        page={()=>{
+                            <Navigate to="/subirArchivo" />
+                            updateUpload({_id:"633f654ee9a2f2806e92435a"});
+                        }}
+                    /> */}
 
-                <OptionBox
-                    colorbox={
-                        <div className='colorBox' style={{background:'#FCDC4B'}}>
-                            {<AiOutlineFolder className="icon" style={{width:'8.3vw', height:'auto'}}/>}
-                        </div>
-                    }
-                    titulo="TITULO 5"
-                    descripcion="Pequeña descripcion en este espacio que pueda describir de lo que se trata esta seccion"
-                    page="/subir"
-                />
+                    {/* <OptionBox
+                        colorbox={
+                            <div className='colorBox' style={{background:'#FFA928'}}>
+                                {<BiCommentDetail className="icon" style={{width:'8.3vw', height:'auto'}}/>}
+                            </div>
+                        }
+                        titulo="TITULO 4"
+                        descripcion="Pequeña descripcion en este espacio que pueda describir de lo que se trata esta seccion"
+                        page="/subir"
+                    />
 
-                <OptionBox
-                    colorbox={
-                        <div className='colorBox' style={{background:'#44B2ED'}}>
-                            {<BsArchive className="icon" style={{width:'8.3vw', height:'auto'}}/>}
-                        </div>
-                    }
-                    titulo="TITULO 6"
-                    descripcion="Pequeña descripcion en este espacio que pueda describir de lo que se trata esta seccion"
-                    page="/subir"
-                />
+                    <OptionBox
+                        colorbox={
+                            <div className='colorBox' style={{background:'#FCDC4B'}}>
+                                {<AiOutlineFolder className="icon" style={{width:'8.3vw', height:'auto'}}/>}
+                            </div>
+                        }
+                        titulo="TITULO 5"
+                        descripcion="Pequeña descripcion en este espacio que pueda describir de lo que se trata esta seccion"
+                        page="/subir"
+                    />
 
+                    <OptionBox
+                        colorbox={
+                            <div className='colorBox' style={{background:'#44B2ED'}}>
+                                {<BsArchive className="icon" style={{width:'8.3vw', height:'auto'}}/>}
+                            </div>
+                        }
+                        titulo="TITULO 6"
+                        descripcion="Pequeña descripcion en este espacio que pueda describir de lo que se trata esta seccion"
+                        page="/subir"
+                    /> */}
+
+                    
+                </div>
+                
                 
             </div>
-            
-            
-        </div>
-    );
+        );
+    }
+    else {
+        return <Navigate to="/login" replace />;
+    }
 }
 
 export default UploadMain;
