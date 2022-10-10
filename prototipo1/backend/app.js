@@ -74,7 +74,26 @@ app.post("/login", (req, res)=>{
         res.json(null) //indicar en front credenciales incorrectas
       }
     })
-})
+});
+
+app.get("/login", (req, res)=>{
+    jwt.verify(req.headers.token, "secretKey", (err, userId) => {
+        if(err){
+            res.json(null) 
+        }
+        else {
+            let user=req.query.usuario;
+
+            db.collection("usuarios").findOne({usuario:user}, { projection: { password: 0} }, (err, result)=>{
+                if(err){
+                    handleError(res, err.message, "Failed to get user");
+                }else{
+                    res.status(200).json(result);
+                }
+            });
+        }
+    })
+});
 
 //Endpoint para extraer expedientes de collecion nulidad
 app.get("/nulidad", function(req, res){
@@ -260,7 +279,7 @@ app.get("/tablaCuentas", function(req, res) {
         if(err){
             res.json(null)
         }else{
-            db.collection("usuarios").find({}).toArray(function(err, result){
+            db.collection("usuarios").find({}, { projection: { password: 0} }).toArray(function(err, result){
                 if(err) {
                     handleError(res, err.message, "Failed to get accounts");
                 }
@@ -285,10 +304,10 @@ app.delete("/borrarCuenta", function(req, res) {
 })
  
 app.post("/crearCuenta", (req, res)=>{
-    // jwt.verify(req.headers.token, "secretKey", (err, userId) => {
-    //     if(err){
-    //         res.json(null)
-    //     }else {
+    jwt.verify(req.headers.token, "secretKey", (err, userId) => {
+        if(err){
+            res.json(null)
+        }else {
             let user=req.body.usuario;
             let pass=req.body.password;
             let area=req.body.area;
@@ -315,9 +334,10 @@ app.post("/crearCuenta", (req, res)=>{
                 });
                 }
             })
-        //}
-    //});
+        }
+    });
 });
+
 
 https.createServer({
     cert: fs.readFileSync("../Cert/app.cer"),

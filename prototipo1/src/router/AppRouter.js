@@ -20,7 +20,6 @@ import AccountsTable from '../components/AccountsTable';
 import { DownloadProvider } from "../DownloadContext";
 import { UploadProvider } from "../UploadContext";
 import { SessionProvider } from '../SessionContext';
-//import Home from "../components/pages/Home";
 import Home from "../components/pages/Home";
 import UploadMain from "../components/pages/UploadMain";
 import SearchMain from "../components/pages/SearchMain";

@@ -11,6 +11,8 @@ const URI = "https://localhost/login";
 const Login = () => {
     
     const { updateSession } = useContext(SessionContext);
+    const { session } = useContext(SessionContext);
+
     const navigate = useNavigate();
 
     const [state, setState] = useState({
@@ -41,17 +43,32 @@ const Login = () => {
                         'Content-Type': 'application/json',
                     }
                 }).then((res) => {
+                    //console.log(res.data);
                     updateSession(res.data); //store token
                     localStorage.setItem('JWT_token', res.data)
                     navigate("/home")
-                })
+                });
+
+                await axios({
+                    method: 'get',
+                    url: URI,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        token: localStorage.getItem('JWT_token'),
+                    },
+                    params: { usuario:state.usuario } 
+                }).then((res) => {
+                    //console.log(res.data);
+                    updateSession(res.data); //store user info
+                });
                   
         } else {
             setErrorMsg("ERROR MESSAGE");
         }
-    } catch (error) {
-        error.response && setErrorMsg(error.response.data);
-    }}
+        } catch (error) {
+            error.response && setErrorMsg(error.response.data);
+        }
+    }
 
     return(
         <body>
