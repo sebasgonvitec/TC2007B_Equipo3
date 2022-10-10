@@ -12,12 +12,16 @@ import UploadContext from '../../UploadContext';
 import { Link } from "react-router-dom";
 import '../styleComponents/OptionBox.css';
 import '../styleComponents/Btn.css'
+import { useNavigate } from 'react-router-dom';
+import swal from 'sweetalert';
 
 function UploadMain(){
     
     const { session } = useContext(SessionContext);
 
     const { updateUpload } = useContext(UploadContext);
+
+    const navigate = useNavigate();
 
     if(session != null)
     {
@@ -37,7 +41,15 @@ function UploadMain(){
                         }
                         titulo="JUICIO DE NULIDAD"
                         descripcion="Pequeña descripcion en este espacio que pueda describir de lo que se trata esta seccion"
-                        page="/subir"
+                        onClick={
+                            () => {
+                                if(session.nulidad === "true"){
+                                    navigate("/subir");
+                                }else{
+                                    swal("Acceso Denegado" ,  "No tienes permisos para acceder a esta área.\nRevisa con tu administrador." ,  "error" );
+                                }
+                            }
+                        }
                     />
 
                     <OptionBox
@@ -48,28 +60,37 @@ function UploadMain(){
                         }
                         titulo="CARPETA DE INVESTIGACIÓN"
                         descripcion="Pequeña descripcion en este espacio que pueda describir de lo que se trata esta seccion"
-                        page="/subirInv"
+                        onClick={
+                            () => {
+                                if(session.investigacion === "true"){
+                                    navigate("/subirInv");
+                                }else{
+                                    swal("Acceso Denegado" ,  "No tienes permisos para acceder a esta área.\nRevisa con tu administrador." ,  "error" );
+                                }
+                            }
+                        }
                     />
 
-                    <div className="container">
-            
-                        <div className='colorBox' style={{background:'#66C214'}}>
-                             {<TbReportAnalytics className="icon" style={{width:'8.3vw', height:'auto'}}/>}
-                        </div>
-                        <div className="content">
-                            <p style={{fontWeight:'700', fontSize:'1.2vw'}} >OTROS</p>
-                            <p style={{fontSize:'1vw'}}>Pequeña descripcion en este espacio que pueda describir de lo que se trata esta seccion</p>
-                            <div >
-                                <Link to="/subirArchivo" >
-                                <div className="button" onClick={
-                                    () => {
-                                        updateUpload({_id:"000000000000000000000000"});
-                                    }
-                                }>Seleccionar</div>
-                                </Link>
+                    <OptionBox
+                        colorbox={
+                            <div className='colorBox' style={{background:'#66C214'}}>
+                                {<TbReportAnalytics className="icon" style={{width:'8.3vw', height:'auto'}}/>}
                             </div>
-                        </div>
-                    </div>
+                        }
+                        titulo="OTROS"
+                        descripcion="Pequeña descripcion en este espacio que pueda describir de lo que se trata esta seccion"
+                        onClick={
+                            () => {
+                                if(session.otros === "true"){
+                                    navigate("/subirArchivo");
+                                    updateUpload({_id:"000000000000000000000000"});
+                                }else{
+                                    swal("Acceso Denegado" ,  "No tienes permisos para acceder a esta área.\nRevisa con tu administrador." ,  "error" );
+                                }
+                            }
+                        }
+                    />
+
                     {/* <OptionBox
                         colorbox={
                             <div className='colorBox' style={{background:'#66C214'}}>

@@ -306,7 +306,7 @@ app.delete("/borrarCuenta", function(req, res) {
 app.post("/crearCuenta", (req, res)=>{
     jwt.verify(req.headers.token, "secretKey", (err, userId) => {
         if(err){
-            res.json(null)
+            res.json({msg: "No tiene los permisos, saquese alv"})
         }else {
             let user=req.body.usuario;
             let pass=req.body.password;
@@ -316,7 +316,7 @@ app.post("/crearCuenta", (req, res)=>{
             let investigacion=req.body.investigacion;
             let otros=req.body.otros;
 
-            console.log("usuario recibido")
+            console.log("usuario recibido");
 
             db.collection("usuarios").findOne({usuario:user}, (err, result)=>{
             if(result!=null){

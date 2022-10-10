@@ -6,12 +6,17 @@ import { Grid, GridColumn } from "@progress/kendo-react-grid";
 import { process } from "@progress/kendo-data-query";
 import {IntlProvider, LocalizationProvider,loadMessages} from "@progress/kendo-react-intl";
 import esMessages from "../language/es.json";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
+import { useContext } from "react";
+import SessionContext from "../SessionContext";
 
 const URI = 'https://localhost/tablaCuentas'
 const URI_delete = 'https://localhost/borrarCuenta'
 
 const AccountsTable = () => {
+
+    const { session } = useContext(SessionContext);
+
     const navigate = useNavigate();
 
     const [data, setData] = useState([]);
@@ -116,32 +121,37 @@ const AccountsTable = () => {
         );
     };
 
+    if(session != null)
+    {
+        return(
+            <LocalizationProvider language="es-ES"> 
+                <IntlProvider locale="es">
 
-    return(
-        <LocalizationProvider language="es-ES"> 
-            <IntlProvider locale="es">
+                    <Grid
+                        data={result}
+                        filterable={true}
+                        onDataStateChange={onDataStateChange}
+                        filterOperators={filterOperators}
+                        {...dataState}
+                    
+                    >
+                        <GridColumn field="usuario" title="Usuario" />
+                        <GridColumn field="nombre" title="Nombre" />
+                        <GridColumn field="area" title="Area" />
+                        <GridColumn field="nulidad" title="Juicios de Nulidad"/>
+                        <GridColumn field="investigacion" title="Carpetas de Investigacion"/>
+                        <GridColumn field="otros" title="Expedientes Otros"/>
+                        <GridColumn title="Editar Usuario" cell={EditButton} filterable={false}/>
+                        <GridColumn title="Borrar Usuario" cell={DeleteButton} filterable={false}/>
 
-                <Grid
-                    data={result}
-                    filterable={true}
-                    onDataStateChange={onDataStateChange}
-                    filterOperators={filterOperators}
-                    {...dataState}
-                
-                >
-                    <GridColumn field="usuario" title="Usuario" />
-                    <GridColumn field="nombre" title="Nombre" />
-                    <GridColumn field="area" title="Area" />
-                    <GridColumn field="nulidad" title="Juicios de Nulidad"/>
-                    <GridColumn field="investigacion" title="Carpetas de Investigacion"/>
-                    <GridColumn field="otros" title="Expedientes Otros"/>
-                    <GridColumn title="Editar Usuario" cell={EditButton} filterable={false}/>
-                    <GridColumn title="Borrar Usuario" cell={DeleteButton} filterable={false}/>
-
-                </Grid>   
-            </IntlProvider>
-        </LocalizationProvider>
-    );
+                    </Grid>   
+                </IntlProvider>
+            </LocalizationProvider>
+        );
+    }
+    else {
+        return <Navigate to="/login" replace />;
+    }
 }
 
 export default AccountsTable;

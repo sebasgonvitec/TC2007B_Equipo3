@@ -1,23 +1,35 @@
 import React from "react";
-import { useNavigate } from 'react-router-dom';
+import { useContext } from "react";
+import { useNavigate, Navigate } from 'react-router-dom';
+import SessionContext from "../SessionContext";
+
 
 function PortalAdmin(){
+
+    const { session } = useContext(SessionContext);
     const navigate = useNavigate();
 
-    return(
-        <div>
-            <h1>Portal Administrador</h1>
-            <button onClick={() =>{
-                navigate('/registro')
-            }}>Registro de Usuarios</button>
-            <button onClick={() =>{
-                navigate('/registro')
-            }}>Bitacora de Actividad</button>
-            <button onClick={() =>{
-                navigate('/tablaUsuarios')
-            }}>Editar usuarios</button>
-        </div>
-    );
+    if(session != null)
+    {
+
+        return(
+            <div>
+                <h1>Portal Administrador</h1>
+                <button onClick={() =>{
+                    navigate('/registro')
+                }}>Registro de Usuarios</button>
+                <button onClick={() =>{
+                    navigate('/registro')
+                }}>Bitacora de Actividad</button>
+                <button onClick={() =>{
+                    navigate('/tablaUsuarios')
+                }}>Editar usuarios</button>
+            </div>
+        );
+    }
+    else {
+        return <Navigate to="/login" replace />;
+    }
 }
 
 export default PortalAdmin;

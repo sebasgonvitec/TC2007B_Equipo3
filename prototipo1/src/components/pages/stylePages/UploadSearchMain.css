@@ -22,3 +22,7 @@
     align-items: center;
     color: white;
 }
+
+.swal-modal .swal-text {
+    text-align: center;
+}

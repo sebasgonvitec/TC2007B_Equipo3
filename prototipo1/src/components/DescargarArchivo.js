@@ -126,7 +126,6 @@ function DescargarArchivo(){
                     e.preventDefault();
                     downloadFile2(dataItem._id, dataItem.nombre);
                     }}>Descargar</button>
-                <button onClick={() => console.log(dataItem._id)}>Info</button>
             </td>
         );
     };

@@ -44,23 +44,28 @@ const Login = () => {
                     }
                 }).then((res) => {
                     //console.log(res.data);
-                    updateSession(res.data); //store token
-                    localStorage.setItem('JWT_token', res.data)
-                    navigate("/home")
+                    //updateSession(res.data); //store token
+                    localStorage.setItem('JWT_token', res.data);
+                    axios({
+                        method: 'get',
+                        url: URI,
+                        headers: {
+                            'Content-Type': 'application/json',
+                            token: localStorage.getItem('JWT_token'),
+                        },
+                        params: { usuario:state.usuario } 
+                    }).then((res) => {
+                        //console.log(res.data);
+                        updateSession(res.data);
+                        if(session.admin == 'true'){
+                            navigate('/portalAdmin');
+                        }else{
+                            navigate("/home");
+                        } //store user info
+                    });
                 });
 
-                await axios({
-                    method: 'get',
-                    url: URI,
-                    headers: {
-                        'Content-Type': 'application/json',
-                        token: localStorage.getItem('JWT_token'),
-                    },
-                    params: { usuario:state.usuario } 
-                }).then((res) => {
-                    //console.log(res.data);
-                    updateSession(res.data); //store user info
-                });
+                
                   
         } else {
             setErrorMsg("ERROR MESSAGE");

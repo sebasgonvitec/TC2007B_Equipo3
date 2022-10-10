@@ -5,19 +5,22 @@ import { AiOutlineFolder } from "react-icons/ai";
 import { BsArchive } from "react-icons/bs";
 import { TbReportAnalytics } from "react-icons/tb";
 import { BiCommentDetail } from "react-icons/bi";
-import { Navigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
 import { useContext } from "react";
 import SessionContext from "../../SessionContext";
 import DownloadContext from '../../DownloadContext';
 import { Link } from "react-router-dom";
 import '../styleComponents/OptionBox.css';
 import '../styleComponents/Btn.css'
+import swal from 'sweetalert';
 
 function SearchMain(){
 
     const { session } = useContext(SessionContext);
 
     const { updateDownload } = useContext(DownloadContext);
+
+    const navigate = useNavigate();
 
     if(session != null)
     {
@@ -37,9 +40,17 @@ function SearchMain(){
                         }
                         titulo="JUICIO DE NULIDAD"
                         descripcion="Pequeña descripcion en este espacio que pueda describir de lo que se trata esta seccion"
-                        page="/descargar"
+                        onClick={
+                            () => {
+                                if(session.nulidad === "true"){
+                                    navigate("/descargar");
+                                }else{
+                                    swal("Acceso Denegado" ,  "No tienes permisos para acceder a esta área.\nRevisa con tu administrador." ,  "error" );
+                                }
+                            }
+                        }
                     />
-
+    
                     <OptionBox
                         colorbox={
                             <div className='colorBox' style={{background:'#8B2E87'}}>
@@ -48,28 +59,35 @@ function SearchMain(){
                         }
                         titulo="CARPETA DE INVESTIGACIÓN"
                         descripcion="Pequeña descripcion en este espacio que pueda describir de lo que se trata esta seccion"
-                        page="/descargarInv"
+                        onClick={
+                            () => {
+                                if(session.investigacion === "true"){
+                                    navigate("/descargarInv");
+                                }else{
+                                    swal("Acceso Denegado" ,  "No tienes permisos para acceder a esta área.\nRevisa con tu administrador." ,  "error" );
+                                }
+                            }
+                        }
                     />
 
-                    <div className="container">
-                                
-                        <div className='colorBox' style={{background:'#66C214'}}>
-                            {<TbReportAnalytics className="icon" style={{width:'8.3vw', height:'auto'}}/>}
-                        </div>
-                        <div className="content">
-                            <p style={{fontWeight:'700', fontSize:'1.2vw'}} >OTROS</p>
-                            <p style={{fontSize:'1vw'}}>Pequeña descripcion en este espacio que pueda describir de lo que se trata esta seccion</p>
-                            <div >
-                                <Link to="/descargarArchivo" >
-                                <div className="button" onClick={
-                                    () => {
-                                        updateDownload({_id:"000000000000000000000000"});
-                                    }
-                                }>Seleccionar</div>
-                                </Link>
+                    <OptionBox
+                        colorbox={
+                            <div className='colorBox' style={{background:'#66C214'}}>
+                                {<TbReportAnalytics className="icon" style={{width:'8.3vw', height:'auto'}}/>}
                             </div>
-                            </div>
-                        </div>
+                        }
+                        titulo="OTROS"
+                        descripcion="Pequeña descripcion en este espacio que pueda describir de lo que se trata esta seccion"
+                        onClick={
+                            () => {
+                                if(session.otros === "true"){
+                                    navigate("/descargarArchivo");
+                                }else{
+                                    swal("Acceso Denegado" ,  "No tienes permisos para acceder a esta área.\nRevisa con tu administrador." ,  "error" );
+                                }
+                            }
+                        }
+                    />
 
                     {/* <OptionBox
                         colorbox={
