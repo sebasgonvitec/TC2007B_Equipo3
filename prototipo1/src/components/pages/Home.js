@@ -10,12 +10,14 @@ import { CgProfile } from "react-icons/cg";
 import SessionContext from '../../SessionContext';
 import { useContext } from "react";
 import { Navigate } from 'react-router-dom';
+import ReloadAlert from '../Reload';
 
 
 function Home(){
 
     const { session } = useContext(SessionContext);
-    
+    ReloadAlert();
+
     if(session != null)
     {
         return(

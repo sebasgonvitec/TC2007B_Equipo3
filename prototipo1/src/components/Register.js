@@ -5,11 +5,14 @@ import { useState } from "react"
 import { useContext } from "react";
 import { Navigate } from 'react-router-dom';
 import SessionContext from "../SessionContext";
+import ReloadAlert from "./Reload";
 
 const URI = "https://localhost/crearCuenta";
 
 const Register = () => {
-    
+
+    ReloadAlert();
+
     const { session } = useContext(SessionContext);
 
     const [state, setState] = useState({

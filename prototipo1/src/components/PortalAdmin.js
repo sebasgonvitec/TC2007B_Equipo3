@@ -2,12 +2,14 @@ import React from "react";
 import { useContext } from "react";
 import { useNavigate, Navigate } from 'react-router-dom';
 import SessionContext from "../SessionContext";
-
+import ReloadAlert from "./Reload";
 
 function PortalAdmin(){
 
     const { session } = useContext(SessionContext);
     const navigate = useNavigate();
+
+    ReloadAlert();
 
     if(session != null)
     {

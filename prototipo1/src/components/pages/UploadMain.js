@@ -14,8 +14,11 @@ import '../styleComponents/OptionBox.css';
 import '../styleComponents/Btn.css'
 import { useNavigate } from 'react-router-dom';
 import swal from 'sweetalert';
+import ReloadAlert from '../Reload';
 
 function UploadMain(){
+
+    ReloadAlert();
     
     const { session } = useContext(SessionContext);
 

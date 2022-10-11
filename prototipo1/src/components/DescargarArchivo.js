@@ -12,13 +12,17 @@ import { filterBy } from "@progress/kendo-data-query";
 // import downloadjs from 'downloadjs';
 import fileDownload from 'js-file-download';
 import SessionContext from "../SessionContext";
+import ReloadAlert from "./Reload";
 import { useNavigate, Navigate } from 'react-router-dom';
+
 
 
 let URI = 'https://localhost/descargarArchivos/download'
 let URI_TEST = 'https://localhost/descargarArchivos'
 
 function DescargarArchivo(){
+
+    ReloadAlert();
     
     const navigate = useNavigate();
 

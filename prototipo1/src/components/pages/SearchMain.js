@@ -13,8 +13,11 @@ import { Link } from "react-router-dom";
 import '../styleComponents/OptionBox.css';
 import '../styleComponents/Btn.css'
 import swal from 'sweetalert';
+import ReloadAlert from '../Reload';
 
 function SearchMain(){
+
+    ReloadAlert();
 
     const { session } = useContext(SessionContext);
 

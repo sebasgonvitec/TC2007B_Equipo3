@@ -262,7 +262,7 @@ app.post("/subirArchivo", uploads.single("archivo"), (req, res)=>{
             inputFS.pipe(cipher).pipe(outputFS)
             outputFS.on("finish", ()=>{
                 fs.unlinkSync(__dirname + "/.temp/" + req.file.filename)
-                let aInsertar = {nombre:req.body.nombre, folio:req.body.folio, path: rutaDefinitiva, fecha: req.body.fecha, expediente: req.body.expediente}
+                let aInsertar = {nombre:req.body.nombre, folio:req.body.folio, path: rutaDefinitiva, fecha: req.body.fecha, expediente: req.body.expediente, expedienteNom: req.body.expedienteNom, usuario: req.body.usuario}
                 console.log(req.body);
                 db.collection("archivos").insertOne(aInsertar, (err, res)=>{
                     if(err) throw err;
@@ -337,6 +337,36 @@ app.post("/crearCuenta", (req, res)=>{
         }
     });
 });
+
+//Obtener archivos subidos por un usuario
+app.get("/archivosUsuario", function(req, res){
+    jwt.verify(req.headers.token, "secretKey", (err, userId) => {
+        if(err){
+            res.json(null)
+        }else{
+            db.collection("archivos").find({ "usuario": req.query.usuario }).toArray(function(err, result){
+                if(err){
+                    handleError(res, err.message, "Failed to get documentos de expediente");
+                }else{
+                    res.status(200).json(result);
+                }
+            }); 
+        }
+    });
+});
+
+//Borrar un archivo dado
+app.delete("/borrarArchivo", function(req, res) {
+    jwt.verify(req.headers.token, "secretKey", (err, userId) => {
+        if(err){
+            res.json(null)
+        }else{
+            db.collection("archivos").deleteOne({"_id": mongo.ObjectId(req.query.id)}, (err, result) => {
+                if (err) throw err;
+            })
+        }
+    });
+})
 
 
 https.createServer({

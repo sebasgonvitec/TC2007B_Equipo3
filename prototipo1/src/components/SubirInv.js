@@ -11,10 +11,13 @@ import { useContext } from "react";
 import UploadContext  from "../UploadContext";
 import SessionContext from "../SessionContext";
 import { useNavigate, Navigate } from 'react-router-dom';
+import ReloadAlert from "./Reload";
 
 const URI = 'https://localhost/investigacion';
 
 function SubirInv() {
+
+    ReloadAlert();
 
     const { updateUpload } = useContext(UploadContext);
     const { session } = useContext(SessionContext);

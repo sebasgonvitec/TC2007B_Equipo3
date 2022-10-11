@@ -11,10 +11,13 @@ import DownloadContext from "../DownloadContext";
 import SessionContext from "../SessionContext";
 import { Link } from "react-router-dom";
 import { useNavigate, Navigate } from 'react-router-dom';
+import ReloadAlert from "./Reload";
 
 const URI = 'https://localhost/investigacion';
 
 function DescargarInv(){
+
+    ReloadAlert();
 
     const { updateDownload } = useContext(DownloadContext);
     const { session } = useContext(SessionContext);

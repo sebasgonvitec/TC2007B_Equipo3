@@ -57,7 +57,7 @@ const Login = () => {
                     }).then((res) => {
                         //console.log(res.data);
                         updateSession(res.data);
-                        if(session.admin == 'true'){
+                        if(res.data.admin == 'true'){
                             navigate('/portalAdmin');
                         }else{
                             navigate("/home");

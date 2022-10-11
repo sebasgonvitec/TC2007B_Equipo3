@@ -5,6 +5,7 @@ import UploadContext  from "../UploadContext";
 import Dropzone from 'react-dropzone';
 import '../components/styleComponents/Subir.css';
 import SessionContext from "../SessionContext";
+import ReloadAlert from "./Reload";
 import { Navigate } from 'react-router-dom';
 
 let URI = 'https://localhost/subirArchivo?';
@@ -15,6 +16,8 @@ let month = date.getMonth() + 1; // 0-11
 let year = date.getFullYear();
 
 const SubirArchivo = () => {
+
+    ReloadAlert();
 
     //Import upload from UploadContext to specify expediente
     const { upload } = useContext(UploadContext);
@@ -66,6 +69,8 @@ const SubirArchivo = () => {
                     formData.append('folio', state.folio);
                     formData.append('fecha', `${day}/${month}/${year}`);
                     formData.append('expediente', upload._id);
+                    formData.append('expedienteNom', upload.nombre);
+                    formData.append('usuario', session._id);
 
                     setErrorMsg('');
                     await axios.post(URI, formData, {

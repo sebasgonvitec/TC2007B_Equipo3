@@ -9,6 +9,7 @@ import esMessages from "../language/es.json";
 import { useNavigate, Navigate } from 'react-router-dom';
 import { useContext } from "react";
 import SessionContext from "../SessionContext";
+import ReloadAlert from './Reload';
 
 const URI = 'https://localhost/tablaCuentas'
 const URI_delete = 'https://localhost/borrarCuenta'
@@ -16,8 +17,9 @@ const URI_delete = 'https://localhost/borrarCuenta'
 const AccountsTable = () => {
 
     const { session } = useContext(SessionContext);
-
     const navigate = useNavigate();
+
+    ReloadAlert();
 
     const [data, setData] = useState([]);
     useEffect( () => {
@@ -113,9 +115,10 @@ const AccountsTable = () => {
                     axios({
                         url: URI_delete,
                         method: 'DELETE',
-                        params: { id: dataItem._id} // important
+                        params: { id: dataItem._id}, // important
+                        headers: { token: localStorage.getItem('JWT_token')}
                     })
-                    window.location.reload(false);
+                    getData(); //Actualizar eliminacion
                 }}>Borrar</button>
             </td>
         );

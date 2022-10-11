@@ -1,25 +1,20 @@
-import React from "react";
-import axios from 'axios';
-import { useState, useEffect } from "react";
+import axios from 'axios'
+import React from 'react'
+import { useState, useEffect } from 'react'
 import "@progress/kendo-theme-material/dist/all.css";
 import { Grid, GridColumn } from "@progress/kendo-react-grid";
 import { process } from "@progress/kendo-data-query";
 import {IntlProvider, LocalizationProvider,loadMessages} from "@progress/kendo-react-intl";
 import esMessages from "../language/es.json";
-import { useContext } from "react";
-import DownloadContext from "../DownloadContext";
-import SessionContext from "../SessionContext";
-import { Link } from "react-router-dom";
 import { useNavigate, Navigate } from 'react-router-dom';
-import ReloadAlert from "./Reload";
+import { useContext } from "react";
+import SessionContext from "../SessionContext";
 
-const URI = 'https://localhost/nulidad';
+const URI = 'https://localhost/archivosUsuario'
+const URI_delete = 'https://localhost/borrarArchivo'
 
-function Descargar(){
+const ArchivosUsuario = () => {
 
-    ReloadAlert();
-
-    const { updateDownload } = useContext(DownloadContext);
     const { session } = useContext(SessionContext);
     const navigate = useNavigate();
 
@@ -30,24 +25,20 @@ function Descargar(){
 
     //Funcion para obtener los datos de la DB
     const getData = async () => {
-        const config = {
-            headers:{
-              token: localStorage.getItem('JWT_token'),
-            }
-        };
-        await axios.get(URI, config).then((res) => {
-            if(res.data !== null){
-                setData(res.data)   
-            }
-            else {
-                navigate('/login')
+        const res = await axios.get(URI, {
+            params: { usuario: session._id },
+            headers: {
+                'Content-Type': 'application/json',
+                token: localStorage.getItem('JWT_token')
             }
         })
+        setData(res.data)
     }
 
     //Estados de la data en la tabla al momento de utilizar filtros
     const [dataState, setDataState] = React.useState()
     const [result, setResult] = React.useState(data);
+    console.log(result)
     useEffect(() => { setResult(data)}, [data] )
    
 
@@ -59,7 +50,7 @@ function Descargar(){
     //Personalizar filtros para la tabla
     const filterOperators = {
         text: [
-            { text: 'grid.filterContainsOperator', operator: 'contains', messages:'heey' },
+            { text: 'grid.filterContainsOperator', operator: 'contains'},
             { text: 'grid.filterNotContainsOperator', operator: 'doesnotcontain' },
             { text: 'grid.filterEqOperator', operator: 'eq' },
             { text: 'grid.filterNotEqOperator', operator: 'neq' },
@@ -94,30 +85,35 @@ function Descargar(){
           {text: "grid.filterEqOperator", operator: "eq"}
         ],
       };
-    
-      //cargar los mensajes/etiquetas para filtros en español
-      loadMessages(esMessages, "es-ES"); 
 
+      
+    //cargar los mensajes/etiquetas para filtros en español
+    loadMessages(esMessages, "es-ES"); 
 
-    const BotonSubir = (props) => {
+    // Componente de boton para editar cuenta
+    const DeleteButton = (props) => {
         const { dataItem } = props;
+        console.log(dataItem);
         return(
             <td>
-                <Link to='/descargarArchivo'>
-                    <button onClick={
-                        () => updateDownload(dataItem)
-                    }>Abrir</button>
-                </Link>
+                <button onClick={(e) => {
+                    e.preventDefault();
+                    axios({
+                        url: URI_delete,
+                        method: 'DELETE',
+                        params: { id: dataItem._id}, // important
+                        headers: { token: localStorage.getItem('JWT_token')}
+                    })
+                   getData(); //Actualizar eliminacion
+
+                }}>Borrar</button>
             </td>
         );
     };
 
     if(session != null)
     {
-        return (
-            <>
-            <h1>Descargar Expediente</h1>
-            <p>Seleccione expediente para descargar un archivo</p>
+        return(
             <LocalizationProvider language="es-ES"> 
                 <IntlProvider locale="es">
 
@@ -130,17 +126,14 @@ function Descargar(){
                     
                     >
                         <GridColumn field="nombre" title="Nombre" />
-                        <GridColumn field="numero" title="Número" />
-                        <GridColumn field="expediente" title="Expediente" />
-                        <GridColumn field="actor" title="Actor" />
-                        <GridColumn field="estatus" title="Estatus"/>
-                        <GridColumn field="fecha" title="Fecha"/>
-                        <GridColumn cell={BotonSubir}  width="100px" filterable={false}/>
+                        <GridColumn field="folio" title="Folio" />
+                        <GridColumn field="fecha" title="Fecha" />
+                        <GridColumn field="expedienteNom" title="Nombre Expediente"/>
+                        <GridColumn title="Borrar Archivo" cell={DeleteButton} filterable={false}/>
 
                     </Grid>   
                 </IntlProvider>
             </LocalizationProvider>
-            </>
         );
     }
     else {
@@ -148,4 +141,4 @@ function Descargar(){
     }
 }
 
-export {Descargar};
+export default ArchivosUsuario;

@@ -4,6 +4,7 @@ import axios from "axios";
 import { useState } from "react";
 import { Navigate } from 'react-router-dom';
 import SessionContext from "../SessionContext";
+import ReloadAlert from "./Reload";
 
 
 const URI = "https://localhost/crearExpedienteInv";
@@ -14,6 +15,8 @@ let month = date.getMonth() + 1; // 0-11
 let year = date.getFullYear();
 
 function CrearExpedienteInv() {
+
+    ReloadAlert();
     
     const { session } = useContext(SessionContext);
 
