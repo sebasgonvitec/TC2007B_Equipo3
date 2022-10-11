@@ -10,7 +10,7 @@ function OptionBox(props){
                 <p style={{fontWeight:'700', fontSize:'1.2vw'}} >{props.titulo}</p>
                 <p style={{fontSize:'1vw'}}>{props.descripcion}</p>
                 <Btn
-                    page={props.page}
+                    onClick={props.onClick}
                     name="Seleccionar"/>
             </div>
         </div>

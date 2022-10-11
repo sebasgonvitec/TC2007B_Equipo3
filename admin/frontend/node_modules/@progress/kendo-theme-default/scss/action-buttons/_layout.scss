@@ -1,0 +1,77 @@
+@include exports("action-buttons/layout") {
+
+    .k-actions {
+        padding: $actions-padding-y $actions-padding-x;
+        box-sizing: border-box;
+        border-width: $actions-border-width 0 0 0;
+        border-style: solid;
+        border-color: inherit;
+        flex-shrink: 0;
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        gap: $actions-button-spacing;
+        overflow: hidden;
+        // TODO: remove
+        clear: both;
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+    }
+
+
+    // Actions in popup
+    .k-popup .k-actions {
+        margin-top: $actions-margin-top;
+    }
+
+
+    // Aliases
+    .k-edit-buttons,
+    .k-action-buttons,
+    .k-columnmenu-actions {
+        @extend .k-actions;
+    }
+
+
+    // Legacy spacing
+    .k-ie {
+        .k-actions .k-button ~ .k-button {
+            margin-left: $actions-button-spacing;
+            flex-shrink: 0;
+
+            .k-rtl &,
+            [dir="rtl"] & {
+                margin-left: 0;
+                margin-right: $actions-button-spacing;
+            }
+        }
+    }
+
+    // Actions align
+    .k-actions-start {
+        justify-content: flex-start;
+    }
+    .k-actions-center {
+        justify-content: center;
+    }
+    .k-actions-end {
+        justify-content: flex-end;
+    }
+    .k-actions-stretched > * {
+        flex: 1 0 0%;
+    }
+
+    // Actions orientation
+    .k-actions-horizontal {
+        width: 100%;
+        flex-flow: row nowrap;
+    }
+    .k-actions-vertical {
+        flex-flow: column nowrap;
+    }
+
+}

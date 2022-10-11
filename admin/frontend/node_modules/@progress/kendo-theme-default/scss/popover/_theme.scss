@@ -1,0 +1,38 @@
+@include exports("popover/theme") {
+
+    // Popover
+    .k-popover {
+        @include box-shadow( $popover-shadow );
+
+        @include fill(
+            $popover-text,
+            $popover-bg,
+            $popover-border
+        );
+    }
+
+    .k-popover-inner {
+        background-color: inherit;
+        border-color: inherit;
+    }
+
+    // Header
+    .k-popover-header {
+        @include fill(
+            $popover-header-text,
+            $popover-header-bg,
+            $popover-header-border
+        );
+    }
+
+    // Callout
+    .k-popover-callout {
+        @include fill(
+            $bg: inherit,
+            $border: inherit
+        );
+
+        @include box-shadow( inherit )
+    }
+
+}

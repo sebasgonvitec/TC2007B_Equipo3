@@ -1,0 +1,12 @@
+@include exports("action-buttons/theme") {
+
+    .k-actions {
+        @include fill(
+            $actions-text,
+            $actions-bg,
+            $actions-border,
+            $actions-gradient
+        );
+    }
+
+}

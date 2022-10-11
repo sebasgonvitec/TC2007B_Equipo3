@@ -1,0 +1,11 @@
+@include exports("dialog/theme") {
+    // Titlebar
+    .k-dialog-titlebar {
+        @include fill(
+            $dialog-titlebar-text,
+            $dialog-titlebar-bg,
+            $dialog-titlebar-border
+        );
+    }
+
+}

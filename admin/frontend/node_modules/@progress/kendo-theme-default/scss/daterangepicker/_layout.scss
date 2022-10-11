@@ -1,0 +1,43 @@
+@include exports( "daterangepicker/layout" ) {
+
+    // Daterange picker
+    .k-daterange-picker {
+        width: $kendo-input-default-width;
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: flex-end;
+        gap: map-get( $spacing, 2 );
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        .k-dateinput {
+            width: $kendo-daterange-picker-input-width;
+        }
+    }
+
+
+    // Angular specific
+    kendo-daterange {
+        // @extend .k-daterangepicker;
+    }
+
+
+    // React specific
+    .k-daterangepicker-wrap {
+        display: inherit;
+        flex-flow: inherit;
+        align-items: inherit;
+        gap: inherit;
+    }
+
+
+    // Alias
+    .k-daterangepicker {
+        @extend .k-daterange-picker;
+    }
+
+}

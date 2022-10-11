@@ -1,0 +1,73 @@
+@include exports( "common/dragdrop/dragclue" ) {
+
+    // Layout
+    .k-drag-clue {
+        @include border-radius( $drag-clue-border-radius );
+        padding: $drag-clue-padding-y $drag-clue-padding-x;
+        border-width: $drag-clue-border-width;
+        border-style: if( $drag-clue-border-width == null, null, solid );
+        box-sizing: border-box;
+        font-size: $drag-clue-font-size;
+        font-family: $drag-clue-font-family;
+        line-height: $drag-clue-line-height;
+        display: inline-flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        align-content: center;
+        white-space: nowrap;
+        opacity: $drag-clue-opacity;
+        overflow: hidden;
+        position: absolute;
+        z-index: 20000;
+        cursor: move;
+    }
+    .k-drag-status,
+    .k-drag-clue .k-drag-status {
+        margin: 0;
+        margin-right: .4ex;
+    }
+
+
+    // Theme
+    .k-drag-clue {
+        @include fill(
+            $drag-clue-text,
+            $drag-clue-bg,
+            $drag-clue-border,
+            $drag-clue-gradient
+        );
+        @include box-shadow( $drag-clue-shadow );
+    }
+
+}
+
+
+@include exports( "common/dragdrop/reordercue" ) {
+
+    // Layout
+    .k-reorder-cue {
+        position: absolute;
+
+        &::before,
+        &::after {
+            content: "";
+            width: 0;
+            height: 0;
+            border: 3px solid transparent;
+            position: absolute;
+            transform: translateX(-50%);
+        }
+
+        &::before {
+            border-bottom-width: 0;
+            border-top-color: currentColor;
+            top: -4px;
+        }
+        &::after {
+            border-top-width: 0;
+            border-bottom-color: currentColor;
+            bottom: -4px;
+        }
+    }
+
+}

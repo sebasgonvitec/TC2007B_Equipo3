@@ -1,0 +1,44 @@
+@include exports("dropzone/layout") {
+
+    // Dropzone
+    .k-external-dropzone {
+        height: $dropzone-min-height;
+        display: flex;
+        flex-flow: row nowrap;
+    }
+
+    // Dropzpne inner
+    .k-dropzone-inner {
+        padding: $dropzone-padding-y $dropzone-padding-x;
+        border-width: $dropzone-border-width;
+        border-style: solid;
+        box-sizing: border-box;
+        font-size: $dropzone-font-size;
+        font-family: $dropzone-font-family;
+        line-height: $dropzone-line-height;
+        flex: 1 1 auto;
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        cursor: pointer;
+
+        > .k-icon,
+        .k-dropzone-icon {
+            margin-bottom: $dropzone-icon-spacing;
+            font-size: $dropzone-icon-size;
+        }
+
+        .k-dropzone-hint {
+            margin-bottom: $dropzone-hint-spacing;
+            font-size: $dropzone-hint-font-size;
+        }
+
+        .k-dropzone-note {
+            margin-bottom: $dropzone-note-spacing;
+            font-size: $dropzone-note-font-size;
+        }
+    }
+
+}

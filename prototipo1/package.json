@@ -2,6 +2,7 @@
   "name": "prototipo1",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "dependencies": {
     "@progress/kendo-data-query": "^1.6.0",
     "@progress/kendo-drawing": "^1.17.1",
@@ -28,6 +29,7 @@
     "react-icons": "^4.4.0",
     "react-router-dom": "^6.4.0",
     "react-scripts": "5.0.1",
+    "sweetalert": "^2.1.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

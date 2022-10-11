@@ -9,22 +9,39 @@ import esMessages from "../language/es.json";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import UploadContext  from "../UploadContext";
+import SessionContext from "../SessionContext";
+import { useNavigate, Navigate } from 'react-router-dom';
+import ReloadAlert from "./Reload";
 
-const URI = 'http://localhost:1337/';
+const URI = 'https://localhost/nulidad';
 
 function Subir() {
 
+    ReloadAlert();
+
     const { updateUpload } = useContext(UploadContext);
+    const { session } = useContext(SessionContext);
+    const navigate = useNavigate();
     
     const [data, setData] = useState([]);
     useEffect( () => {
         getData()
     }, [])
 
-    //Funcion para obtener los datos de la DB
     const getData = async () => {
-        const res = await axios.get(URI)
-        setData(res.data)
+        const config = {
+            headers:{
+              token: localStorage.getItem('JWT_token'),
+            }
+        };
+        await axios.get(URI, config).then((res) => {
+            if(res.data !== null){
+                setData(res.data)   
+            }
+            else {
+                navigate('/login')
+            }
+        })
     }
 
     //Estados de la data en la tabla al momento de utilizar filtros
@@ -93,35 +110,40 @@ function Subir() {
             </td>
         );
     };
-    
-    return (
-        <>
-        <h1>Subir archivos</h1>
-        <p>Seleccione expediente para subir un archivo</p>
-        <LocalizationProvider language="es-ES"> 
-            <IntlProvider locale="es">
+    if(session != null)
+    {
+        return (
+            <>
+            <h1>Subir archivos</h1>
+            <p>Seleccione expediente para subir un archivo</p>
+            <LocalizationProvider language="es-ES"> 
+                <IntlProvider locale="es">
 
-                <Grid
-                    data={result}
-                    filterable={true}
-                    onDataStateChange={onDataStateChange}
-                    filterOperators={filterOperators}
-                    {...dataState}
-                >
-                    <GridColumn field="nombre" title="Nombre" />
-                    <GridColumn field="numero" title="Número" />
-                    <GridColumn field="expediente" title="Expediente" />
-                    <GridColumn field="actor" title="Actor" />
-                    <GridColumn field="estatus" title="Estatus" />
-                    <GridColumn field="fecha" title="Fecha"/>
-                    <GridColumn cell={MyCommandCell}  width="100px" filterable={false}/>
+                    <Grid
+                        data={result}
+                        filterable={true}
+                        onDataStateChange={onDataStateChange}
+                        filterOperators={filterOperators}
+                        {...dataState}
+                    >
+                        <GridColumn field="nombre" title="Nombre" />
+                        <GridColumn field="numero" title="Número" />
+                        <GridColumn field="expediente" title="Expediente" />
+                        <GridColumn field="actor" title="Actor" />
+                        <GridColumn field="estatus" title="Estatus" />
+                        <GridColumn field="fecha" title="Fecha"/>
+                        <GridColumn cell={MyCommandCell}  width="100px" filterable={false}/>
 
-                </Grid>   
-            </IntlProvider>
-        </LocalizationProvider>
-        <Link to='/crearExpediente'>Crear nuevo expediente</Link>
-        </>
-    );
+                    </Grid>   
+                </IntlProvider>
+            </LocalizationProvider>
+            <Link to='/crearExpediente'>Crear nuevo expediente</Link>
+            </>
+        );
+    }
+    else {
+        return <Navigate to="/login" replace />;
+    }
 }
 
 export default Subir;

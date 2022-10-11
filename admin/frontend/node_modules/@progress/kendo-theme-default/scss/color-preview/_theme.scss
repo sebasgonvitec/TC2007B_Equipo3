@@ -1,0 +1,17 @@
+@include exports( "color-preview/theme" ) {
+
+    // Color Preview
+    .k-color-preview {
+        @include fill(
+            $color-preview-text,
+            $color-preview-bg,
+            $color-preview-border
+        );
+
+        &:hover,
+        &.k-hover {
+            @include fill( $border: $color-preview-hover-border );
+        }
+    }
+
+}

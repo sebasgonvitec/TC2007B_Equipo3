@@ -11,14 +11,24 @@ import DownloadContext from "../DownloadContext";
 import { filterBy } from "@progress/kendo-data-query";
 // import downloadjs from 'downloadjs';
 import fileDownload from 'js-file-download';
+import SessionContext from "../SessionContext";
+import ReloadAlert from "./Reload";
+import { useNavigate, Navigate } from 'react-router-dom';
 
 
-let URI = 'http://localhost:1337/descargarArchivos/download'
-let URI_TEST = 'http://localhost:1337/descargarArchivos'
+
+let URI = 'https://localhost/descargarArchivos/download'
+let URI_TEST = 'https://localhost/descargarArchivos'
 
 function DescargarArchivo(){
+
+    ReloadAlert();
     
+    const navigate = useNavigate();
+
     const { download } = useContext(DownloadContext);
+
+    const { session } = useContext(SessionContext);
 
     const [errorMsg, setErrorMsg] = useState('');
 
@@ -27,11 +37,21 @@ function DescargarArchivo(){
         getData()
     }, [])
 
-    //Funcion para obtener los datos de la DB
     const getData = async () => {
-        //const res = await axios.get(URI+download.nombre)
-        const res = await axios.get(URI_TEST, { params: { expediente: download._id }})
-        setData(res.data)
+        const config = {
+            params: { expediente: download._id },
+            headers:{
+              token: localStorage.getItem('JWT_token'),
+            }
+        };
+        await axios.get(URI_TEST, config).then((res) => {
+            if(res.data !== null){
+                setData(res.data)   
+            }
+            else {
+                navigate('/login')
+            }
+        })
     }
 
     //Estados de la data en la tabla al momento de utilizar filtros
@@ -48,43 +68,15 @@ function DescargarArchivo(){
         axios({
             url: URI,
             method: 'GET',
+            headers:{
+                token: localStorage.getItem('JWT_token'),
+            },
             responseType: 'blob',
             params: { id: id, nombre: nombre } // important
         }).then((res)=>{
             fileDownload(res.data, nombre+".pdf");
         })
     }
-
-    // const downloadFile = async (nombre) => {
-    //     try{
-    //         const result = await axios.get(URI, { params: { nombre: nombre } }, { 
-    //             responseType: 'blob'
-    //          });
-    //         return downloadjs(result.data, nombre, 'application/pdf');
-    //         // await axios.post(URI, {nombre: nombre}, {
-    //         //     headers: {
-    //         //         'Content-Type': 'application/json'
-    //         //     },
-    //         // }).then((response) => {
-    //         //     //download(response.data, nombre+".pdf", "application/pdf");
-    //         //     //console.log(response.data);
-    //         //     //var arrBuffer = base64ToArrayBuffer(response.data)
-    //         //     var blob = new Blob([response.data], { type: 'application/pdf'})
-    //         //     console.log(response.data)
-    //         //     downloadjs(blob, nombre+".pdf", "application/pdf");
-                
-    //         // });
-    //         // //console.log(result.data);
-    //         // //const split = path.split('/');
-    //         // //const filename = split[split.length - 1];
-    //         // setErrorMsg('');
-    //         // //return download(result.data, filename, mimetype);
-    //     } catch (error){
-    //         if(error.response && error.response.status === 404){
-    //             setErrorMsg('Error al descargar el archivo');
-    //         }
-    //     }
-    // }
 
 
     //Personalizar filtros para la tabla
@@ -138,45 +130,50 @@ function DescargarArchivo(){
                     e.preventDefault();
                     downloadFile2(dataItem._id, dataItem.nombre);
                     }}>Descargar</button>
-                <button onClick={() => console.log(dataItem._id)}>Info</button>
             </td>
         );
     };
     
-    return (
-        <>
-        <h1>Descargar Archivos</h1>
-        <p>Seleccione el archivo que desea descargar</p>
-        
-        <div>
-            <h2>Informacion del expediente</h2>
-            <p>Nombre: {download.nombre}</p>
-            <p>Numero: {download.numero}</p>
-            <p>Expediente: {download.expediente}</p>
-            <p>Actor: {download.actor}</p>
-        </div>
-        {errorMsg && <div className="error">{errorMsg}</div>}
-        <LocalizationProvider language="es-ES"> 
-            <IntlProvider locale="es">
+    if(session != null)
+    {
+        return (
+            <>
+            <h1>Descargar Archivos</h1>
+            <p>Seleccione el archivo que desea descargar</p>
+            
+            <div>
+                <h2>Informacion del expediente</h2>
+                <p>Nombre: {download.nombre}</p>
+                <p>Numero: {download.numero}</p>
+                <p>Expediente: {download.expediente}</p>
+                <p>Actor: {download.actor}</p>
+            </div>
+            {errorMsg && <div className="error">{errorMsg}</div>}
+            <LocalizationProvider language="es-ES"> 
+                <IntlProvider locale="es">
 
-                <Grid
-                    data={result}
-                    filterable={true}
-                    onDataStateChange={onDataStateChange}
-                    filterOperators={filterOperators}
-                    {...dataState}
-                >
-                    <GridColumn field="nombre" title="Nombre" />
-                    <GridColumn field="folio" title="Folio" />
-                    <GridColumn field="fecha" title="Fecha" />
-                    <GridColumn cell={MyCommandCell} width="300px" filterable={false}/>
+                    <Grid
+                        data={result}
+                        filterable={true}
+                        onDataStateChange={onDataStateChange}
+                        filterOperators={filterOperators}
+                        {...dataState}
+                    >
+                        <GridColumn field="nombre" title="Nombre" />
+                        <GridColumn field="folio" title="Folio" />
+                        <GridColumn field="fecha" title="Fecha" />
+                        <GridColumn cell={MyCommandCell} width="300px" filterable={false}/>
 
-                </Grid>   
-            </IntlProvider>
-        </LocalizationProvider>
-        <a></a>
-        </>
-    );
+                    </Grid>   
+                </IntlProvider>
+            </LocalizationProvider>
+            <a></a>
+            </>
+        );
+    }
+    else {
+        return <Navigate to="/login" replace />;
+    }
 }
 
 export default DescargarArchivo;

@@ -1,8 +1,13 @@
 import React from "react";
+import { useContext } from "react";
 import axios from "axios";
-import { useState } from "react"
+import { useState } from "react";
+import { Navigate } from 'react-router-dom';
+import SessionContext from "../SessionContext";
+import ReloadAlert from "./Reload";
 
-const URI = "http://localhost:1337/crearExpediente";
+
+const URI = "https://localhost/crearExpedienteNul";
 
 const date = new Date();
 let day = date.getDate();
@@ -10,7 +15,11 @@ let month = date.getMonth() + 1; // 0-11
 let year = date.getFullYear();
 
 function CrearExpediente() {
+
+    ReloadAlert();
     
+    const { session } = useContext(SessionContext);
+
     const [state, setState] = useState({
         nombre: "",
         numero: "",
@@ -47,6 +56,7 @@ function CrearExpediente() {
                 await axios.post(URI, formData, {
                     headers: {
                         'Content-Type': 'application/json',
+                        token: localStorage.getItem('JWT_token'),
                     }
                 });
         } else {
@@ -56,23 +66,29 @@ function CrearExpediente() {
         error.response && setErrorMsg(error.response.data);
     }}
     
-    return (
-        <>
-            <h1>Crear Expediente</h1>
+    if(session != null)
+    {
+        return (
+            <>
+                <h1>Crear Expediente</h1>
 
-            <div>
-                <form onSubmit={handleOnSubmit}>
-                    {errorMsg && <p>{errorMsg}</p>}
-                    <input type="text" name="nombre" onChange={handleInputChange} value={state.nombre} placeholder="Nombre del expediente" />
-                    <input type="text" name="numero" onChange={handleInputChange} value={state.numero} placeholder="Numero del expediente" />
-                    <input type="text" name="expediente" onChange={handleInputChange} value={state.expediente} placeholder="Expediente" />
-                    <input type="text" name="actor" onChange={handleInputChange} value={state.actor} placeholder="Actor" />
-                    <input type="text" name="estatus" onChange={handleInputChange} value={state.estatus} placeholder="Estatus" />
-                    <button type="submit">Crear Expediente</button>
-                </form>
-            </div>
-        </>
-        )
+                <div>
+                    <form onSubmit={handleOnSubmit}>
+                        {errorMsg && <p>{errorMsg}</p>}
+                        <input type="text" name="nombre" onChange={handleInputChange} value={state.nombre} placeholder="Nombre del expediente" />
+                        <input type="text" name="numero" onChange={handleInputChange} value={state.numero} placeholder="Numero del expediente" />
+                        <input type="text" name="expediente" onChange={handleInputChange} value={state.expediente} placeholder="Expediente" />
+                        <input type="text" name="actor" onChange={handleInputChange} value={state.actor} placeholder="Actor" />
+                        <input type="text" name="estatus" onChange={handleInputChange} value={state.estatus} placeholder="Estatus" />
+                        <button type="submit">Crear Expediente</button>
+                    </form>
+                </div>
+            </>
+        );
     }
+    else {
+        return <Navigate to="/login" replace />;
+    }
+}
 
 export default CrearExpediente;

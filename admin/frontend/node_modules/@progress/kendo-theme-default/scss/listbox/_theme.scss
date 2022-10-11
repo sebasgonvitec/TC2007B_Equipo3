@@ -1,0 +1,16 @@
+@include exports("listbox/theme") {
+
+    .k-listbox {
+        .k-list-scroller {
+            @include fill(
+                $listbox-text,
+                $listbox-bg,
+                $listbox-border
+            );
+        }
+        .k-drop-hint {
+            border-top-color: $primary;
+        }
+    }
+
+}

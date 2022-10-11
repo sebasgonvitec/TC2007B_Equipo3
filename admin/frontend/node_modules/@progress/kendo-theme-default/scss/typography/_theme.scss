@@ -1,0 +1,19 @@
+@include exports("typography/theme") {
+
+    .k-body {
+        @include fill(
+            $body-text,
+            $body-bg
+        );
+    }
+
+    // Code snippet
+    .k-pre,
+    .k-code {
+        @include fill(
+            $code-text,
+            $code-bg,
+            $code-border
+        );
+    }
+}
