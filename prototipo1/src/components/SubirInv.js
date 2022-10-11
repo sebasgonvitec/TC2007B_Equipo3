@@ -128,9 +128,9 @@ function SubirInv() {
                     >
                         <GridColumn field="nombre" title="Nombre" />
                         <GridColumn field="numero" title="Número" />
-                        <GridColumn field="expediente" title="Expediente" />
-                        <GridColumn field="actor" title="Actor" />
-                        <GridColumn field="estatus" title="Estatus" />
+                        <GridColumn field="carpeta_inv" title="Carpeta de Investigacion" />
+                        <GridColumn field="denunciante" title="Denunciante" />
+                        <GridColumn field="estatus" title="Estatus"/>
                         <GridColumn field="fecha" title="Fecha"/>
                         <GridColumn cell={MyCommandCell}  width="100px" filterable={false}/>
 

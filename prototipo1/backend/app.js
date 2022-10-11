@@ -392,6 +392,7 @@ app.delete("/borrarArchivo", function(req, res) {
         if(err){
             res.json(null)
         }else{
+            fs.unlinkSync(__dirname + "/.storage/" + req.query.nombre)
             db.collection("archivos").deleteOne({"_id": mongo.ObjectId(req.query.id)}, (err, result) => {
                 if (err) throw err;
             })

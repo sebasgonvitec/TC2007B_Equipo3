@@ -87,6 +87,7 @@ function UploadMain(){
                                 if(session.otros === "true"){
                                     navigate("/subirArchivo");
                                     updateUpload({_id:"000000000000000000000000"});
+                                    updateUpload({nombre:"N/A"});
                                 }else{
                                     swal("Acceso Denegado" ,  "No tienes permisos para acceder a esta área.\nRevisa con tu administrador." ,  "error" );
                                 }
