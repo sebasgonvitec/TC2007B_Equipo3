@@ -84,6 +84,7 @@ function SearchMain(){
                         onClick={
                             () => {
                                 if(session.otros === "true"){
+                                    updateDownload({_id:"000000000000000000000000"});
                                     navigate("/descargarArchivo");
                                 }else{
                                     swal("Acceso Denegado" ,  "No tienes permisos para acceder a esta área.\nRevisa con tu administrador." ,  "error" );

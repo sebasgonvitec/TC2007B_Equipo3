@@ -338,6 +338,37 @@ app.post("/crearCuenta", (req, res)=>{
     });
 });
 
+//Obtener usuario por id
+app.get("/editarUsuario", (req, res)=>{
+    jwt.verify(req.headers.token, "secretKey", (err, userId) => {
+        if(err){
+            res.json(null)
+        }else{
+            db.collection("usuarios").findOne({"_id": mongo.ObjectId(req.query.id)}, (err, result)=>{
+                if(err) throw err;
+                res.status(200).send(result);
+            })
+        }
+    });
+});
+
+//Actualizar usuario seleccionado
+app.post("/editarUsuario", (req, res)=>{
+    jwt.verify(req.headers.token, "secretKey", (err, userId) => {
+        if(err){
+            res.json(null)
+        }else{
+            bcrypt.hash(req.body.password, 10, (err, hash)=>{
+                const updateData = { $set: { usuario:req.body.usuario, password:hash, nombre:req.body.nombre, area:req.body.area, nulidad:req.body.nulidad, investigacion:req.body.investigacion, otros:req.body.otros } };
+                db.collection("usuarios").updateOne({"_id": mongo.ObjectId(req.query.id)}, updateData, (err, result)=>{
+                    if(err) throw err;
+                    res.status(200).send(result);
+                });
+            })
+        }
+    });
+});
+
 //Obtener archivos subidos por un usuario
 app.get("/archivosUsuario", function(req, res){
     jwt.verify(req.headers.token, "secretKey", (err, userId) => {
@@ -355,7 +386,7 @@ app.get("/archivosUsuario", function(req, res){
     });
 });
 
-//Borrar un archivo dado
+//Borrar un archivo por id
 app.delete("/borrarArchivo", function(req, res) {
     jwt.verify(req.headers.token, "secretKey", (err, userId) => {
         if(err){

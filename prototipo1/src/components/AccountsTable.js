@@ -99,7 +99,7 @@ const AccountsTable = () => {
             <td>
                 <button onClick={(e) => {
                     e.preventDefault();
-                    navigate("/editarUsuario")
+                    navigate("/editarUsuario", {state:{dataItem}})
                 }}>Editar</button>
             </td>
         );
