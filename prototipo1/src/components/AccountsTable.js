@@ -38,7 +38,7 @@ const AccountsTable = () => {
     //Estados de la data en la tabla al momento de utilizar filtros
     const [dataState, setDataState] = React.useState()
     const [result, setResult] = React.useState(data);
-    console.log(result)
+    //console.log(result)
     useEffect(() => { setResult(data)}, [data] )
    
 
@@ -97,7 +97,8 @@ const AccountsTable = () => {
             <td>
                 <button onClick={(e) => {
                     e.preventDefault();
-                    navigate("/editarUsuario")
+                    //console.log(dataItem)
+                    navigate("/editarUsuario", {state:{dataItem}})
                 }}>Editar</button>
             </td>
         );

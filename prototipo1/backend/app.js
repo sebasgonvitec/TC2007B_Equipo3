@@ -306,7 +306,7 @@ app.delete("/borrarCuenta", function(req, res) {
 app.post("/crearCuenta", (req, res)=>{
     jwt.verify(req.headers.token, "secretKey", (err, userId) => {
         if(err){
-            res.json({msg: "No tiene los permisos, saquese alv"})
+            res.json({msg: "No tiene los permisos necesarios"})
         }else {
             let user=req.body.usuario;
             let pass=req.body.password;
@@ -338,6 +338,34 @@ app.post("/crearCuenta", (req, res)=>{
     });
 });
 
+app.get("/editarUsuario", (req, res)=>{
+    jwt.verify(req.headers.token, "secretKey", (err, userId) => {
+        if(err){
+            res.json(null)
+        }else{
+            db.collection("usuarios").findOne({"_id": mongo.ObjectId(req.query.id)}, (err, result)=>{
+                if(err) throw err;
+                res.status(200).send(result);
+            })
+        }
+    });
+});
+
+app.post("/editarUsuario", (req, res)=>{
+    jwt.verify(req.headers.token, "secretKey", (err, userId) => {
+        if(err){
+            res.json(null)
+        }else{
+            bcrypt.hash(req.body.password, 10, (err, hash)=>{
+                const updateData = { $set: { usuario:req.body.usuario, password:hash, nombre:req.body.nombre, area:req.body.area, nulidad:req.body.nulidad, investigacion:req.body.investigacion, otros:req.body.otros } };
+                db.collection("usuarios").updateOne({"_id": mongo.ObjectId(req.query.id)}, updateData, (err, result)=>{
+                    if(err) throw err;
+                    res.status(200).send(result);
+                });
+            })
+        }
+    });
+});
 
 https.createServer({
     cert: fs.readFileSync("../Cert/app.cer"),
