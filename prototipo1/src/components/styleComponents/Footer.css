@@ -1,6 +1,6 @@
 .footer{
     
-    height: 16.6vw;
+    height: 12vw;
     width: 100%;
     background: #45B2E6;
     display: flex;
@@ -11,9 +11,10 @@
 
 
 .logoFooter{
-    height: 10vw;
+    height: 7vw;
     width: auto;
-    padding: 2.9vw;
+    padding: 2.5vw;
+    padding-left: 3vw;
 }
 
 .txtFooter{
@@ -21,12 +22,12 @@
     height: auto;
     font-style: normal;
     font-weight: 400;
-    font-size: 1.3vw;
-    line-height: 2.41vw;
+    font-size: 1.1vw;
+    line-height: 1.8vw;
     display: flex;
     flex-direction: column;
     text-align: right;
     color: #FFFFFF;
-    padding-top: 0.83vw;
+    padding-top: 0.5vw;
     padding-right: 2.92vw;
 }
