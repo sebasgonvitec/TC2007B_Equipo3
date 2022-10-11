@@ -1,0 +1,51 @@
+.loginContent{
+    display: flex;
+    flex-direction: row;   
+}
+
+.imgLogin{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+#formCont{
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+    align-items: center;  
+}
+
+input{
+    font-family: 'Raleway';
+}
+
+#usuario{
+    margin-top: 1.6vw;
+    width: 31vw;
+    padding: 0.8vw;
+    border: 1px solid #BCBABA;
+    border-radius: 8px;
+}
+
+#password{
+    margin-top: 1.6vw;
+    width: 31vw;
+    padding: 0.8vw;
+    border: 1px solid #BCBABA;
+    border-radius: 8px;
+}
+
+button{
+    width: 11vw;
+    padding: 1vw;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    color: white;
+    background: #1C67B3;
+}
+
+#btn:hover{
+    background: #8B2E87;
+}

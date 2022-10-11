@@ -6,6 +6,12 @@ import { useState } from "react"
 import { redirect } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 
+import Name from "./Name"
+import LogoAo from "../img/logo_ao.png"
+import BackgroundLogin from "../img/backgroundLogin.png"
+import ImgLogin from "../img/imgLogin.jpeg"
+import "./styleComponents/Login.css"
+
 const URI = "https://localhost/login";
 
 const Login = () => {
@@ -76,14 +82,24 @@ const Login = () => {
     }
 
     return(
-        <body>
-            <h1>Login</h1>
-            <form onSubmit={handleOnSubmit}>
-                <input type="text" name="usuario" onChange={handleInputChange} value={state.usuario} placeholder="Usuario" id="usuario" required/><br/>
-                <input type="password" name="password" onChange={handleInputChange} value={state.password} placeholder="Contraseña" id="password" required/><br/>
-                <br/>
-                <button type="submit">login</button><br/>
-            </form>
+        <body style={{backgroundImage: `url(${BackgroundLogin})` }}>
+            {/* <Name
+                titulo="Inicia tu sesión"
+            /> */}
+            <div className="loginContent">
+                <div style={{marginTop: '5vw', marginLeft: '27vw'}}>
+                    <form id="formCont" onSubmit={handleOnSubmit}>
+                        <img src={LogoAo} alt="ImgLogin" style={{width: '39vw'}}/>
+                        <input type="text" name="usuario" onChange={handleInputChange} value={state.usuario} placeholder="Usuario" id="usuario" required/><br/>
+                        <input type="password" name="password" onChange={handleInputChange} value={state.password} placeholder="Contraseña" id="password" required/><br/>
+                        <br/>
+                        <button id="btn" type="submit">Ingresar</button><br/>
+                    </form>
+                </div>
+                <div className="imgLogin">
+                    <img src={ImgLogin} alt="ImgLogin" style={{height: '39vw'}} />
+                </div>
+            </div>
         </body>
     );
 }
