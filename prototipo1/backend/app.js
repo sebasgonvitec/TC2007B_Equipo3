@@ -123,12 +123,17 @@ app.post("/crearExpedienteNul", function(req, res){
             res.json(null)
         }
         else { 
+            console.log(req.body);
             let aInsertar = {
-                nombre:req.body.nombre,
                 numero:req.body.numero,
                 expediente:req.body.expediente,
+                salaTja:req.body.salaTja,
+                demandadas:req.body.demandadas,
                 actor:req.body.actor,
-                estatus:req.body.estatus,
+                domicilio:req.body.domicilio,
+                materia:req.body.materia,
+                estatusJuridico:req.body.estatusJuridico,
+                actoImpugando:req.body.actoImpugando,
                 fecha:req.body.fecha
             };
             db.collection("nulidad").insertOne(aInsertar, function(err, result){
@@ -171,12 +176,16 @@ app.post("/crearExpedienteInv", function(req, res){
         }
         else { 
             let aInsertar = {
-                nombre:req.body.nombre,
                 numero:req.body.numero,
+                eco:req.body.eco,
                 carpeta_inv:req.body.carpeta_inv,
-                denunciante:req.body.denunciante,
-                estatus:req.body.estatus,
-                fecha:req.body.fecha
+                denunciante:req.body.carpeta_inv,
+                imputado:req.body.imputado,
+                delito:req.body.delito,
+                lugarHechos:req.body.lugarHechos,
+                objetoDelito:req.body.objetoDelito,
+                estado:req.body.estado,
+                fecha:req.body.fecha,
             };
             db.collection("investigacion").insertOne(aInsertar, function(err, result){
             if(err){
