@@ -78,7 +78,7 @@ const SubirArchivo = () => {
                     
                     const logData = {usuario:session.nombre, fecha: new Date().toString(), accion: "Subió un archivo.", folio: state.numero, area: upload.nombre}
 
-                    await axios.post(logURI, formData, {
+                    await axios.post(logURI, logData, {
                     headers:{
                         'Content-Type': 'application/json',
                         token: localStorage.getItem('JWT_token')

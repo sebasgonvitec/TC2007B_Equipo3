@@ -66,7 +66,7 @@ function DescargarArchivo(){
         setDataState(event.dataState);
         setResult(process(data, event.dataState));
     }
-    const downloadFile2 = (id, nombre) =>{
+    const downloadFile2 = (id, nombre, folio, expediente) =>{
         
         
         
@@ -80,9 +80,9 @@ function DescargarArchivo(){
             params: { id: id, nombre: nombre } // important
         }).then((res)=>{
             
-            const logData = {usuario:session.nombre, fecha: new Date().toString(), accion: "Descargó un archivo.", folio: nombre, area: "N/A"}
+            const logData = {usuario:session.nombre, fecha: new Date().toString(), accion: "Descargó un archivo.", folio: folio, area: expediente}
 
-            await axios.post(logURI, formData, {
+            axios.post(logURI, logData, {
             headers:{
                 'Content-Type': 'application/json',
                 token: localStorage.getItem('JWT_token')
@@ -143,7 +143,7 @@ function DescargarArchivo(){
             <td>
                 <button onClick={(e) => {
                     e.preventDefault();
-                    downloadFile2(dataItem._id, dataItem.nombre);
+                    downloadFile2(dataItem._id, dataItem.nombre, dataItem.folio, dataItem.expediente);
                     }}>Descargar</button>
             </td>
         );

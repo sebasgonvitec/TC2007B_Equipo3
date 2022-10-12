@@ -54,9 +54,9 @@ function CrearExpedienteInv() {
 
                 setErrorMsg('');
                 
-                const logData = {usuario:session.nombre, fecha: new Date().toString(), accion: "Creó un expediente.", folio: state.numero, area: "N/A"}
+                const logData = {usuario:session.nombre, fecha: new Date().toString(), accion: "Creó un expediente.", folio: state.numero, area: "Carpeta de Investigación"};
 
-                await axios.post(logURI, formData, {
+                await axios.post(logURI, logData, {
                 headers:{
                     'Content-Type': 'application/json',
                     token: localStorage.getItem('JWT_token')

@@ -430,10 +430,10 @@ app.post("/registrarActividad", function(req, res){
         }
         else {
             let aInsertar = {
-                usuario:req.body.usuario,
-                fecha:req.body.fecha,
-                accion: req.body.accion
-                folio: req.body.folio
+                usuario: req.body.usuario,
+                fecha: req.body.fecha,
+                accion: req.body.accion,
+                folio: req.body.folio,
                 area: req.body.area
             };
             db.collection("actividad").insertOne(aInsertar, function(err, result){

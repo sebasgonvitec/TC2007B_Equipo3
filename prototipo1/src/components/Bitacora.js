@@ -30,6 +30,7 @@ function Bitacora() {
     const getData = async () => {
         const config = {
             headers:{
+              'Content-Type': 'application/json',
               token: localStorage.getItem('JWT_token'),
             }
         };
@@ -100,7 +101,7 @@ function Bitacora() {
     if(session != null)
     {
         return (
-            <>
+            <div>
             <h1>Bitácora de Actividad</h1>
             <p></p>
             <LocalizationProvider language="es-ES"> 
@@ -122,6 +123,7 @@ function Bitacora() {
                     </Grid>   
                 </IntlProvider>
             </LocalizationProvider>
+            </div>
 
         );
     }
