@@ -399,6 +399,54 @@ app.delete("/borrarArchivo", function(req, res) {
     });
 })
 
+// Endpoint para extraer bitacora de actividad
+
+app.get("/bitacora", function(req, res){
+    jwt.verify(req.headers.token, "secretKey", (err, userId) => {
+        if(err){
+            res.json(null)
+        }
+        else {
+            console.log(userId)
+            db.collection("actividad").find({}).toArray(function(err, result){
+                if(err){
+                    handleError(res, err.message, "Failed to get activity logs.");
+                }else{
+                    res.status(200).json(result);
+
+                }
+            });
+
+        }
+    })
+})
+
+// Endpoint para crear registros de actividad
+
+app.post("/registrarActividad", function(req, res){
+    jwt.verify(req.headers.token, "secretKey", (err, userId) => {
+        if(err){
+            res.json(null)
+        }
+        else {
+            let aInsertar = {
+                usuario:req.body.usuario,
+                fecha:req.body.fecha,
+                accion: req.body.accion
+                folio: req.body.folio
+                area: req.body.area
+            };
+            db.collection("actividad").insertOne(aInsertar, function(err, result){
+            if(err){
+                handleError(res, err.message, "Failed to create new activity log");
+            }else{
+                res.status(200).json(result);
+            }
+            });
+        }
+    });
+});
+
 
 https.createServer({
     cert: fs.readFileSync("../Cert/app.cer"),
