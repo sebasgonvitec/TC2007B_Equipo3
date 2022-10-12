@@ -19,6 +19,8 @@ import { useNavigate, Navigate } from 'react-router-dom';
 
 let URI = 'https://localhost/descargarArchivos/download'
 let URI_TEST = 'https://localhost/descargarArchivos'
+const logURI = "https://localhost/registrarActividad";
+
 
 function DescargarArchivo(){
 
@@ -65,6 +67,9 @@ function DescargarArchivo(){
         setResult(process(data, event.dataState));
     }
     const downloadFile2 = (id, nombre) =>{
+        
+        
+        
         axios({
             url: URI,
             method: 'GET',
@@ -74,6 +79,16 @@ function DescargarArchivo(){
             responseType: 'blob',
             params: { id: id, nombre: nombre } // important
         }).then((res)=>{
+            
+            const logData = {usuario:session.nombre, fecha: new Date().toString(), accion: "Descargó un archivo.", folio: nombre, area: "N/A"}
+
+            await axios.post(logURI, formData, {
+            headers:{
+                'Content-Type': 'application/json',
+                token: localStorage.getItem('JWT_token')
+            }
+            });
+            
             fileDownload(res.data, nombre+".pdf");
         })
     }
