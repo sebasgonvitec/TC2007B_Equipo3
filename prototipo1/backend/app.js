@@ -222,20 +222,25 @@ app.get("/descargarArchivos/download", async (req, res) => {
                     let temporal = __dirname + "/.temp/" + req.query.nombre + ".pdf";
                     let inputFS = fs.createReadStream(__dirname + result.path)
                     let outputFS = fs.createWriteStream(temporal)
-        
-                    let key = "abcabcabcabcabcabcabcabcabcabc12" //Not to be done, key usually goes encrypted as well 32 bytes(256 bits) 
-                    let iv = "abcabcabcabcabc1" //(initialization vector) 16 bytes
-        
-                    let cipher = crypto.createDecipheriv("aes-256-cbc", key, iv)
-                    inputFS.pipe(cipher).pipe(outputFS)
-                    outputFS.on("finish", ()=>{
-                        console.log(temporal);
-                        res.set({
-                            'Content-Type': 'application/pdf'
-                        })
-                        res.download(temporal, function(err){
-                            if(err) throw err;
-                            fs.unlinkSync(temporal);
+
+                    //Obtener llave de la DB
+                    db.collection("roles").findOne({rol:req.query.area}, (err, resultQuery)=>{
+                        fs.readFile("../Cert/app.key", (err, decryptKey)=>{
+                            key=Buffer.from(crypto.privateDecrypt(decryptKey, Buffer.from(resultQuery.llave, "hex")))
+                            iv=Buffer.from(crypto.privateDecrypt(decryptKey, Buffer.from(resultQuery.iv, "hex")))
+
+                            let cipher = crypto.createDecipheriv("aes-256-cbc", key, iv)
+                            inputFS.pipe(cipher).pipe(outputFS)
+                            outputFS.on("finish", ()=>{
+                                console.log(temporal);
+                                res.set({
+                                    'Content-Type': 'application/pdf'
+                                })
+                                res.download(temporal, function(err){
+                                    if(err) throw err;
+                                    fs.unlinkSync(temporal);
+                                })
+                            })
                         })
                     })
                 }
@@ -255,21 +260,28 @@ app.post("/subirArchivo", uploads.single("archivo"), (req, res)=>{
             let inputFS = fs.createReadStream(__dirname + "/.temp/" + req.file.filename)
             let outputFS = fs.createWriteStream(__dirname + "/.storage/" + req.body.nombre)
 
-            let key = "abcabcabcabcabcabcabcabcabcabc12" //Not to be done, key usually goes encrypted as well 32 bytes(256 bits) 
-            let iv = "abcabcabcabcabc1"
+            //Obtener llave de la DB
+            db.collection("roles").findOne({rol:req.body.area}, (err, resultQuery)=>{
+                fs.readFile("../Cert/app.key", (err, decryptKey)=>{
+                    let key=Buffer.from(crypto.privateDecrypt(decryptKey, Buffer.from(resultQuery.llave, "hex")))
+                    let iv=Buffer.from(crypto.privateDecrypt(decryptKey, Buffer.from(resultQuery.iv, "hex")))
 
-            let cipher = crypto.createCipheriv("aes-256-cbc", key, iv)
-            inputFS.pipe(cipher).pipe(outputFS)
-            outputFS.on("finish", ()=>{
-                fs.unlinkSync(__dirname + "/.temp/" + req.file.filename)
-                let aInsertar = {nombre:req.body.nombre, folio:req.body.folio, path: rutaDefinitiva, fecha: req.body.fecha, expediente: req.body.expediente, expedienteNom: req.body.expedienteNom, usuario: req.body.usuario}
-                console.log(req.body);
-                db.collection("archivos").insertOne(aInsertar, (err, res)=>{
-                    if(err) throw err;
-                console.log(res);
-                });
-            });
-    res.status(200).json({message:"Archivo subido correctamente"});
+                    let cipher = crypto.createCipheriv("aes-256-cbc", key, iv)
+                    inputFS.pipe(cipher).pipe(outputFS)
+
+                    outputFS.on("finish", ()=>{
+                        fs.unlinkSync(__dirname + "/.temp/" + req.file.filename)
+                        let aInsertar = {nombre:req.body.nombre, folio:req.body.folio, path: rutaDefinitiva, fecha: req.body.fecha, expediente: req.body.expediente, expedienteNom: req.body.expedienteNom, usuario: req.body.usuario}
+                        console.log(req.body);
+                        db.collection("archivos").insertOne(aInsertar, (err, res)=>{
+                            if(err) throw err;
+                        console.log(res);
+                        });
+                    });
+                })
+            })
+
+            res.status(200).json({message:"Archivo subido correctamente"});
         }
     });
 })
@@ -399,6 +411,23 @@ app.delete("/borrarArchivo", function(req, res) {
         }
     });
 })
+
+
+//endpoint para configurar inicialmente las llaves de los roles
+// app.get("/keySetup", (req, res)=>{
+//     let roles=["nulidad", "investigacion", "otros"]
+//     let privKey=fs.readFileSync("../Cert/app.key")
+
+//     for(i=0; i<roles.length; i++){
+//         let key=crypto.publicEncrypt(privKey, Buffer.from(crypto.randomBytes(16).toString("hex"))).toString("hex")
+//         let iv=crypto.publicEncrypt(privKey, Buffer.from(crypto.randomBytes(8).toString("hex"))).toString("hex")
+//         let aInsertar={rol: roles[i], llave: key, iv: iv}
+//         db.collection("roles").insertOne(aInsertar, (err, result)=>{
+//             if (err) throw err;
+//         })
+//     }
+//     res.send({msg:"key setup exitoso!"})
+// })
 
 
 https.createServer({

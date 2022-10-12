@@ -37,6 +37,9 @@ function DescargarArchivo(){
         getData()
     }, [])
 
+    console.log(download._id)
+    console.log(download.area)
+
     const getData = async () => {
         const config = {
             params: { expediente: download._id },
@@ -72,7 +75,7 @@ function DescargarArchivo(){
                 token: localStorage.getItem('JWT_token'),
             },
             responseType: 'blob',
-            params: { id: id, nombre: nombre } // important
+            params: { id: id, nombre: nombre, area: download.area} // important
         }).then((res)=>{
             fileDownload(res.data, nombre+".pdf");
         })
