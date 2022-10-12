@@ -6,6 +6,9 @@ import { Navigate } from 'react-router-dom';
 import SessionContext from "../SessionContext";
 import ReloadAlert from "./Reload";
 
+import "./styleComponents/CrearExpediente.css"
+import Name from "./Name"
+import { AiOutlineFolder } from "react-icons/ai";
 
 const URI = "https://localhost/crearExpedienteNul";
 
@@ -69,10 +72,30 @@ function CrearExpediente() {
     if(session != null)
     {
         return (
-            <>
-                <h1>Crear Expediente</h1>
+            <div>
+                <div style={{marginLeft:"5.8vw"}}>
+                    <Name 
+                        titulo="Crear Expediente - Juicio de Nulidad"
+                        descripcion="Ingresa los datos para crear un expediente"
+                    />
+                </div>
+                <div className="containerForm">
+                    <form id="formCrearExp" onSubmit={handleOnSubmit} >
+                        <div id="tituloCrearExp">Ingresa los datos</div>
+                        {errorMsg && <p>{errorMsg}</p>}
+                        <input type="text" name="nombre" onChange={handleInputChange} value={state.nombre} placeholder="Nombre del expediente" />
+                        <input type="text" name="numero" onChange={handleInputChange} value={state.numero} placeholder="Numero del expediente" />
+                        <input type="text" name="expediente" onChange={handleInputChange} value={state.expediente} placeholder="Expediente" />
+                        <input type="text" name="actor" onChange={handleInputChange} value={state.actor} placeholder="Actor" />
+                        <input type="text" name="estatus" onChange={handleInputChange} value={state.estatus} placeholder="Estatus" />
+                        <button id="btnCrearExp" type="submit">Crear Expediente</button>
+                    </form>
+                    <div className='colorBox' style={{background:'#45B2E6'}}>
+                        {<AiOutlineFolder className="icon" style={{width:'13vw', height:'auto'}}/>}
+                    </div>
+                </div>
 
-                <div>
+                {/* <div>
                     <form onSubmit={handleOnSubmit}>
                         {errorMsg && <p>{errorMsg}</p>}
                         <input type="text" name="nombre" onChange={handleInputChange} value={state.nombre} placeholder="Nombre del expediente" />
@@ -82,8 +105,8 @@ function CrearExpediente() {
                         <input type="text" name="estatus" onChange={handleInputChange} value={state.estatus} placeholder="Estatus" />
                         <button type="submit">Crear Expediente</button>
                     </form>
-                </div>
-            </>
+                </div> */}
+            </div>
         );
     }
     else {

@@ -13,6 +13,9 @@ import SessionContext from "../SessionContext";
 import { useNavigate, Navigate } from 'react-router-dom';
 import ReloadAlert from "./Reload";
 
+import "./styleComponents/SubirInv.css"
+import Name from "./Name"
+
 const URI = 'https://localhost/investigacion';
 
 function SubirInv() {
@@ -113,32 +116,38 @@ function SubirInv() {
     if(session != null)
     {
         return (
-            <>
-            <h1>Subir archivos</h1>
-            <p>Seleccione expediente para subir un archivo</p>
-            <LocalizationProvider language="es-ES"> 
-                <IntlProvider locale="es">
+            <body style={{marginLeft:"5.8vw", marginRight:"5.8vw"}}>
+                
+                <Name
+                    titulo="Subir Archivos"
+                    descripcion="Seleccione expediente para subir un archivo"
+                />
+                
+                <LocalizationProvider language="es-ES"> 
+                    <IntlProvider locale="es">
 
-                    <Grid
-                        data={result}
-                        filterable={true}
-                        onDataStateChange={onDataStateChange}
-                        filterOperators={filterOperators}
-                        {...dataState}
-                    >
-                        <GridColumn field="nombre" title="Nombre" />
-                        <GridColumn field="numero" title="Número" />
-                        <GridColumn field="expediente" title="Expediente" />
-                        <GridColumn field="actor" title="Actor" />
-                        <GridColumn field="estatus" title="Estatus" />
-                        <GridColumn field="fecha" title="Fecha"/>
-                        <GridColumn cell={MyCommandCell}  width="100px" filterable={false}/>
+                        <Grid
+                            data={result}
+                            filterable={true}
+                            onDataStateChange={onDataStateChange}
+                            filterOperators={filterOperators}
+                            {...dataState}
+                        >
+                            <GridColumn field="nombre" title="Nombre"/>
+                            <GridColumn field="numero" title="Número" />
+                            <GridColumn field="expediente" title="Expediente" />
+                            <GridColumn field="actor" title="Actor" />
+                            <GridColumn field="estatus" title="Estatus" />
+                            <GridColumn field="fecha" title="Fecha"/>
+                            <GridColumn cell={MyCommandCell}  width="100px" filterable={false}/>
 
-                    </Grid>   
-                </IntlProvider>
-            </LocalizationProvider>
-            <Link to='/crearExpedienteInv'>Crear nuevo expediente</Link>
-            </>
+                        </Grid>   
+                    </IntlProvider>
+                </LocalizationProvider>
+                <Link to='/crearExpedienteInv'> 
+                    <button id="btnSubInv" >Crear Expediente</button>
+                </Link>
+            </body>
         );
     }
     else {

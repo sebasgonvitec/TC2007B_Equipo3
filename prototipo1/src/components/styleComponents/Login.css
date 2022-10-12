@@ -5,6 +5,7 @@
 
 .imgLogin{
     width: 100%;
+    height:auto;
     display: flex;
     justify-content: flex-end;
 }
@@ -14,10 +15,7 @@
     flex-direction: column;
     align-content: space-between;
     align-items: center;  
-}
-
-input{
-    font-family: 'Raleway';
+    margin-right: 10vw;
 }
 
 #usuario{
@@ -34,17 +32,6 @@ input{
     padding: 0.8vw;
     border: 1px solid #BCBABA;
     border-radius: 8px;
-}
-
-button{
-    width: 11vw;
-    padding: 1vw;
-    border: none;
-    border-radius: 10px;
-    font-weight: bold;
-    color: white;
-    background: #1C67B3;
-    cursor: pointer;
 }
 
 #btn:hover{

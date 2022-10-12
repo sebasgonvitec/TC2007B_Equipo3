@@ -9,3 +9,18 @@
   z-index: 1;
   top: 0;
 }
+
+button{
+  width: 11vw;
+  padding: 1vw;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  color: white;
+  background: #1C67B3;
+  cursor: pointer;
+}
+
+input{
+  font-family: 'Raleway';
+}

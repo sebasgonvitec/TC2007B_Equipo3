@@ -97,7 +97,7 @@ const Login = () => {
                     </form>
                 </div>
                 <div className="imgLogin">
-                    <img src={ImgLogin} alt="ImgLogin" style={{height: '39vw'}} />
+                    <img src={ImgLogin} alt="ImgLogin" style={{maxWidth: '100%', height: 'auto'}} />
                 </div>
             </div>
         </body>

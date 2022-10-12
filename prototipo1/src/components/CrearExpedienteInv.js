@@ -6,6 +6,10 @@ import { Navigate } from 'react-router-dom';
 import SessionContext from "../SessionContext";
 import ReloadAlert from "./Reload";
 
+import "./styleComponents/CrearExpediente.css"
+import Name from "./Name"
+import { BsArchive } from "react-icons/bs";
+
 
 const URI = "https://localhost/crearExpedienteInv";
 
@@ -68,11 +72,18 @@ function CrearExpedienteInv() {
     if(session != null)
     {
         return (
-            <>
-                <h1>Crear Expediente</h1>
+            <div>
+                <div style={{marginLeft:"5.8vw"}}>
+                    <Name 
+                        titulo="Crear Expediente - Carpeta de Investigación"
+                        descripcion="Ingresa los datos para crear un expediente"
+                    />
+                </div>
+                
 
-                <div>
-                    <form onSubmit={handleOnSubmit}>
+                <div className="containerForm">
+                    <form id="formCrearExp" onSubmit={handleOnSubmit}>
+                        <div id="tituloCrearExp">Ingresa los datos</div>
                         {errorMsg && <p>{errorMsg}</p>}
                         <input type="text" name="nombre" onChange={handleInputChange} value={state.nombre} placeholder="Nombre del expediente" />
                         <input type="text" name="numero" onChange={handleInputChange} value={state.numero} placeholder="Numero del expediente" />
@@ -81,8 +92,11 @@ function CrearExpedienteInv() {
                         <input type="text" name="estatus" onChange={handleInputChange} value={state.estatus} placeholder="Estatus" />
                         <button type="submit">Crear Expediente</button>
                     </form>
+                    <div className='colorBox' style={{background:'#FFA928'}}>
+                        {<BsArchive className="icon" style={{width:'11vw', height:'auto', padding: "1.5vw"}}/>}
+                    </div>
                 </div>
-            </>
+            </div>
         );
     }
     else {
