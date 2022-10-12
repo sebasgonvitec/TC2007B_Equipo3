@@ -1,4 +1,4 @@
-#Sistema de Gestión de Archivos de Álvaro Obregón
+# Sistema de Gestión de Archivos de Álvaro Obregón
 ![Logotipo de la Administración 2021-2024](https://aao.cdmx.gob.mx/wp-content/uploads/logo_banner_new.svg)
 
 El Sistema de Gestión de Archivos es un gestor para apoyar la digitalización de archivos y carpetas de índole legal. Se diseño teniendo en mente la gestión actual y la satisfacción de todos los funcionarios de la Alcaldía.
