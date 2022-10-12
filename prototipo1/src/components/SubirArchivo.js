@@ -9,6 +9,8 @@ import ReloadAlert from "./Reload";
 import { Navigate } from 'react-router-dom';
 
 let URI = 'https://localhost/subirArchivo?';
+const logURI = "https://localhost/registrarActividad";
+
 
 const date = new Date();
 let day = date.getDate();
@@ -73,6 +75,16 @@ const SubirArchivo = () => {
                     formData.append('usuario', session._id);
 
                     setErrorMsg('');
+                    
+                    const logData = {usuario:session.nombre, fecha: new Date().toString(), accion: "Subió un archivo.", folio: state.numero, area: upload.nombre}
+
+                    await axios.post(logURI, formData, {
+                    headers:{
+                        'Content-Type': 'application/json',
+                        token: localStorage.getItem('JWT_token')
+                    }
+                    });
+                    
                     await axios.post(URI, formData, {
                         headers: {
                             'Content-Type': 'multipart/form-data',
