@@ -13,6 +13,8 @@ import { Link } from "react-router-dom";
 import { useNavigate, Navigate } from 'react-router-dom';
 import ReloadAlert from "./Reload";
 
+import Name from "./Name"
+
 const URI = 'https://localhost/investigacion';
 
 function DescargarInv(){
@@ -115,32 +117,34 @@ function DescargarInv(){
     if(session != null)
     {
         return (
-            <>
-            <h1>Descargar Expediente</h1>
-            <p>Seleccione expediente para descargar un archivo</p>
-            <LocalizationProvider language="es-ES"> 
-                <IntlProvider locale="es">
+            <body style={{marginLeft:"5.8vw", marginRight:"5.8vw", marginBottom:"5vw"}}>
+                <Name
+                    titulo="Descargar Expediente"
+                    descripcion="Seleccione expediente para descargar un archivo"
+                />
+                <LocalizationProvider language="es-ES"> 
+                    <IntlProvider locale="es">
 
-                    <Grid
-                        data={result}
-                        filterable={true}
-                        onDataStateChange={onDataStateChange}
-                        filterOperators={filterOperators}
-                        {...dataState}
-                    
-                    >
-                        <GridColumn field="nombre" title="Nombre" />
-                        <GridColumn field="numero" title="Número" />
-                        <GridColumn field="carpeta_inv" title="Carpeta de Investigacion" />
-                        <GridColumn field="denunciante" title="Denunciante" />
-                        <GridColumn field="estatus" title="Estatus"/>
-                        <GridColumn field="fecha" title="Fecha"/>
-                        <GridColumn cell={BotonSubir}  width="100px" filterable={false}/>
+                        <Grid
+                            data={result}
+                            filterable={true}
+                            onDataStateChange={onDataStateChange}
+                            filterOperators={filterOperators}
+                            {...dataState}
+                        
+                        >
+                            <GridColumn field="nombre" title="Nombre" />
+                            <GridColumn field="numero" title="Número" />
+                            <GridColumn field="carpeta_inv" title="Carpeta de Investigacion" />
+                            <GridColumn field="denunciante" title="Denunciante" />
+                            <GridColumn field="estatus" title="Estatus"/>
+                            <GridColumn field="fecha" title="Fecha"/>
+                            <GridColumn cell={BotonSubir}  width="100px" filterable={false}/>
 
-                    </Grid>   
-                </IntlProvider>
-            </LocalizationProvider>
-            </>
+                        </Grid>   
+                    </IntlProvider>
+                </LocalizationProvider>
+            </body>
         );
     }
     else {
