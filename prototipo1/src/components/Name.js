@@ -3,7 +3,7 @@ import './styleComponents/Name.css'
 function Name(props){
     return(
         <div>
-            <p className="titulo">{props.titulo}</p>
+            <div className="titulo">{props.titulo}</div>
             <p className="descripcion">{props.descripcion}</p>
         </div>
     );

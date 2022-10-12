@@ -3,10 +3,16 @@ import React, { useRef, useState } from "react";
 import { useContext } from "react";
 import UploadContext  from "../UploadContext";
 import Dropzone from 'react-dropzone';
-import '../components/styleComponents/Subir.css';
+//import '../components/styleComponents/Subir.css';
 import SessionContext from "../SessionContext";
 import ReloadAlert from "./Reload";
 import { Navigate } from 'react-router-dom';
+import { Link } from "react-router-dom"
+
+import Name from "./Name"
+import "./styleComponents/SubirArchivo.css"
+import { BsChevronLeft } from "react-icons/bs";
+import { AiOutlineFolder } from "react-icons/ai";
 
 let URI = 'https://localhost/subirArchivo?';
 
@@ -94,25 +100,55 @@ const SubirArchivo = () => {
     {
         return(
             <>
-                <h1>Subir Archivo</h1>
+                <div style={{marginLeft:"5.8vw"}}>   
+                    <Name
+                        titulo="Subir Archivo"
+                    />
+                    <Link to={"/uploadmain"}  className="btnBack" style={{color: "#8B2E87"}}>
+                            <BsChevronLeft style={{width:"2.5vw", height:"auto"}}/>
+                            <div>Volver</div>
+                    </Link>
+                    
+                </div>
 
-                {/* <div>
-                    <h2>Informacion del expediente</h2>
-                    <p>Nombre: {upload.nombre}</p>
-                    <p>Numero: {upload.numero}</p>
-                    <p>Expediente: {upload.expediente}</p>
-                    <p>Actor: {upload.actor}</p>
-                </div> */}
+                 <div className="infoSubir">
+                    <div className='colorBoxArchivo' style={{background:'#45B2E6'}}>
+                        <AiOutlineFolder className="icon" style={{width:'8.3vw', height:'auto'}}/>
+                    </div>
+                    <div className="infoContent">
+                        <p style={{fontWeight:"bold", fontSize:"1.5vw"}}>Informacion del expediente</p>
+                        <div> 
+                            <span style={{fontWeight:"bold"}}>Nombre: </span> 
+                            {upload.nombre}
+                        </div>
+                        <div>
+                            <span style={{fontWeight:"bold"}}> Numero: </span>
+                            {upload.numero}
+                        </div>
+                        <div>
+                            <span style={{fontWeight:"bold"}}>Expediente: </span> 
+                            {upload.expediente}
+                        </div>
+                        <div>
+                            <span style={{fontWeight:"bold"}}> Actor: </span> 
+                            {upload.actor}
+                        </div>
+                    </div>
+                </div> 
 
 
-                <form onSubmit={handleOnSubmit}>
+                <form id="formSubirArchivo" onSubmit={handleOnSubmit}>
                     {errorMsg && <p>{errorMsg}</p>}
-                    <input type="text" name="nombre" onChange={handleInputChange} value={state.nombre} placeholder="Nombre" />
-                    <input type="text" name="folio" onChange={handleInputChange} value={state.folio} placeholder="Folio" />
-                    <button type="submit">Subir</button>
-                    {/* <input type="text" name="archivoPrueba" onChange={handleInputChange} value={state.archivoPrueba} placeholder="Archivo" /> */}
+                    
+                    <div className="formCont"> 
+                        <p className="tituloSubir"> Ingresa los datos</p>
+                        <input type="text" name="nombre" onChange={handleInputChange} value={state.nombre} placeholder="Nombre" id="nombreArch" />
+                        <input type="text" name="folio" onChange={handleInputChange} value={state.folio} placeholder="Folio" id="folioArch"/>
+                        <button id="btnSubir" type="submit">Subir</button>
+                        {/* <input type="text" name="archivoPrueba" onChange={handleInputChange} value={state.archivoPrueba} placeholder="Archivo" /> */}
+                    </div>
                     <div className="upload-section">
-                        <Dropzone 
+                        <Dropzone
                         onDrop={onDrop} 
                         onDragEnter={() => updateBorder('over')}
                         onDragLeave={() => updateBorder('leave')}
