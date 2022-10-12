@@ -98,94 +98,104 @@ app.get("/login", (req, res)=>{
 //Endpoint para extraer expedientes de collecion nulidad
 app.get("/nulidad", function(req, res){
     jwt.verify(req.headers.token, "secretKey", (err, userId) => {
-        if(err){
-            res.json(null) 
-        }
-        else {
-            console.log(userId)
-            db.collection("nulidad").find({}).toArray(function(err, result){
-                if(err){
-                    handleError(res, err.message, "Failed to get nulidad");
-                }else{
-                    res.status(200).json(result);
-                    
-                }
-            });
+        db.collection("usuarios").find({usuario: userId.usuario}).toArray(function(error, result){
+            if(err || error || result[0].nulidad === "false"){
+                res.json(null) 
+            }
+            else {
+                console.log(userId)
+                db.collection("nulidad").find({}).toArray(function(err, result){
+                    if(err){
+                        handleError(res, err.message, "Failed to get nulidad");
+                    }else{
+                        res.status(200).json(result);
+                        
+                    }
+                });
+    
+            }
 
-        }
+        })  
     })    
 })
 
 //Endpoint para crear expedientes de collecion nulidad
 app.post("/crearExpedienteNul", function(req, res){
     jwt.verify(req.headers.token, "secretKey", (err, userId) => {
-        if(err){
-            res.json(null)
-        }
-        else { 
-            let aInsertar = {
-                nombre:req.body.nombre,
-                numero:req.body.numero,
-                expediente:req.body.expediente,
-                actor:req.body.actor,
-                estatus:req.body.estatus,
-                fecha:req.body.fecha
-            };
-            db.collection("nulidad").insertOne(aInsertar, function(err, result){
-            if(err){
-                handleError(res, err.message, "Failed to create new expediente");
-            }else{
-                res.status(200).json(result);
+        db.collection("usuarios").find({usuario: userId.usuario}).toArray(function(error, result){
+            if(err || error || result[0].nulidad == "false"){
+                res.json(null)
             }
-        })
-        }   
+            else { 
+                let aInsertar = {
+                    nombre:req.body.nombre,
+                    numero:req.body.numero,
+                    expediente:req.body.expediente,
+                    actor:req.body.actor,
+                    estatus:req.body.estatus,
+                    fecha:req.body.fecha
+                };
+                db.collection("nulidad").insertOne(aInsertar, function(err, result){
+                if(err){
+                    handleError(res, err.message, "Failed to create new expediente");
+                }else{
+                    res.status(200).json(result);
+                }
+            })
+            }   
+        }) 
+           
     });
 });
 
 //Endpoint para extraer expedientes de collecion investigacion
 app.get("/investigacion", function(req, res){
     jwt.verify(req.headers.token, "secretKey", (err, userId) => {
-        if(err){
-            res.json(null) 
-        }
-        else {
-            console.log(userId)
-            db.collection("investigacion").find({}).toArray(function(err, result){
-                if(err){
-                    handleError(res, err.message, "Failed to get Carpetas de Investigación");
-                }else{
-                    res.status(200).json(result);
-                    
-                }
-            });
-
-        }
+        db.collection("usuarios").find({usuario: userId.usuario}).toArray(function(error, result){
+            if(err || error || result[0].investigacion == "false"){
+                res.json(null) 
+            }
+            else {
+                console.log(userId)
+                db.collection("investigacion").find({}).toArray(function(err, result){
+                    if(err){
+                        handleError(res, err.message, "Failed to get Carpetas de Investigación");
+                    }else{
+                        res.status(200).json(result);
+                        
+                    }
+                });
+    
+            }
+        })
     })    
 })
 
 //Endpoint para crear expedientes de collecion investigacion
 app.post("/crearExpedienteInv", function(req, res){
     jwt.verify(req.headers.token, "secretKey", (err, userId) => {
-        if(err){
-            res.json(null)
-        }
-        else { 
-            let aInsertar = {
-                nombre:req.body.nombre,
-                numero:req.body.numero,
-                carpeta_inv:req.body.carpeta_inv,
-                denunciante:req.body.denunciante,
-                estatus:req.body.estatus,
-                fecha:req.body.fecha
-            };
-            db.collection("investigacion").insertOne(aInsertar, function(err, result){
-            if(err){
-                handleError(res, err.message, "Failed to create new expediente");
-            }else{
-                res.status(200).json(result);
+        db.collection("usuarios").find({usuario: userId.usuario}).toArray(function(error, result){
+            if(err || error || result[0].investigacion == "false"){
+                res.json(null)
             }
-            });
-        }   
+            else { 
+                let aInsertar = {
+                    nombre:req.body.nombre,
+                    numero:req.body.numero,
+                    carpeta_inv:req.body.carpeta_inv,
+                    denunciante:req.body.denunciante,
+                    estatus:req.body.estatus,
+                    fecha:req.body.fecha
+                };
+                db.collection("investigacion").insertOne(aInsertar, function(err, result){
+                if(err){
+                    handleError(res, err.message, "Failed to create new expediente");
+                }else{
+                    res.status(200).json(result);
+                }
+                });
+            }   
+        })
     });
 });
 
@@ -288,96 +298,106 @@ app.post("/subirArchivo", uploads.single("archivo"), (req, res)=>{
 
 app.get("/tablaCuentas", function(req, res) {
     jwt.verify(req.headers.token, "secretKey", (err, userId) => {
-        if(err){
-            res.json(null)
-        }else{
-            db.collection("usuarios").find({}, { projection: { password: 0} }).toArray(function(err, result){
-                if(err) {
-                    handleError(res, err.message, "Failed to get accounts");
-                }
-                else {
-                    res.status(200).send(result);
-                }
-            })
-        }
+        db.collection("usuarios").find({usuario: userId.usuario}).toArray(function(error, result){
+            if(err || error || result[0].admin == null){
+                res.json(null)
+            }else{
+                db.collection("usuarios").find({}, { projection: { password: 0} }).toArray(function(err, result){
+                    if(err) {
+                        handleError(res, err.message, "Failed to get accounts");
+                    }
+                    else {
+                        res.status(200).send(result);
+                    }
+                })
+            }
+        })  
     });
 });
 
 app.delete("/borrarCuenta", function(req, res) {
     jwt.verify(req.headers.token, "secretKey", (err, userId) => {
-        if(err){
-            res.json(null)
-        }else{
-            db.collection("usuarios").deleteOne({"_id": mongo.ObjectId(req.query.id)}, (err, result) => {
-                if (err) throw err;
-            })
-        }
+        db.collection("usuarios").find({usuario: userId.usuario}).toArray(function(error, result){
+            if(err || error || result[0].admin == null){
+                res.json(null)
+            }else{
+                db.collection("usuarios").deleteOne({"_id": mongo.ObjectId(req.query.id)}, (err, result) => {
+                    if (err) throw err;
+                })
+            }
+        })
     });
 })
  
 app.post("/crearCuenta", (req, res)=>{
     jwt.verify(req.headers.token, "secretKey", (err, userId) => {
-        if(err){
-            res.json({msg: "No tiene los permisos, saquese alv"})
-        }else {
-            let user=req.body.usuario;
-            let pass=req.body.password;
-            let area=req.body.area;
-            let name=req.body.nombre;
-            let nulidad=req.body.nulidad;
-            let investigacion=req.body.investigacion;
-            let otros=req.body.otros;
-
-            console.log("usuario recibido");
-
-            db.collection("usuarios").findOne({usuario:user}, (err, result)=>{
-            if(result!=null){
-                console.log("El usuario ya existe")
-                throw new Error('El usuario ya existe')
-            }
+        db.collection("usuarios").find({usuario: userId.usuario}).toArray(function(error, result){
+            if(err || error || result[0].admin == null){
+                res.json({msg: "No tiene los permisos, saquese alv"})
+            }else {
+                let user=req.body.usuario;
+                let pass=req.body.password;
+                let area=req.body.area;
+                let name=req.body.nombre;
+                let nulidad=req.body.nulidad;
+                let investigacion=req.body.investigacion;
+                let otros=req.body.otros;
     
-            else{
-                bcrypt.hash(pass, 10, (err, hash)=>{
-                let aAgregar={usuario:user, password:hash, nombre:name, area:area, nulidad:nulidad, investigacion:investigacion, otros:otros}
-                db.collection("usuarios").insertOne(aAgregar, (err, result)=>{
-                    if (err) throw err;
-                    console.log("Usuario agregado")
-                    });
-                });
+                console.log("usuario recibido");
+    
+                db.collection("usuarios").findOne({usuario:user}, (err, result)=>{
+                if(result!=null){
+                    console.log("El usuario ya existe")
+                    throw new Error('El usuario ya existe')
                 }
-            })
-        }
+        
+                else{
+                    bcrypt.hash(pass, 10, (err, hash)=>{
+                    let aAgregar={usuario:user, password:hash, nombre:name, area:area, nulidad:nulidad, investigacion:investigacion, otros:otros}
+                    db.collection("usuarios").insertOne(aAgregar, (err, result)=>{
+                        if (err) throw err;
+                        console.log("Usuario agregado")
+                        });
+                    });
+                    }
+                })
+            }
+        })    
     });
 });
 
 //Obtener usuario por id
 app.get("/editarUsuario", (req, res)=>{
     jwt.verify(req.headers.token, "secretKey", (err, userId) => {
-        if(err){
-            res.json(null)
-        }else{
-            db.collection("usuarios").findOne({"_id": mongo.ObjectId(req.query.id)}, (err, result)=>{
-                if(err) throw err;
-                res.status(200).send(result);
-            })
-        }
+        db.collection("usuarios").find({usuario: userId.usuario}).toArray(function(error, result){
+            if(err || error || result[0].admin == null){
+                res.json(null)
+            }else{
+                db.collection("usuarios").findOne({"_id": mongo.ObjectId(req.query.id)}, (err, result)=>{
+                    if(err) throw err;
+                    res.status(200).send(result);
+                })
+            }
+        })
     });
 });
 
 //Actualizar usuario seleccionado
 app.post("/editarUsuario", (req, res)=>{
     jwt.verify(req.headers.token, "secretKey", (err, userId) => {
-        if(err){
-            res.json(null)
-        }else{
-            bcrypt.hash(req.body.password, 10, (err, hash)=>{
-                const updateData = { $set: { usuario:req.body.usuario, password:hash, nombre:req.body.nombre, area:req.body.area, nulidad:req.body.nulidad, investigacion:req.body.investigacion, otros:req.body.otros } };
-                db.collection("usuarios").updateOne({"_id": mongo.ObjectId(req.query.id)}, updateData, (err, result)=>{
-                    if(err) throw err;
-                    res.status(200).send(result);
-                });
-            })
-        }
+        db.collection("usuarios").find({usuario: userId.usuario}).toArray(function(error, result){
+            if(err || error || result[0].admin == null){
+                res.json(null)
+            }else{
+                bcrypt.hash(req.body.password, 10, (err, hash)=>{
+                    const updateData = { $set: { usuario:req.body.usuario, password:hash, nombre:req.body.nombre, area:req.body.area, nulidad:req.body.nulidad, investigacion:req.body.investigacion, otros:req.body.otros } };
+                    db.collection("usuarios").updateOne({"_id": mongo.ObjectId(req.query.id)}, updateData, (err, result)=>{
+                        if(err) throw err;
+                        res.status(200).send(result);
+                    });
+                })
+            }
+        })   
     });
 });
 
