@@ -6,14 +6,15 @@ import ReloadAlert from "./Reload";
 import { useContext } from "react";
 import SessionContext from "../SessionContext";
 
-const { session } = useContext(SessionContext);
 const URI = 'https://localhost/editarUsuario';
+const logURI = 'https://localhost/registrarActividad';
 
 function EditarUsuario(){
 
     ReloadAlert();
     
     const { state } = useLocation(); //Este state viene del componente anterior
+    const { session } = useContext(SessionContext);
     const user = state.dataItem; 
     const [userData, setUserData] = useState({});
 
