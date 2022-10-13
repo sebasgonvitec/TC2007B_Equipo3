@@ -5,10 +5,12 @@ import { useState } from "react";
 import { Navigate } from 'react-router-dom';
 import SessionContext from "../SessionContext";
 import ReloadAlert from "./Reload";
+import { Link } from "react-router-dom"
 
 import "./styleComponents/CrearExpediente.css"
 import Name from "./Name"
 import { BsArchive } from "react-icons/bs";
+import { BsChevronLeft } from "react-icons/bs";
 
 
 const URI = "https://localhost/crearExpedienteInv";
@@ -78,8 +80,12 @@ function CrearExpedienteInv() {
                         titulo="Crear Expediente - Carpeta de Investigación"
                         descripcion="Ingresa los datos para crear un expediente"
                     />
-                </div>
                 
+                    <Link to={"/subirInv"}  className="btnBack" style={{color: "#8B2E87"}}>
+                                <BsChevronLeft style={{width:"2.5vw", height:"auto"}}/>
+                                <div>Volver</div>
+                    </Link>
+                </div>
 
                 <div className="containerForm">
                     <form id="formCrearExp" onSubmit={handleOnSubmit}>
@@ -90,7 +96,7 @@ function CrearExpedienteInv() {
                         <input type="text" name="carpeta_inv" onChange={handleInputChange} value={state.carpeta_inv} placeholder="Expediente" />
                         <input type="text" name="denunciante" onChange={handleInputChange} value={state.denunciante} placeholder="Denunciante" />
                         <input type="text" name="estatus" onChange={handleInputChange} value={state.estatus} placeholder="Estatus" />
-                        <button type="submit">Crear Expediente</button>
+                        <button id="btnCrearExp" type="submit">Crear Expediente</button>
                     </form>
                     <div className='colorBox' style={{background:'#FFA928'}}>
                         {<BsArchive className="icon" style={{width:'11vw', height:'auto', padding: "1.5vw"}}/>}

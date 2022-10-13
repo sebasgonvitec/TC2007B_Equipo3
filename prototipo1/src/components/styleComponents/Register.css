@@ -4,8 +4,7 @@
     border-radius: 10px;
     display: flex;
     flex-direction: column;
-    align-content: space-between;
-    padding: 3vw;
+    padding: 2vw;
     
      
     margin-left: auto;
@@ -15,24 +14,42 @@
 #desciption{
     font-size: 1.25vw;
     font-weight:bold;
+    display: flex;
+    align-items: flex-start;
+
 }
 
 #nombre{
-    margin-top: 1.6vw;
+    margin-top: 1vw;
     width: 31vw;
-    padding: 0.8vw;
+    padding: 0.5vw;
+    border: 1px solid #BCBABA;
+    border-radius: 8px;
+}
+
+#usuarioR{
+    margin-top: 1vw;
+    width: 31vw;
+    padding: 0.5vw;
+    border: 1px solid #BCBABA;
+    border-radius: 8px;
+}
+
+#passwordR{
+    margin-top: 1vw;
+    width: 31vw;
+    padding: 0.5vw;
     border: 1px solid #BCBABA;
     border-radius: 8px;
 }
 
 #area{
-    margin-top: 1.6vw;
+    margin-top: 1vw;
     width: 31vw;
-    padding: 0.8vw;
+    padding: 0.5vw;
     border: 1px solid #BCBABA;
     border-radius: 8px;
 }
-
 .privilegios{
     display: flex;
     flex-direction: column;
@@ -46,7 +63,7 @@
 
 
 #btnCuenta{
-    margin: 2vw auto 0px auto;
+    margin: 1vw auto 0px auto;
     
 }
 

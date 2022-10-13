@@ -30,7 +30,7 @@
 }
 
 #optionsContainer{
-    width: 93.33vw;
+    width: 80%;
     height: 38.66vw;
     background: #F2F2F2;
     border-radius: 10px;
@@ -51,8 +51,8 @@
 }
 
 .btn{
-    width: 16vw;
-    height: 16vw;
+    width: 15vw;
+    height: 15vw;
     border-radius: 10px;
     display: flex;
     flex-direction: column;

@@ -1,6 +1,6 @@
 .containerForm{
     height: 100%;
-    width: 75vw;
+    width: 50%;
     background: #F2F2F2;
     border-radius: 10px;
     display: flex;
@@ -10,7 +10,7 @@
 }
 #formCrearExp{
     height: 100%;
-    width: 55vw;
+    width: 50vw;
     border-radius: 10px;
     padding: 2vw;
     display: flex;
@@ -31,15 +31,15 @@ input{
     padding: 0.8vw;
     border: none;
     border-radius: 5px;
-    font-size: 1.1vw;
+    font-size: auto;
 }
 
 #btnCrearExp:hover{
     background: #8B2E87;
 }
 
-.colorBox{
-    height: 100%;
+.colorBoxExp{
+    height: auto;
     border-radius: 10px;
     display: flex;
     justify-content: center;

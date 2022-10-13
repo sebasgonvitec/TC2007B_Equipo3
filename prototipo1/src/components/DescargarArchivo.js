@@ -14,6 +14,12 @@ import fileDownload from 'js-file-download';
 import SessionContext from "../SessionContext";
 import ReloadAlert from "./Reload";
 import { useNavigate, Navigate } from 'react-router-dom';
+import { Link } from "react-router-dom"
+
+import Name from "./Name"
+import "./styleComponents/DescargarArchivo.css"
+import { BsChevronLeft } from "react-icons/bs";
+import { AiOutlineFolder } from "react-icons/ai";
 
 
 
@@ -137,38 +143,61 @@ function DescargarArchivo(){
     if(session != null)
     {
         return (
-            <>
-            <h1>Descargar Archivos</h1>
-            <p>Seleccione el archivo que desea descargar</p>
-            
-            <div>
-                <h2>Informacion del expediente</h2>
-                <p>Nombre: {download.nombre}</p>
-                <p>Numero: {download.numero}</p>
-                <p>Expediente: {download.expediente}</p>
-                <p>Actor: {download.actor}</p>
-            </div>
-            {errorMsg && <div className="error">{errorMsg}</div>}
-            <LocalizationProvider language="es-ES"> 
-                <IntlProvider locale="es">
+            <body style={{marginLeft:"5.8vw", marginRight:"5.8vw", marginBottom:"5vw"}}>
+                <Name
+                        titulo="Descargar Archivos"
+                        descripcion="Seleccione el archivo que desea descargar"
+                />
+                <Link to={"/searchmain"}  className="btnBack" style={{color: "#8B2E87"}}>
+                        <BsChevronLeft style={{width:"2.5vw", height:"auto"}}/>
+                        <div>Volver</div>
+                </Link>
+                <div className="infoSubirDes">
+                    <div className='colorBoxArchivo' style={{background:'#45B2E6'}}>
+                        <AiOutlineFolder className="icon" style={{width:'8.3vw', height:'auto'}}/>
+                    </div>
+                    <div className="infoContent">
+                        <p style={{fontWeight:"bold", fontSize:"1.5vw"}}>Informacion del expediente</p>
+                        <div> 
+                            <span style={{fontWeight:"bold"}}>Nombre: </span> 
+                            {download.nombre}
+                        </div>
+                        <div>
+                            <span style={{fontWeight:"bold"}}> Numero: </span>
+                            {download.numero}
+                        </div>
+                        <div>
+                            <span style={{fontWeight:"bold"}}>Expediente: </span> 
+                            {download.expediente}
+                        </div>
+                        <div>
+                            <span style={{fontWeight:"bold"}}> Actor: </span> 
+                            {download.actor}
+                        </div>
+                    </div>
+                </div> 
 
-                    <Grid
-                        data={result}
-                        filterable={true}
-                        onDataStateChange={onDataStateChange}
-                        filterOperators={filterOperators}
-                        {...dataState}
-                    >
-                        <GridColumn field="nombre" title="Nombre" />
-                        <GridColumn field="folio" title="Folio" />
-                        <GridColumn field="fecha" title="Fecha" />
-                        <GridColumn cell={MyCommandCell} width="300px" filterable={false}/>
+                {errorMsg && <div className="error">{errorMsg}</div>}
+                <LocalizationProvider language="es-ES"> 
+                    <IntlProvider locale="es">
 
-                    </Grid>   
-                </IntlProvider>
-            </LocalizationProvider>
-            <a></a>
-            </>
+                        <Grid
+                            data={result}
+                            filterable={true}
+                            onDataStateChange={onDataStateChange}
+                            filterOperators={filterOperators}
+                            {...dataState}
+                        >
+                            <GridColumn field="nombre" title="Nombre" />
+                            <GridColumn field="folio" title="Folio" />
+                            <GridColumn field="fecha" title="Fecha" />
+                            <GridColumn cell={MyCommandCell} width="300px" filterable={false}/>
+
+                        </Grid>   
+                    </IntlProvider>
+                </LocalizationProvider>
+                <a></a>
+            </body>
         );
     }
     else {

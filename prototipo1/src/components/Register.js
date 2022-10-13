@@ -83,8 +83,8 @@ const Register = () => {
                     <p id="desciption"> Ingresa los datos para registrar una cuenta nueva </p>
                     <input type="text" name="nombre" onChange={handleInputChange} value={state.nombre} placeholder="Nombre Completo" id="nombre" required/><br/>
                     <input type="text" name="area" onChange={handleInputChange} value={state.area} placeholder="Area" id="area" required/><br/>
-                    <input type="text" name="usuario" onChange={handleInputChange} value={state.usuario} placeholder="Usuario" id="usuario" required/><br/>
-                    <input type="password" name="password" onChange={handleInputChange} value={state.password} placeholder="Contraseña" id="password" required/><br/>
+                    <input type="text" name="usuario" onChange={handleInputChange} value={state.usuario} placeholder="Usuario" id="usuarioR" required/><br/>
+                    <input type="password" name="password" onChange={handleInputChange} value={state.password} placeholder="Contraseña" id="passwordR" required/><br/>
                     <h4>Privilegios:</h4>
                     <div className="privilegios">
                         <label id="labelForm">

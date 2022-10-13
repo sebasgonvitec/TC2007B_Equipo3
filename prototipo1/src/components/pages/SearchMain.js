@@ -37,7 +37,7 @@ function SearchMain(){
                 <div className="optionsContainer">
                     <OptionBox
                         colorbox={
-                            <div className='colorBox' style={{background:'#45B2E6'}}>
+                            <div className='colorBox' style={{background:'#66C214'}}>
                                 {<AiOutlineFolder className="icon" style={{width:'8.3vw', height:'auto'}}/>}
                             </div>
                         }
@@ -56,7 +56,7 @@ function SearchMain(){
     
                     <OptionBox
                         colorbox={
-                            <div className='colorBox' style={{background:'#8B2E87'}}>
+                            <div className='colorBox' style={{background:'#44B2ED'}}>
                                 {<BsArchive className="icon" style={{width:'8.3vw', height:'auto'}}/>}
                             </div>
                         }
@@ -75,7 +75,7 @@ function SearchMain(){
 
                     <OptionBox
                         colorbox={
-                            <div className='colorBox' style={{background:'#66C214'}}>
+                            <div className='colorBox' style={{background:'#FFA928'}}>
                                 {<TbReportAnalytics className="icon" style={{width:'8.3vw', height:'auto'}}/>}
                             </div>
                         }

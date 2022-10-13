@@ -5,10 +5,12 @@ import { useState } from "react";
 import { Navigate } from 'react-router-dom';
 import SessionContext from "../SessionContext";
 import ReloadAlert from "./Reload";
+import { Link } from "react-router-dom"
 
 import "./styleComponents/CrearExpediente.css"
 import Name from "./Name"
 import { AiOutlineFolder } from "react-icons/ai";
+import { BsChevronLeft } from "react-icons/bs";
 
 const URI = "https://localhost/crearExpedienteNul";
 
@@ -76,8 +78,13 @@ function CrearExpediente() {
                 <div style={{marginLeft:"5.8vw"}}>
                     <Name 
                         titulo="Crear Expediente - Juicio de Nulidad"
-                        descripcion="Ingresa los datos para crear un expediente"
+                        descripcion="Ingresa los datos para crear un expediente"                        
                     />
+                    <Link to={"/subir"}  className="btnBack" style={{color: "#8B2E87"}}>
+                        <BsChevronLeft style={{width:"2.5vw", height:"auto"}}/>
+                        <div>Volver</div>
+
+                    </Link>
                 </div>
                 <div className="containerForm">
                     <form id="formCrearExp" onSubmit={handleOnSubmit} >

@@ -14,6 +14,7 @@ import { useNavigate, Navigate } from 'react-router-dom';
 import ReloadAlert from "./Reload";
 
 import "./styleComponents/SubirInv.css"
+import { BsChevronLeft } from "react-icons/bs";
 import Name from "./Name"
 
 const URI = 'https://localhost/investigacion';
@@ -119,9 +120,14 @@ function SubirInv() {
             <body style={{marginLeft:"5.8vw", marginRight:"5.8vw"}}>
                 
                 <Name
-                    titulo="Subir Archivos"
+                    titulo="Subir Archivos - Carpeta de Investigacion"
                     descripcion="Seleccione expediente para subir un archivo"
                 />
+                <Link to={"/uploadmain"}  className="btnBack" style={{color: "#8B2E87", marginBottom:"2vw"}}>
+                    <BsChevronLeft style={{width:"2.5vw", height:"auto"}}/>
+                    <div>Volver</div>
+
+                </Link>
                 
                 <LocalizationProvider language="es-ES"> 
                     <IntlProvider locale="es">
