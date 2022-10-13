@@ -16,6 +16,7 @@ import ReloadAlert from "./Reload";
 import { useNavigate, Navigate } from 'react-router-dom';
 import { Link } from "react-router-dom"
 
+import "./styleComponents/Descargar.css"
 import Name from "./Name"
 import InfoArchivo from "./InfoArchivo";
 import { BsChevronLeft } from "react-icons/bs";
@@ -132,7 +133,7 @@ function DescargarArchivo(){
         const { dataItem } = props;
         return(
             <td>
-                <button onClick={(e) => {
+                <button id="btnAbrir" onClick={(e) => {
                     e.preventDefault();
                     downloadFile2(dataItem._id, dataItem.nombre);
                     }}>Descargar</button>

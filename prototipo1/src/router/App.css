@@ -11,10 +11,11 @@
 }
 
 button{
-  width: 11vw;
-  padding: 1vw;
+  width: auto;
+  padding: 1vw 2vw 1vw 2vw;
   border: none;
   border-radius: 10px;
+  font-size: auto;
   font-weight: bold;
   color: white;
   background: #1C67B3;

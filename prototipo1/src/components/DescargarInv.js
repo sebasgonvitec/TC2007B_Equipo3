@@ -14,6 +14,7 @@ import { useNavigate, Navigate } from 'react-router-dom';
 import ReloadAlert from "./Reload";
 
 import { BsChevronLeft } from "react-icons/bs";
+import "./styleComponents/Descargar.css"
 import Name from "./Name"
 
 const URI = 'https://localhost/investigacion';
@@ -107,7 +108,7 @@ function DescargarInv(){
         return(
             <td>
                 <Link to='/descargarArchivo'>
-                    <button onClick={
+                    <button id="btnAbrir" onClick={
                         () => updateDownload(dataItem)
                     }>Abrir</button>
                 </Link>

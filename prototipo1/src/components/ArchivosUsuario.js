@@ -131,7 +131,7 @@ const ArchivosUsuario = () => {
                         <GridColumn field="folio" title="Folio" />
                         <GridColumn field="fecha" title="Fecha" />
                         <GridColumn field="expedienteNom" title="Nombre Expediente"/>
-                        <GridColumn title="Borrar Archivo" cell={DeleteButton} filterable={false}/>
+                        <GridColumn title="Borrar Archivo" cell={DeleteButton} filterable={false} width="150vw"/>
 
                     </Grid>   
                 </IntlProvider>

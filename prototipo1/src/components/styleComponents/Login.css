@@ -18,16 +18,8 @@
     margin-right: 10vw;
 }
 
-#usuario{
-    margin-top: 1vw;
-    width: 31vw;
-    padding: 0.8vw;
-    border: 1px solid #BCBABA;
-    border-radius: 8px;
-}
-
-#password{
-    margin-top: 1vw;
+#inputL{
+    margin: 2vw;
     width: 31vw;
     padding: 0.8vw;
     border: 1px solid #BCBABA;

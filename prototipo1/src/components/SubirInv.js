@@ -107,7 +107,7 @@ function SubirInv() {
         return(
             <td>
                 <Link to='/subirArchivo'>
-                <button onClick={
+                <button id="btnAbrir" onClick={
                     () => updateUpload(dataItem)
                     }>Abrir</button>
                 </Link>

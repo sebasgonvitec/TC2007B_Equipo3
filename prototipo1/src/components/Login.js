@@ -90,8 +90,8 @@ const Login = () => {
                 <div style={{marginTop: '5vw', marginLeft: '27vw'}}>
                     <form id="formCont" onSubmit={handleOnSubmit}>
                         <img src={LogoAo} alt="ImgLogin" style={{width: '39vw'}}/>
-                        <input type="text" name="usuario" onChange={handleInputChange} value={state.usuario} placeholder="Usuario" id="usuario" required/><br/>
-                        <input type="password" name="password" onChange={handleInputChange} value={state.password} placeholder="Contraseña" id="password" required/><br/>
+                        <input type="text" name="usuario" onChange={handleInputChange} value={state.usuario} placeholder="Usuario" id="inputL" required/><br/>
+                        <input type="password" name="password" onChange={handleInputChange} value={state.password} placeholder="Contraseña" id="inputL" required/><br/>
                         <br/>
                         <button id="btn" type="submit">Ingresar</button><br/>
                     </form>
