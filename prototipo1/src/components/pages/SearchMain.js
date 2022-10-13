@@ -36,8 +36,8 @@ function SearchMain(){
 
                 <div className="optionsContainer">
                     <OptionBox
-                        colorbox={
-                            <div className='colorBox' style={{background:'#45B2E6'}}>
+                        colorboxOption={
+                            <div className='colorboxOption' style={{background:'#66C214'}}>
                                 {<AiOutlineFolder className="icon" style={{width:'8.3vw', height:'auto'}}/>}
                             </div>
                         }
@@ -55,8 +55,8 @@ function SearchMain(){
                     />
     
                     <OptionBox
-                        colorbox={
-                            <div className='colorBox' style={{background:'#8B2E87'}}>
+                        colorboxOption={
+                            <div className='colorboxOption' style={{background:'#44B2ED'}}>
                                 {<BsArchive className="icon" style={{width:'8.3vw', height:'auto'}}/>}
                             </div>
                         }
@@ -74,8 +74,8 @@ function SearchMain(){
                     />
 
                     <OptionBox
-                        colorbox={
-                            <div className='colorBox' style={{background:'#66C214'}}>
+                        colorboxOption={
+                            <div className='colorboxOption' style={{background:'#FFA928'}}>
                                 {<TbReportAnalytics className="icon" style={{width:'8.3vw', height:'auto'}}/>}
                             </div>
                         }
@@ -94,8 +94,8 @@ function SearchMain(){
                     />
 
                     {/* <OptionBox
-                        colorbox={
-                            <div className='colorBox' style={{background:'#FFA928'}}>
+                        colorboxOption={
+                            <div className='colorboxOption' style={{background:'#FFA928'}}>
                                 {<BiCommentDetail className="icon" style={{width:'8.3vw', height:'auto'}}/>}
                             </div>
                         }
@@ -105,8 +105,8 @@ function SearchMain(){
                     />
 
                     <OptionBox
-                        colorbox={
-                            <div className='colorBox' style={{background:'#FCDC4B'}}>
+                        colorboxOption={
+                            <div className='colorboxOption' style={{background:'#FCDC4B'}}>
                                 {<AiOutlineFolder className="icon" style={{width:'8.3vw', height:'auto'}}/>}
                             </div>
                         }
@@ -116,8 +116,8 @@ function SearchMain(){
                     />
 
                     <OptionBox
-                        colorbox={
-                            <div className='colorBox' style={{background:'#44B2ED'}}>
+                        colorboxOption={
+                            <div className='colorboxOption' style={{background:'#44B2ED'}}>
                                 {<BsArchive className="icon" style={{width:'8.3vw', height:'auto'}}/>}
                             </div>
                         }

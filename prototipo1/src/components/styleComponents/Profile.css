@@ -1,0 +1,37 @@
+.infoContainer{
+    width: 65%;
+    display: flex;
+    flex-direction: row;
+    background: #F2F2F2;
+    border-radius: 5px;
+    margin-bottom: 3vw;
+    font-family: "Raleway";
+    font-size: 1vw;
+    color: #5B5B5B;
+}
+
+.colorBoxArchivo{
+    width:5vw;
+    height:auto;
+    width: 17vw;
+    border-radius: 5px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.infoPer{
+    text-align: left;
+    
+    padding: 1.5vw;
+    background: #E3E3E3;
+    border-radius: 5px;
+    margin: 1vw;
+    line-height: 1.5vw;
+
+}
+
+#btnLogout:hover{
+    background: #db2923;
+}

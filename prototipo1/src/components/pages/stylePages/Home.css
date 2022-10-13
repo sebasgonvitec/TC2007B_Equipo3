@@ -3,8 +3,9 @@
     text-align: center;  
     justify-content: center;
     align-items: center;
-    height: 34.83vw;
+    height: auto;
     width: 100%;
+    margin-top: -5vw;
 }
 
 .contentBanner{
@@ -30,16 +31,16 @@
 }
 
 #optionsContainer{
-    width: 93.33vw;
-    height: 38.66vw;
+    width: 80%;
+    height: 100%;
     background: #F2F2F2;
     border-radius: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin: 40px auto 40px auto;
-    font-size: 1.8vw;
+    margin: 3.3vw auto 0 auto;
+    font-size: 1.5vw;
     color: #625E5E;
 }
 .arrow:link{
@@ -51,17 +52,22 @@
 }
 
 .btn{
-    width: 16vw;
-    height: 16vw;
+    width: 14vw;
+    height: 14vw;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     margin:3.3vw;
-    font-size: 2vw;
+    font-size: auto;
+    font-family: "Raleway";
+    font-weight: bold;    
     color:#FFFFFF;
+    text-align: center;
+    padding: 1vw;
 }
+
 .btn:link{
     color: white;
 }
@@ -72,7 +78,7 @@
 
 .icono{
     width: 7.8vw;
-    padding:10px;
+    padding:1vw;
     height: auto;
 }
 

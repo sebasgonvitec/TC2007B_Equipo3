@@ -13,6 +13,10 @@ import SessionContext from "../SessionContext";
 import { useNavigate, Navigate } from 'react-router-dom';
 import ReloadAlert from "./Reload";
 
+import "./styleComponents/SubirInv.css"
+import { BsChevronLeft } from "react-icons/bs";
+import Name from "./Name"
+
 const URI = 'https://localhost/nulidad';
 
 function Subir() {
@@ -106,10 +110,9 @@ function Subir() {
         return(
             <td>
                 <Link to='/subirArchivo'>
-                <button onClick={() => 
-                    updateUpload(dataItem)
-                    }
-                >Abrir</button>
+                <button id="btnAbrir" onClick={
+                    () => updateUpload(dataItem)
+                    }>Abrir</button>
                 </Link>
             </td>
         );
@@ -117,32 +120,42 @@ function Subir() {
     if(session != null)
     {
         return (
-            <>
-            <h1>Subir archivos</h1>
-            <p>Seleccione expediente para subir un archivo</p>
-            <LocalizationProvider language="es-ES"> 
-                <IntlProvider locale="es">
+            <body style={{marginLeft:"5.8vw", marginRight:"5.8vw"}}>
+                <Name
+                    titulo="Subir Archivos - Juicio de Nulidad"
+                    descripcion="Seleccione un expediente para subir un archivo"
+                />
 
-                    <Grid
-                        data={result}
-                        filterable={true}
-                        onDataStateChange={onDataStateChange}
-                        filterOperators={filterOperators}
-                        {...dataState}
-                    >
-                        <GridColumn field="nombre" title="Nombre" />
-                        <GridColumn field="numero" title="Número" />
-                        <GridColumn field="expediente" title="Expediente" />
-                        <GridColumn field="actor" title="Actor" />
-                        <GridColumn field="estatus" title="Estatus" />
-                        <GridColumn field="fecha" title="Fecha"/>
-                        <GridColumn cell={MyCommandCell}  width="100px" filterable={false}/>
+                <Link to={"/uploadmain"}  className="btnBack" style={{color: "#8B2E87", marginBottom:"2vw"}}>
+                    <BsChevronLeft style={{width:"2.5vw", height:"auto"}}/>
+                    <div>Volver</div>
 
-                    </Grid>   
-                </IntlProvider>
-            </LocalizationProvider>
-            <Link to='/crearExpediente'>Crear nuevo expediente</Link>
-            </>
+                </Link>
+                <LocalizationProvider language="es-ES"> 
+                    <IntlProvider locale="es">
+
+                        <Grid
+                            data={result}
+                            filterable={true}
+                            onDataStateChange={onDataStateChange}
+                            filterOperators={filterOperators}
+                            {...dataState}
+                        >
+                            <GridColumn field="nombre" title="Nombre" />
+                            <GridColumn field="numero" title="Número" />
+                            <GridColumn field="expediente" title="Expediente" />
+                            <GridColumn field="actor" title="Actor" />
+                            <GridColumn field="estatus" title="Estatus" />
+                            <GridColumn field="fecha" title="Fecha"/>
+                            <GridColumn cell={MyCommandCell} filterable={false}/>
+
+                        </Grid>   
+                    </IntlProvider>
+                </LocalizationProvider>
+                <Link to='/crearExpediente'>
+                    <button id="btnSubInv" >Crear Expediente</button>
+                </Link>
+            </body>
         );
     }
     else {

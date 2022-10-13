@@ -5,7 +5,12 @@ import { useState } from "react";
 import { Navigate } from 'react-router-dom';
 import SessionContext from "../SessionContext";
 import ReloadAlert from "./Reload";
+import { Link } from "react-router-dom"
 
+import "./styleComponents/CrearExpediente.css"
+import Name from "./Name"
+import { AiOutlineFolder } from "react-icons/ai";
+import { BsChevronLeft } from "react-icons/bs";
 
 const URI = "https://localhost/crearExpedienteNul";
 const logURI = "https://localhost/registrarActividad";
@@ -93,10 +98,35 @@ function CrearExpediente() {
     if(session != null)
     {
         return (
-            <>
-                <h1>Crear Expediente</h1>
+            <div>
+                <div style={{marginLeft:"5.8vw"}}>
+                    <Name 
+                        titulo="Crear Expediente - Juicio de Nulidad"
+                        descripcion="Ingresa los datos para crear un expediente"                        
+                    />
+                    <Link to={"/subir"}  className="btnBack" style={{color: "#8B2E87"}}>
+                        <BsChevronLeft style={{width:"2.5vw", height:"auto"}}/>
+                        <div>Volver</div>
 
-                <div>
+                    </Link>
+                </div>
+                <div className="containerForm">
+                    <form id="formCrearExp" onSubmit={handleOnSubmit} >
+                        <div id="tituloCrearExp">Ingresa los datos</div>
+                        {errorMsg && <p>{errorMsg}</p>}
+                        <input type="text" name="nombre" onChange={handleInputChange} value={state.nombre} placeholder="Nombre del expediente" id="inputCE" />
+                        <input type="text" name="numero" onChange={handleInputChange} value={state.numero} placeholder="Numero del expediente" id="inputCE"/>
+                        <input type="text" name="expediente" onChange={handleInputChange} value={state.expediente} placeholder="Expediente" id="inputCE"/>
+                        <input type="text" name="actor" onChange={handleInputChange} value={state.actor} placeholder="Actor"id="inputCE" />
+                        <input type="text" name="estatus" onChange={handleInputChange} value={state.estatus} placeholder="Estatus" id="inputCE"/>
+                        <button id="btnCrearExp" type="submit">Crear Expediente</button>
+                    </form>
+                    <div className='colorBoxExp' style={{background:'#45B2E6'}}>
+                        {<AiOutlineFolder className="icon" style={{width:'13vw', height:'auto'}}/>}
+                    </div>
+                </div>
+
+                {/* <div>
                     <form onSubmit={handleOnSubmit}>
                         {errorMsg && <p>{errorMsg}</p>}
                         
@@ -112,8 +142,8 @@ function CrearExpediente() {
                         
                         <button type="submit">Crear Expediente</button>
                     </form>
-                </div>
-            </>
+                </div> */}
+            </div>
         );
     }
     else {

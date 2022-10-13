@@ -3,10 +3,17 @@ import React, { useRef, useState } from "react";
 import { useContext } from "react";
 import UploadContext  from "../UploadContext";
 import Dropzone from 'react-dropzone';
-import '../components/styleComponents/Subir.css';
+//import '../components/styleComponents/Subir.css';
 import SessionContext from "../SessionContext";
 import ReloadAlert from "./Reload";
 import { Navigate } from 'react-router-dom';
+import { Link } from "react-router-dom"
+
+import Name from "./Name"
+import InfoArchivo from "./InfoArchivo";
+import "./styleComponents/SubirArchivo.css"
+import { BsChevronLeft } from "react-icons/bs";
+
 
 let URI = 'https://localhost/subirArchivo?';
 const logURI = "https://localhost/registrarActividad";
@@ -107,25 +114,38 @@ const SubirArchivo = () => {
     {
         return(
             <>
-                <h1>Subir Archivo</h1>
+                <div style={{marginLeft:"5.8vw", marginRight:"5.8vw"}}>   
+                    <Name
+                        titulo="Subir Archivo"
+                    />
+                    <Link to={"/uploadmain"}  className="btnBack" style={{color: "#8B2E87"}}>
+                            <BsChevronLeft style={{width:"2.5vw", height:"auto"}}/>
+                            <div>Volver</div>
+                    </Link>
+                    
+                </div>
 
-                {/* <div>
-                    <h2>Informacion del expediente</h2>
-                    <p>Nombre: {upload.nombre}</p>
-                    <p>Numero: {upload.numero}</p>
-                    <p>Expediente: {upload.expediente}</p>
-                    <p>Actor: {upload.actor}</p>
-                </div> */}
+                <div style={{marginTop: "1vw", marginRight: "auto", marginLeft: "auto"}}>
+                    <InfoArchivo
+                        nombre = {<span> {upload.nombre} </span>}
+                        numero = {<span> {upload.numero} </span>}
+                        expediente = {<span> {upload.expediente} </span>}
+                        actor = {<span> {upload.actor} </span>}
+                    />
+                </div>
 
-
-                <form onSubmit={handleOnSubmit}>
+                <form id="formSubirArchivo" onSubmit={handleOnSubmit}>
                     {errorMsg && <p>{errorMsg}</p>}
-                    <input type="text" name="nombre" onChange={handleInputChange} value={state.nombre} placeholder="Nombre" />
-                    <input type="text" name="folio" onChange={handleInputChange} value={state.folio} placeholder="Folio" />
-                    <button type="submit">Subir</button>
-                    {/* <input type="text" name="archivoPrueba" onChange={handleInputChange} value={state.archivoPrueba} placeholder="Archivo" /> */}
+                    
+                    <div className="formCont"> 
+                        <p className="tituloSubir"> Ingresa los datos</p>
+                        <input type="text" name="nombre" onChange={handleInputChange} value={state.nombre} placeholder="Nombre" id="nombreArch" />
+                        <input type="text" name="folio" onChange={handleInputChange} value={state.folio} placeholder="Folio" id="folioArch"/>
+                        <button id="btnSubir" type="submit">Subir</button>
+                        {/* <input type="text" name="archivoPrueba" onChange={handleInputChange} value={state.archivoPrueba} placeholder="Archivo" /> */}
+                    </div>
                     <div className="upload-section">
-                        <Dropzone 
+                        <Dropzone
                         onDrop={onDrop} 
                         onDragEnter={() => updateBorder('over')}
                         onDragLeave={() => updateBorder('leave')}

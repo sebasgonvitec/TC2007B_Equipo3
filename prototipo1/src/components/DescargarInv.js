@@ -13,6 +13,10 @@ import { Link } from "react-router-dom";
 import { useNavigate, Navigate } from 'react-router-dom';
 import ReloadAlert from "./Reload";
 
+import { BsChevronLeft } from "react-icons/bs";
+import "./styleComponents/Descargar.css"
+import Name from "./Name"
+
 const URI = 'https://localhost/investigacion';
 
 function DescargarInv(){
@@ -105,7 +109,7 @@ function DescargarInv(){
         return(
             <td>
                 <Link to='/descargarArchivo'>
-                    <button onClick={
+                    <button id="btnAbrir" onClick={
                         () => updateDownload(dataItem)
                     }>Abrir</button>
                 </Link>
@@ -116,32 +120,40 @@ function DescargarInv(){
     if(session != null)
     {
         return (
-            <>
-            <h1>Descargar Expediente</h1>
-            <p>Seleccione expediente para descargar un archivo</p>
-            <LocalizationProvider language="es-ES"> 
-                <IntlProvider locale="es">
+            <body style={{marginLeft:"5.8vw", marginRight:"5.8vw", marginBottom:"5vw"}}>
+                <Name
+                    titulo="Buscar Expediente - Carpeta de Investigacion"
+                    descripcion="Seleccione expediente para descargar un archivo"
+                />
+                <Link to={"/searchmain"}  className="btnBack" style={{color: "#8B2E87", marginBottom:"2vw"}}>
+                    <BsChevronLeft style={{width:"2.5vw", height:"auto"}}/>
+                    <div>Volver</div>
 
-                    <Grid
-                        data={result}
-                        filterable={true}
-                        onDataStateChange={onDataStateChange}
-                        filterOperators={filterOperators}
-                        {...dataState}
-                    
-                    >
-                        <GridColumn field="nombre" title="Nombre" />
-                        <GridColumn field="numero" title="Número" />
-                        <GridColumn field="carpeta_inv" title="Carpeta de Investigacion" />
-                        <GridColumn field="denunciante" title="Denunciante" />
-                        <GridColumn field="estatus" title="Estatus"/>
-                        <GridColumn field="fecha" title="Fecha"/>
-                        <GridColumn cell={BotonSubir}  width="100px" filterable={false}/>
+                </Link>
+                
+                <LocalizationProvider language="es-ES"> 
+                    <IntlProvider locale="es">
 
-                    </Grid>   
-                </IntlProvider>
-            </LocalizationProvider>
-            </>
+                        <Grid
+                            data={result}
+                            filterable={true}
+                            onDataStateChange={onDataStateChange}
+                            filterOperators={filterOperators}
+                            {...dataState}
+                        
+                        >
+                            <GridColumn field="nombre" title="Nombre" />
+                            <GridColumn field="numero" title="Número" />
+                            <GridColumn field="carpeta_inv" title="Carpeta de Investigacion" />
+                            <GridColumn field="denunciante" title="Denunciante" />
+                            <GridColumn field="estatus" title="Estatus"/>
+                            <GridColumn field="fecha" title="Fecha"/>
+                            <GridColumn cell={BotonSubir} filterable={false}/>
+
+                        </Grid>   
+                    </IntlProvider>
+                </LocalizationProvider>
+            </body>
         );
     }
     else {

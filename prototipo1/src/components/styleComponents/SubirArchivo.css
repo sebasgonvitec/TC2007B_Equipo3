@@ -1,0 +1,76 @@
+.btnBack{
+    font-family: 'Raleway';
+    font-weight: bold;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#formSubirArchivo{
+    height: 17vw;
+    width: 50vw;
+    background: #F2F2F2;
+    border-radius: 10px;
+    padding: 1.5vw 3vw 1.5vw 3vw;
+    margin: 2vw auto 5vw auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: space-around;
+    
+}
+
+.tituloSubir{
+    font-family: 'Raleway';
+    font-size: 1.5vw;
+    font-weight: bold;
+    color: #5B5B5B;
+}
+
+.formCont{
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+    justify-content: center;
+    align-items: center;
+}
+
+#nombreArch{
+    margin-bottom: 1.6vw;
+    width: 20vw;
+    padding: 0.8vw;
+    border: 1px solid #E3E3E3;
+    border-radius: 8px;
+}
+
+#folioArch{
+    margin-bottom: 1.6vw;
+    width: 20vw;
+    padding: 0.8vw;
+    border: 1px solid #E3E3E3;
+    border-radius: 8px;
+}
+
+.upload-section{
+    margin-left: 2vw;
+    margin-right: 2vw;
+}
+
+.drop-zone {
+    padding: 0 5vw 0 5vw;
+    height: 17vw;
+    border: 2px dashed  #777777;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 1.2vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background: #E3E3E3;
+}
+
+#btnSubir:hover{
+    background: #8B2E87;
+}

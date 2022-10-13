@@ -14,6 +14,13 @@ import fileDownload from 'js-file-download';
 import SessionContext from "../SessionContext";
 import ReloadAlert from "./Reload";
 import { useNavigate, Navigate } from 'react-router-dom';
+import { Link } from "react-router-dom"
+
+import "./styleComponents/Descargar.css"
+import Name from "./Name"
+import InfoArchivo from "./InfoArchivo";
+import { BsChevronLeft } from "react-icons/bs";
+
 
 
 
@@ -144,7 +151,7 @@ function DescargarArchivo(){
         const { dataItem } = props;
         return(
             <td>
-                <button onClick={(e) => {
+                <button id="btnAbrir" onClick={(e) => {
                     e.preventDefault();
                     downloadFile2(dataItem._id, dataItem.nombre, dataItem.folio, dataItem.expediente);
                     }}>Descargar</button>
@@ -155,38 +162,49 @@ function DescargarArchivo(){
     if(session != null)
     {
         return (
-            <>
-            <h1>Descargar Archivos</h1>
-            <p>Seleccione el archivo que desea descargar</p>
-            
-            <div>
-                <h2>Informacion del expediente</h2>
-                <p>Nombre: {download.nombre}</p>
-                <p>Numero: {download.numero}</p>
-                <p>Expediente: {download.expediente}</p>
-                <p>Actor: {download.actor}</p>
-            </div>
-            {errorMsg && <div className="error">{errorMsg}</div>}
-            <LocalizationProvider language="es-ES"> 
-                <IntlProvider locale="es">
+            <body style={{marginLeft:"5.8vw", marginRight:"5.8vw", marginBottom:"5vw"}}>
+                <Name
+                        titulo="Descargar Archivos"
+                        descripcion="Seleccione el archivo que desea descargar"
+                />
+                <Link to={"/searchmain"}  className="btnBack" style={{color: "#8B2E87"}}>
+                        <BsChevronLeft style={{width:"2.5vw", height:"auto"}}/>
+                        <div>Volver</div>
+                </Link>
 
-                    <Grid
-                        data={result}
-                        filterable={true}
-                        onDataStateChange={onDataStateChange}
-                        filterOperators={filterOperators}
-                        {...dataState}
-                    >
-                        <GridColumn field="nombre" title="Nombre" />
-                        <GridColumn field="folio" title="Folio" />
-                        <GridColumn field="fecha" title="Fecha" />
-                        <GridColumn cell={MyCommandCell} width="300px" filterable={false}/>
+                <div style={{
+                    display:"flex",
+                    marginTop: "1.5vw", 
+                    marginBottom: "3vw"}}>
+                    <InfoArchivo
+                        nombre = {<span> {download.nombre} </span>}
+                        numero = {<span> {download.numero} </span>}
+                        expediente = {<span> {download.expediente} </span>}
+                        actor = {<span> {download.actor} </span>}
+                    />
+                </div>
 
-                    </Grid>   
-                </IntlProvider>
-            </LocalizationProvider>
-            <a></a>
-            </>
+                {errorMsg && <div className="error">{errorMsg}</div>}
+                <LocalizationProvider language="es-ES"> 
+                    <IntlProvider locale="es">
+
+                        <Grid
+                            data={result}
+                            filterable={true}
+                            onDataStateChange={onDataStateChange}
+                            filterOperators={filterOperators}
+                            {...dataState}
+                        >
+                            <GridColumn field="nombre" title="Nombre" />
+                            <GridColumn field="folio" title="Folio" />
+                            <GridColumn field="fecha" title="Fecha" />
+                            <GridColumn cell={MyCommandCell} filterable={false}/>
+
+                        </Grid>   
+                    </IntlProvider>
+                </LocalizationProvider>
+                <a></a>
+            </body>
         );
     }
     else {

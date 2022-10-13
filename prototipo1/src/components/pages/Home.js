@@ -21,7 +21,7 @@ function Home(){
     if(session != null)
     {
         return(
-            <div>
+            <div style={{marginBottom:"5vw"}}>
                 <div className="banner">
                     <img src={ImgBackground} alt="imgBackground" style={{width: '100%'}}/>
                     <div className="contentBanner">
@@ -49,7 +49,7 @@ function Home(){
                             <div>Perfil</div>
                         </Link>
                     </div>
-                    <p>¡Haz click en una de las opciones para comenzar!</p>               
+                    <p style={{paddingBottom: "2vw"}}>¡Haz click en una de las opciones para comenzar!</p>               
                 </div>  
             </div>
         );

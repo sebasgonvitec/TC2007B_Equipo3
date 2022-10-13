@@ -10,6 +10,8 @@ import { useNavigate, Navigate } from 'react-router-dom';
 import { useContext } from "react";
 import SessionContext from "../SessionContext";
 
+import "./styleComponents/ArchivosUsuario.css"
+
 const URI = 'https://localhost/archivosUsuario'
 const URI_delete = 'https://localhost/borrarArchivo'
 
@@ -96,7 +98,7 @@ const ArchivosUsuario = () => {
         console.log(dataItem);
         return(
             <td>
-                <button onClick={(e) => {
+                <button id="btnBorrar" onClick={(e) => {
                     e.preventDefault();
                     axios({
                         url: URI_delete,
@@ -129,7 +131,7 @@ const ArchivosUsuario = () => {
                         <GridColumn field="folio" title="Folio" />
                         <GridColumn field="fecha" title="Fecha" />
                         <GridColumn field="expedienteNom" title="Nombre Expediente"/>
-                        <GridColumn title="Borrar Archivo" cell={DeleteButton} filterable={false}/>
+                        <GridColumn title="Borrar Archivo" cell={DeleteButton} filterable={false} width="150vw"/>
 
                     </Grid>   
                 </IntlProvider>

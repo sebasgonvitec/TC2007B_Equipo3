@@ -1,0 +1,56 @@
+#formRegister{
+    width: 35vw;
+    background: #F2F2F2;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    padding: 2vw;
+    
+    margin: 1vw auto 0 auto;
+}
+
+#desciption{
+    font-size: 1.25vw;
+    font-weight:bold;
+    display: flex;
+    align-items: flex-start;
+
+}
+
+#inputR{
+    margin-top: 1vw;
+    width: 31vw;
+    padding: 0.5vw;
+    border: 1px solid #BCBABA;
+    border-radius: 8px;
+}
+
+#area{
+    margin-top: 1vw;
+    width: 31vw;
+    padding: 0.5vw;
+    border: 1px solid #BCBABA;
+    border-radius: 8px;
+}
+.privilegios{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+#labelForm{
+    padding: 0.8vw;
+    padding-left: 0;
+}
+
+
+#btnCuenta{
+    margin: 1vw auto 0px auto;
+    
+}
+
+#btnCuenta:hover{
+    background: #45B2E6;
+}
+
+

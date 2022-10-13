@@ -2,13 +2,14 @@
     font-family: 'Raleway';
     font-style: normal;
     font-weight: 700;
-    font-size: 3vw;
+    font-size: 2.8vw;
+    margin-top: 1.5vw;
 }
 
 .descripcion{
     font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
-    font-size: 1.7vw;
+    font-size: 1.4vw;
     color: #625E5E;
 }

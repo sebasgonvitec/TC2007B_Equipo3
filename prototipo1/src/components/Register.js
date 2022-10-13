@@ -6,6 +6,12 @@ import { useContext } from "react";
 import { Navigate } from 'react-router-dom';
 import SessionContext from "../SessionContext";
 import ReloadAlert from "./Reload";
+import { Link } from "react-router-dom"
+
+import "./styleComponents/Register.css"
+import Name from "./Name"
+import BackgroundRegister from "../img/backgroundRegister.png"
+import { BsChevronLeft } from "react-icons/bs";
 
 const URI = "https://localhost/crearCuenta";
 
@@ -68,23 +74,49 @@ const Register = () => {
     if(session != null)
     {
         return(
-            <body>
-                <h1>Registrar Cuenta</h1>
-                <form onSubmit={handleOnSubmit}>
-                    <input type="text" name="nombre" onChange={handleInputChange} value={state.nombre} placeholder="Nombre Completo" required/><br/>
-                    <input type="text" name="area" onChange={handleInputChange} value={state.area} placeholder="Area" required/><br/>
-                    <input type="text" name="usuario" onChange={handleInputChange} value={state.usuario} placeholder="Usuario" id="usuario" required/><br/>
-                    <input type="password" name="password" onChange={handleInputChange} value={state.password} placeholder="Contraseña" id="password" required/><br/>
-                
+            <div style={{backgroundImage: `url(${BackgroundRegister})`}}>
+                <div style={{marginLeft:"5.8vw"}}>
+                    <Name
+                        titulo="Registrar Cuenta"
+                    />
+                    <Link to={"/portalAdmin"}  className="btnBack" style={{color: "#8B2E87"}}>
+                        <BsChevronLeft style={{width:"2.5vw", height:"auto"}}/>
+                        <div>Volver</div>
+
+                    </Link>
+                </div>
+
+                <form id="formRegister" onSubmit={handleOnSubmit}>
+                    <p id="desciption"> Ingresa los datos para registrar una cuenta nueva </p>
+                    <input type="text" name="nombre" onChange={handleInputChange} value={state.nombre} placeholder="Nombre Completo" id="inputR" required/><br/>
+                    <input type="text" name="area" onChange={handleInputChange} value={state.area} placeholder="Area" id="inputR" required/><br/>
+                    <input type="text" name="usuario" onChange={handleInputChange} value={state.usuario} placeholder="Usuario" id="inputR" required/><br/>
+                    <input type="password" name="password" onChange={handleInputChange} value={state.password} placeholder="Contraseña" id="inputR" required/><br/>
                     <h4>Privilegios:</h4>
-                    <input type="checkbox" name="nulidad" onChange={handleInputChange} value="true"/>Juicio de Nulidad<br/>
-                    <input type="checkbox" name="investigacion" onChange={handleInputChange} value="true"/>Carpeta de Investigacion<br/>
-                    <input type="checkbox" name="otros" onChange={handleInputChange} value="true"/>Expedientes Otros<br/>
+                    <div className="privilegios">
+                        <label id="labelForm">
+                            <input type="checkbox" name="nulidad" onChange={handleInputChange} value="true"/>
+                            Juicio de Nulidad
+                        </label>
+                        <label id="labelForm">
+                            <input type="checkbox" name="investigacion" onChange={handleInputChange} value="true"/>
+                            Carpeta de Investigacion
+                        </label>
+                        <label id="labelForm">
+                            <input type="checkbox" name="otros" onChange={handleInputChange} value="true"/>
+                            Expedientes Otros
+                        </label>
+                        
+                        { /* <input type="checkbox" name="nulidad" onChange={handleInputChange} value="true"/>Juicio de Nulidad<br/>
+                        <input type="checkbox" name="investigacion" onChange={handleInputChange} value="true"/>Carpeta de Investigacion<br/>
+        <input type="checkbox" name="otros" onChange={handleInputChange} value="true"/>Expedientes Otros<br/> */}
+                    </div>
 
                     <br/>
-                    <button type="submit">Crear Cuenta</button><br/>
+                    <button id="btnCuenta" type="submit">Crear Cuenta</button><br/>
                 </form>
-            </body>
+                <div style={{paddingBottom:"5.8vw", backgroundColor:" #8B2E87"}}></div>
+            </div>
         );
     }
     else {

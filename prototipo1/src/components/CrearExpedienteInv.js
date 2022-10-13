@@ -5,6 +5,12 @@ import { useState } from "react";
 import { Navigate } from 'react-router-dom';
 import SessionContext from "../SessionContext";
 import ReloadAlert from "./Reload";
+import { Link } from "react-router-dom"
+
+import "./styleComponents/CrearExpediente.css"
+import Name from "./Name"
+import { BsArchive } from "react-icons/bs";
+import { BsChevronLeft } from "react-icons/bs";
 
 
 const URI = "https://localhost/crearExpedienteInv";
@@ -87,26 +93,40 @@ function CrearExpedienteInv() {
     if(session != null)
     {
         return (
-            <>
-                <h1>Crear Expediente</h1>
+            <div>
+                <div style={{marginLeft:"5.8vw"}}>
+                    <Name 
+                        titulo="Crear Expediente - Carpeta de Investigación"
+                        descripcion="Ingresa los datos para crear un expediente"
+                    />
                 
-                <div>
-                    <form onSubmit={handleOnSubmit}>
-                        {errorMsg && <p>{errorMsg}</p>}
-                        <input type="text" name="numero" onChange={handleInputChange} value={state.numero} placeholder="Numero del expediente" />
-                        <input type="text" name="eco" onChange={handleInputChange} value={state.eco} placeholder="ECO" />
-                        <input type="text" name="carpeta_inv" onChange={handleInputChange} value={state.carpeta_inv} placeholder="Carpeta de Investigacion" />
-                        <input type="text" name="denunciante" onChange={handleInputChange} value={state.denunciante} placeholder="Denunciante" />
-                        <input type="text" name="imputado" onChange={handleInputChange} value={state.imputado} placeholder="Imputado" />
-                        <input type="text" name="delito" onChange={handleInputChange} value={state.delito} placeholder="Delito" />
-                        <input type="text" name="lugarHechos" onChange={handleInputChange} value={state.lugarHechos} placeholder="Lugar de los hechos" />
-                        <input type="text" name="objetoDelito" onChange={handleInputChange} value={state.objetoDelito} placeholder="Objeto del delito" />
-                        <input type="text" name="estado" onChange={handleInputChange} value={state.estado} placeholder="Estado" />
-
-                        <button type="submit">Crear Expediente</button>
-                    </form>
+                    <Link to={"/subirInv"}  className="btnBack" style={{color: "#8B2E87"}}>
+                                <BsChevronLeft style={{width:"2.5vw", height:"auto"}}/>
+                                <div>Volver</div>
+                    </Link>
                 </div>
-            </>
+
+                <div className="containerForm">
+                    <form id="formCrearExp" onSubmit={handleOnSubmit}>
+                        <div id="tituloCrearExp">Ingresa los datos</div>
+                        {errorMsg && <p>{errorMsg}</p>}
+                        <input type="text" name="numero" onChange={handleInputChange} value={state.numero} placeholder="Numero del expediente" id="inputCE"/>
+                        <input type="text" name="eco" onChange={handleInputChange} value={state.eco} placeholder="ECO" id="inputCE"/>
+                        <input type="text" name="carpeta_inv" onChange={handleInputChange} value={state.carpeta_inv} placeholder="Carpeta de Investigacion" id="inputCE"/>
+                        <input type="text" name="denunciante" onChange={handleInputChange} value={state.denunciante} placeholder="Denunciante" id="inputCE"/>
+                        <input type="text" name="imputado" onChange={handleInputChange} value={state.imputado} placeholder="Imputado" id="inputCE"/>
+                        <input type="text" name="delito" onChange={handleInputChange} value={state.delito} placeholder="Delito" id="inputCE"/>
+                        <input type="text" name="lugarHechos" onChange={handleInputChange} value={state.lugarHechos} placeholder="Lugar de los hechos" id="inputCE"/>
+                        <input type="text" name="objetoDelito" onChange={handleInputChange} value={state.objetoDelito} placeholder="Objeto del delito" id="inputCE" />
+                        <input type="text" name="estado" onChange={handleInputChange} value={state.estado} placeholder="Estado" id="inputCE"/>
+
+                        <button id="btnCrearExp" type="submit">Crear Expediente</button>
+                    </form>
+                    <div className="colorBoxExp" style={{background:'#FFA928'}}>
+                        {<BsArchive className="icon" style={{width:'11vw', height:'auto'}}/>}
+                    </div>
+                </div>
+            </div>
         );
     }
     else {
