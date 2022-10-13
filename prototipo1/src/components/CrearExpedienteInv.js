@@ -8,6 +8,7 @@ import ReloadAlert from "./Reload";
 
 
 const URI = "https://localhost/crearExpedienteInv";
+const logURI = "https://localhost/registrarActividad";
 
 const date = new Date();
 let day = date.getDate();
@@ -60,6 +61,16 @@ function CrearExpedienteInv() {
                 };
 
                 setErrorMsg('');
+                
+                const logData = {usuario:session.nombre, fecha: new Date().toString(), accion: "Creó un expediente.", folio: state.numero, area: "Carpeta de Investigación"};
+
+                await axios.post(logURI, logData, {
+                headers:{
+                    'Content-Type': 'application/json',
+                    token: localStorage.getItem('JWT_token')
+                }
+                });
+                
                 await axios.post(URI, formData, {
                     headers: {
                         'Content-Type': 'application/json',

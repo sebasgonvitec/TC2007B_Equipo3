@@ -8,6 +8,8 @@ import ReloadAlert from "./Reload";
 
 
 const URI = "https://localhost/crearExpedienteNul";
+const logURI = "https://localhost/registrarActividad";
+
 
 const date = new Date();
 let day = date.getDate();
@@ -62,6 +64,17 @@ function CrearExpediente() {
                 console.log(formData);
 
                 setErrorMsg('');
+                
+
+                const logData = {usuario:session.nombre, fecha: new Date().toString(), accion: "Creó un expediente.", folio: state.numero, area: "Juicio de Nulidad"}
+
+                await axios.post(logURI, logData, {
+                headers:{
+                    'Content-Type': 'application/json',
+                    token: localStorage.getItem('JWT_token')
+                }
+                });
+                
                 await axios.post(URI, formData, {
                     headers: {
                         'Content-Type': 'application/json',
