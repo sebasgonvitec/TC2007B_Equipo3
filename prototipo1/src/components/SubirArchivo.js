@@ -76,7 +76,7 @@ const SubirArchivo = () => {
 
                     setErrorMsg('');
                     
-                    const logData = {usuario:session.nombre, fecha: new Date().toString(), accion: "Subió un archivo.", folio: state.numero, area: upload.nombre}
+                    const logData = {usuario:session.nombre, fecha: new Date().toString(), accion: "Subió un archivo.", folio: state.folio, area: upload.nombre}
 
                     await axios.post(logURI, logData, {
                     headers:{
