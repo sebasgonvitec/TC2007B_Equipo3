@@ -35,7 +35,7 @@ function PortalAdmin(){
                                 <AiOutlineUserAdd className="icono"/>
                                 <div>Registro de Usuarios</div>
                             </Link>
-                            <Link to={"/registro"}  className="btn" style={{background: "#45B2E6"}}>
+                            <Link to={"/bitacora"}  className="btn" style={{background: "#45B2E6"}}>
                                 <TbActivity className="icono"/>
                                 <div>Bitacora de Actividad</div>
                             </Link>

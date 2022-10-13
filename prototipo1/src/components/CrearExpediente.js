@@ -114,11 +114,15 @@ function CrearExpediente() {
                     <form id="formCrearExp" onSubmit={handleOnSubmit} >
                         <div id="tituloCrearExp">Ingresa los datos</div>
                         {errorMsg && <p>{errorMsg}</p>}
-                        <input type="text" name="nombre" onChange={handleInputChange} value={state.nombre} placeholder="Nombre del expediente" id="inputCE" />
-                        <input type="text" name="numero" onChange={handleInputChange} value={state.numero} placeholder="Numero del expediente" id="inputCE"/>
+                        <input type="text" name="numero" onChange={handleInputChange} value={state.numero} placeholder="Numero del expediente" id="inputCE" />
                         <input type="text" name="expediente" onChange={handleInputChange} value={state.expediente} placeholder="Expediente" id="inputCE"/>
-                        <input type="text" name="actor" onChange={handleInputChange} value={state.actor} placeholder="Actor"id="inputCE" />
-                        <input type="text" name="estatus" onChange={handleInputChange} value={state.estatus} placeholder="Estatus" id="inputCE"/>
+                        <input type="text" name="salaTja" onChange={handleInputChange} value={state.salaTja} placeholder="Sala del TJA" id="inputCE"/>
+                        <input type="text" name="actor" onChange={handleInputChange} value={state.actor} placeholder="Actor" id="inputCE" />
+                        <input type="text" name="demandadas" onChange={handleInputChange} value={state.demandadas} placeholder="Demandadas" id="inputCE" />
+                        <input type="text" name="materia" onChange={handleInputChange} value={state.materia} placeholder="Materia" id="inputCE" />
+                        <input type="text" name="domicilio" onChange={handleInputChange} value={state.domicilio} placeholder="Materia" id="inputCE" />
+                        <input type="text" name="actoImpugnado" onChange={handleInputChange} value={state.actoImpugnado} placeholder="Acto Impugnado" id="inputCE" />
+                        <input type="text" name="estatusJuridico" onChange={handleInputChange} value={state.estatusJuridico} placeholder="Estatus Juridico" id="inputCE"/>
                         <button id="btnCrearExp" type="submit">Crear Expediente</button>
                     </form>
                     <div className='colorBoxExp' style={{background:'#45B2E6'}}>
