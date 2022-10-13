@@ -6,42 +6,13 @@
     align-items: center;
 }
 
-.infoSubir{
-    background: #F2F2F2;
-    border-radius: 5px;
-    width: 56vw;
-    margin: 1vw auto 0 auto;
-    display: flex;
-    flex-direction: row;
-    font-family: "Raleway";
-    font-size: 1vw;
-    color: #5B5B5B;
-}
-
-.colorBoxArchivo{
-    height: auto;
-    width: 17vw;
-    border-radius: 5px;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.infoContent{
-    display: flex;
-    flex-direction: column;
-    line-height: 2vw;
-    padding: 1vw 0 1vw 3vw;
-}
-
 #formSubirArchivo{
     height: 17vw;
     width: 50vw;
     background: #F2F2F2;
     border-radius: 10px;
-    margin: 1.5vw auto 5vw auto;
     padding: 1.5vw 3vw 1.5vw 3vw;
+    margin: 2vw auto 5vw auto;
     display: flex;
     flex-direction: row;
     justify-content: center;

@@ -97,7 +97,7 @@ function CrearExpediente() {
                         <input type="text" name="estatus" onChange={handleInputChange} value={state.estatus} placeholder="Estatus" />
                         <button id="btnCrearExp" type="submit">Crear Expediente</button>
                     </form>
-                    <div className='colorBox' style={{background:'#45B2E6'}}>
+                    <div className='colorBoxExp' style={{background:'#45B2E6'}}>
                         {<AiOutlineFolder className="icon" style={{width:'13vw', height:'auto'}}/>}
                     </div>
                 </div>

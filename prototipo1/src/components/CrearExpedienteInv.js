@@ -98,8 +98,8 @@ function CrearExpedienteInv() {
                         <input type="text" name="estatus" onChange={handleInputChange} value={state.estatus} placeholder="Estatus" />
                         <button id="btnCrearExp" type="submit">Crear Expediente</button>
                     </form>
-                    <div className='colorBox' style={{background:'#FFA928'}}>
-                        {<BsArchive className="icon" style={{width:'11vw', height:'auto', padding: "1.5vw"}}/>}
+                    <div className="colorBoxExp" style={{background:'#FFA928'}}>
+                        {<BsArchive className="icon" style={{width:'11vw', height:'auto'}}/>}
                     </div>
                 </div>
             </div>

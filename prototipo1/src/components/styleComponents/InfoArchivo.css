@@ -1,8 +1,8 @@
-.infoSubirDes{
+.infoSubir{
     background: #F2F2F2;
     border-radius: 5px;
     width: 56vw;
-    margin: 1.5vw auto 3vw 0;
+    margin: 1vw auto 0 auto;
     display: flex;
     flex-direction: row;
     font-family: "Raleway";

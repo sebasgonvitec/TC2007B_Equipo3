@@ -17,9 +17,9 @@ import { useNavigate, Navigate } from 'react-router-dom';
 import { Link } from "react-router-dom"
 
 import Name from "./Name"
-import "./styleComponents/DescargarArchivo.css"
+import InfoArchivo from "./InfoArchivo";
 import { BsChevronLeft } from "react-icons/bs";
-import { AiOutlineFolder } from "react-icons/ai";
+
 
 
 
@@ -152,30 +152,18 @@ function DescargarArchivo(){
                         <BsChevronLeft style={{width:"2.5vw", height:"auto"}}/>
                         <div>Volver</div>
                 </Link>
-                <div className="infoSubirDes">
-                    <div className='colorBoxArchivo' style={{background:'#45B2E6'}}>
-                        <AiOutlineFolder className="icon" style={{width:'8.3vw', height:'auto'}}/>
-                    </div>
-                    <div className="infoContent">
-                        <p style={{fontWeight:"bold", fontSize:"1.5vw"}}>Informacion del expediente</p>
-                        <div> 
-                            <span style={{fontWeight:"bold"}}>Nombre: </span> 
-                            {download.nombre}
-                        </div>
-                        <div>
-                            <span style={{fontWeight:"bold"}}> Numero: </span>
-                            {download.numero}
-                        </div>
-                        <div>
-                            <span style={{fontWeight:"bold"}}>Expediente: </span> 
-                            {download.expediente}
-                        </div>
-                        <div>
-                            <span style={{fontWeight:"bold"}}> Actor: </span> 
-                            {download.actor}
-                        </div>
-                    </div>
-                </div> 
+
+                <div style={{
+                    display:"flex",
+                    marginTop: "1.5vw", 
+                    marginBottom: "3vw"}}>
+                    <InfoArchivo
+                        nombre = {<span> {download.nombre} </span>}
+                        numero = {<span> {download.numero} </span>}
+                        expediente = {<span> {download.expediente} </span>}
+                        actor = {<span> {download.actor} </span>}
+                    />
+                </div>
 
                 {errorMsg && <div className="error">{errorMsg}</div>}
                 <LocalizationProvider language="es-ES"> 

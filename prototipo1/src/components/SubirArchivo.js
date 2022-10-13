@@ -10,9 +10,10 @@ import { Navigate } from 'react-router-dom';
 import { Link } from "react-router-dom"
 
 import Name from "./Name"
+import InfoArchivo from "./InfoArchivo";
 import "./styleComponents/SubirArchivo.css"
 import { BsChevronLeft } from "react-icons/bs";
-import { AiOutlineFolder } from "react-icons/ai";
+
 
 let URI = 'https://localhost/subirArchivo?';
 
@@ -100,7 +101,7 @@ const SubirArchivo = () => {
     {
         return(
             <>
-                <div style={{marginLeft:"5.8vw"}}>   
+                <div style={{marginLeft:"5.8vw", marginRight:"5.8vw"}}>   
                     <Name
                         titulo="Subir Archivo"
                     />
@@ -111,31 +112,14 @@ const SubirArchivo = () => {
                     
                 </div>
 
-                 <div className="infoSubir">
-                    <div className='colorBoxArchivo' style={{background:'#45B2E6'}}>
-                        <AiOutlineFolder className="icon" style={{width:'8.3vw', height:'auto'}}/>
-                    </div>
-                    <div className="infoContent">
-                        <p style={{fontWeight:"bold", fontSize:"1.5vw"}}>Informacion del expediente</p>
-                        <div> 
-                            <span style={{fontWeight:"bold"}}>Nombre: </span> 
-                            {upload.nombre}
-                        </div>
-                        <div>
-                            <span style={{fontWeight:"bold"}}> Numero: </span>
-                            {upload.numero}
-                        </div>
-                        <div>
-                            <span style={{fontWeight:"bold"}}>Expediente: </span> 
-                            {upload.expediente}
-                        </div>
-                        <div>
-                            <span style={{fontWeight:"bold"}}> Actor: </span> 
-                            {upload.actor}
-                        </div>
-                    </div>
-                </div> 
-
+                <div style={{marginTop: "1vw", marginRight: "auto", marginLeft: "auto"}}>
+                    <InfoArchivo
+                        nombre = {<span> {upload.nombre} </span>}
+                        numero = {<span> {upload.numero} </span>}
+                        expediente = {<span> {upload.expediente} </span>}
+                        actor = {<span> {upload.actor} </span>}
+                    />
+                </div>
 
                 <form id="formSubirArchivo" onSubmit={handleOnSubmit}>
                     {errorMsg && <p>{errorMsg}</p>}
