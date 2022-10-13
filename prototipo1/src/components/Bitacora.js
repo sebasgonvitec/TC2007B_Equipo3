@@ -6,50 +6,35 @@ import { Grid, GridColumn } from "@progress/kendo-react-grid";
 import { process } from "@progress/kendo-data-query";
 import {IntlProvider, LocalizationProvider,loadMessages} from "@progress/kendo-react-intl";
 import esMessages from "../language/es.json";
+import { Link } from "react-router-dom";
 import { useContext } from "react";
-import DownloadContext from "../DownloadContext";
-import { filterBy } from "@progress/kendo-data-query";
-// import downloadjs from 'downloadjs';
-import fileDownload from 'js-file-download';
+import UploadContext  from "../UploadContext";
 import SessionContext from "../SessionContext";
-import ReloadAlert from "./Reload";
 import { useNavigate, Navigate } from 'react-router-dom';
+import ReloadAlert from "./Reload";
 
+const URI = 'https://localhost/bitacora';
 
-
-let URI = 'https://localhost/descargarArchivos/download'
-let URI_TEST = 'https://localhost/descargarArchivos'
-const logURI = "https://localhost/registrarActividad";
-
-
-function DescargarArchivo(){
+function Bitacora() {
 
     ReloadAlert();
-    
-    const navigate = useNavigate();
-
-    const { download } = useContext(DownloadContext);
 
     const { session } = useContext(SessionContext);
-
-    const [errorMsg, setErrorMsg] = useState('');
-
+    const navigate = useNavigate();
+    
     const [data, setData] = useState([]);
     useEffect( () => {
         getData()
     }, [])
 
-    console.log(download._id)
-    console.log(download.area)
-
     const getData = async () => {
         const config = {
-            params: { expediente: download._id },
             headers:{
+              'Content-Type': 'application/json',
               token: localStorage.getItem('JWT_token'),
             }
         };
-        await axios.get(URI_TEST, config).then((res) => {
+        await axios.get(URI, config).then((res) => {
             if(res.data !== null){
                 setData(res.data)   
             }
@@ -69,33 +54,6 @@ function DescargarArchivo(){
         setDataState(event.dataState);
         setResult(process(data, event.dataState));
     }
-    const downloadFile2 = (id, nombre, folio, expediente) =>{
-        
-        
-        
-        axios({
-            url: URI,
-            method: 'GET',
-            headers:{
-                token: localStorage.getItem('JWT_token'),
-            },
-            responseType: 'blob',
-            params: { id: id, nombre: nombre, area: download.area} // important
-        }).then((res)=>{
-            
-            const logData = {usuario:session.nombre, fecha: new Date().toString(), accion: "Descargó un archivo.", folio: folio, area: expediente}
-
-            axios.post(logURI, logData, {
-            headers:{
-                'Content-Type': 'application/json',
-                token: localStorage.getItem('JWT_token')
-            }
-            });
-            
-            fileDownload(res.data, nombre+".pdf");
-        })
-    }
-
 
     //Personalizar filtros para la tabla
     const filterOperators = {
@@ -136,37 +94,16 @@ function DescargarArchivo(){
         ],
     };
     
-    //cargar los mensajes/etiquetas para filtros en español
+      //cargar los mensajes/etiquetas para filtros en español
     loadMessages(esMessages, "es-ES"); 
 
-    // Componente de boton para acciones en cada fila
-    const MyCommandCell = (props) => {
-        const { dataItem } = props;
-        return(
-            <td>
-                <button onClick={(e) => {
-                    e.preventDefault();
-                    downloadFile2(dataItem._id, dataItem.nombre, dataItem.folio, dataItem.expediente);
-                    }}>Descargar</button>
-            </td>
-        );
-    };
-    
+
     if(session != null)
     {
         return (
-            <>
-            <h1>Descargar Archivos</h1>
-            <p>Seleccione el archivo que desea descargar</p>
-            
             <div>
-                <h2>Informacion del expediente</h2>
-                <p>Nombre: {download.nombre}</p>
-                <p>Numero: {download.numero}</p>
-                <p>Expediente: {download.expediente}</p>
-                <p>Actor: {download.actor}</p>
-            </div>
-            {errorMsg && <div className="error">{errorMsg}</div>}
+            <h1>Bitácora de Actividad</h1>
+            <p></p>
             <LocalizationProvider language="es-ES"> 
                 <IntlProvider locale="es">
 
@@ -177,16 +114,17 @@ function DescargarArchivo(){
                         filterOperators={filterOperators}
                         {...dataState}
                     >
-                        <GridColumn field="nombre" title="Nombre" />
+                        <GridColumn field="fecha" title="Fecha y Hora" />
+                        <GridColumn field="usuario" title="Usuario" />
+                        <GridColumn field="accion" title="Acción" />
                         <GridColumn field="folio" title="Folio" />
-                        <GridColumn field="fecha" title="Fecha" />
-                        <GridColumn cell={MyCommandCell} width="300px" filterable={false}/>
+                        <GridColumn field="area" title="Área" />
 
                     </Grid>   
                 </IntlProvider>
             </LocalizationProvider>
-            <a></a>
-            </>
+            </div>
+
         );
     }
     else {
@@ -194,4 +132,4 @@ function DescargarArchivo(){
     }
 }
 
-export default DescargarArchivo;
+export default Bitacora;

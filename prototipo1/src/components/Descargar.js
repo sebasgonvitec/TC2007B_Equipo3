@@ -101,6 +101,7 @@ function Descargar(){
 
     const BotonSubir = (props) => {
         const { dataItem } = props;
+        dataItem.area = "nulidad"; //añadir area
         return(
             <td>
                 <Link to='/descargarArchivo'>

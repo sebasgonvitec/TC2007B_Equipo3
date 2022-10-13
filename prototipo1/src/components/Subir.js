@@ -100,12 +100,16 @@ function Subir() {
     // Componente de boton para acciones en cada fila
     const MyCommandCell = (props) => {
         const { dataItem } = props;
+        dataItem.area = "nulidad"; //añadir area
+
+        console.log(dataItem)
         return(
             <td>
                 <Link to='/subirArchivo'>
-                <button onClick={
-                    () => updateUpload(dataItem)
-                    }>Abrir</button>
+                <button onClick={() => 
+                    updateUpload(dataItem)
+                    }
+                >Abrir</button>
                 </Link>
             </td>
         );

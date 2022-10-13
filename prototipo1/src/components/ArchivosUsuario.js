@@ -101,7 +101,7 @@ const ArchivosUsuario = () => {
                     axios({
                         url: URI_delete,
                         method: 'DELETE',
-                        params: { id: dataItem._id}, // important
+                        params: { id: dataItem._id, nombre: dataItem.nombre}, // important
                         headers: { token: localStorage.getItem('JWT_token')}
                     })
                    getData(); //Actualizar eliminacion

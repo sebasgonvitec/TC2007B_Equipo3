@@ -28,6 +28,7 @@ import SubirInv from '../components/SubirInv';
 import DescargarInv from '../components/DescargarInv';
 import PortalAdmin from '../components/PortalAdmin';
 import EditarUsuario from '../components/EditarUsuario';
+import Bitacora from '../components/Bitacora';
 
 
 function AppRouter() {
@@ -60,6 +61,7 @@ function AppRouter() {
                     <Route path="/tablaUsuarios" element={<AccountsTable />} />
                     <Route path="/portalAdmin" element={<PortalAdmin />} />
                     <Route path="/editarUsuario" element={<EditarUsuario />} />
+                    <Route path="/bitacora" element={<Bitacora />} />
                 </Routes>
         <Footer />
     </BrowserRouter>

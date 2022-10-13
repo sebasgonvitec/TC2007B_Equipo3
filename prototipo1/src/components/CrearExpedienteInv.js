@@ -8,6 +8,7 @@ import ReloadAlert from "./Reload";
 
 
 const URI = "https://localhost/crearExpedienteInv";
+const logURI = "https://localhost/registrarActividad";
 
 const date = new Date();
 let day = date.getDate();
@@ -21,11 +22,15 @@ function CrearExpedienteInv() {
     const { session } = useContext(SessionContext);
 
     const [state, setState] = useState({
-        nombre: "",
         numero: "",
+        eco: "",
         carpeta_inv: "",
         denunciante: "",
-        estatus: "",
+        imputado: "",
+        delito: "",
+        lugarHechos: "",
+        objetoDelito: "",
+        estado: "",
         fecha: `${day}/${month}/${year}`,
     });
     
@@ -43,15 +48,29 @@ function CrearExpedienteInv() {
         try{
             if(state.nombre.trim() !== ''){
                 const formData = {
-                    nombre:state.nombre,
                     numero:state.numero,
+                    eco:state.eco,
                     carpeta_inv:state.carpeta_inv,
-                    denunciante:state.denunciante,
-                    estatus:state.estatus,
-                    fecha:state.fecha
+                    denunciante:state.carpeta_inv,
+                    imputado:state.imputado,
+                    delito:state.delito,
+                    lugarHechos:state.lugarHechos,
+                    objetoDelito:state.objetoDelito,
+                    estado:state.estado,
+                    fecha:state.fecha,
                 };
 
                 setErrorMsg('');
+                
+                const logData = {usuario:session.nombre, fecha: new Date().toString(), accion: "Creó un expediente.", folio: state.numero, area: "Carpeta de Investigación"};
+
+                await axios.post(logURI, logData, {
+                headers:{
+                    'Content-Type': 'application/json',
+                    token: localStorage.getItem('JWT_token')
+                }
+                });
+                
                 await axios.post(URI, formData, {
                     headers: {
                         'Content-Type': 'application/json',
@@ -70,15 +89,20 @@ function CrearExpedienteInv() {
         return (
             <>
                 <h1>Crear Expediente</h1>
-
+                
                 <div>
                     <form onSubmit={handleOnSubmit}>
                         {errorMsg && <p>{errorMsg}</p>}
-                        <input type="text" name="nombre" onChange={handleInputChange} value={state.nombre} placeholder="Nombre del expediente" />
                         <input type="text" name="numero" onChange={handleInputChange} value={state.numero} placeholder="Numero del expediente" />
-                        <input type="text" name="carpeta_inv" onChange={handleInputChange} value={state.carpeta_inv} placeholder="Expediente" />
+                        <input type="text" name="eco" onChange={handleInputChange} value={state.eco} placeholder="ECO" />
+                        <input type="text" name="carpeta_inv" onChange={handleInputChange} value={state.carpeta_inv} placeholder="Carpeta de Investigacion" />
                         <input type="text" name="denunciante" onChange={handleInputChange} value={state.denunciante} placeholder="Denunciante" />
-                        <input type="text" name="estatus" onChange={handleInputChange} value={state.estatus} placeholder="Estatus" />
+                        <input type="text" name="imputado" onChange={handleInputChange} value={state.imputado} placeholder="Imputado" />
+                        <input type="text" name="delito" onChange={handleInputChange} value={state.delito} placeholder="Delito" />
+                        <input type="text" name="lugarHechos" onChange={handleInputChange} value={state.lugarHechos} placeholder="Lugar de los hechos" />
+                        <input type="text" name="objetoDelito" onChange={handleInputChange} value={state.objetoDelito} placeholder="Objeto del delito" />
+                        <input type="text" name="estado" onChange={handleInputChange} value={state.estado} placeholder="Estado" />
+
                         <button type="submit">Crear Expediente</button>
                     </form>
                 </div>

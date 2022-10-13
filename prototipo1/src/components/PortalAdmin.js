@@ -21,7 +21,7 @@ function PortalAdmin(){
                     navigate('/registro')
                 }}>Registro de Usuarios</button>
                 <button onClick={() =>{
-                    navigate('/registro')
+                    navigate('/bitacora')
                 }}>Bitacora de Actividad</button>
                 <button onClick={() =>{
                     navigate('/tablaUsuarios')

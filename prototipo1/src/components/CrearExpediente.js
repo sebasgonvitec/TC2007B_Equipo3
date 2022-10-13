@@ -8,6 +8,8 @@ import ReloadAlert from "./Reload";
 
 
 const URI = "https://localhost/crearExpedienteNul";
+const logURI = "https://localhost/registrarActividad";
+
 
 const date = new Date();
 let day = date.getDate();
@@ -21,11 +23,16 @@ function CrearExpediente() {
     const { session } = useContext(SessionContext);
 
     const [state, setState] = useState({
-        nombre: "",
         numero: "",
         expediente: "",
+        salaTja: "",
         actor: "",
-        estatus: "",
+        demandadas: "",
+        materia: "",
+        domicilio: "",
+        actoImpugnado: "",
+        estatusJuridico: "",
+        ultimoEstadoProcesal: "",
         fecha: `${day}/${month}/${year}`,
     });
     
@@ -36,23 +43,38 @@ function CrearExpediente() {
             ...state,
             [event.target.name]: event.target.value,
         });
-        console.log(state.nombre);
     }
 
     const handleOnSubmit = async (event) => {
         event.preventDefault();
         try{
-            if(state.nombre.trim() !== ''){
-                // const formData = new FormData();
-                // formData.append('nombre', state.nombre);
-                // formData.append('numero', state.numero);
-                // formData.append('expediente', state.expediente);
-                // formData.append('actor', state.actor);
-                // formData.append('estatus', state.estatus);
-                const formData = {nombre:state.nombre, numero:state.numero, expediente:state.expediente, actor:state.actor, estatus:state.estatus, fecha:state.fecha};
+            if(state.numero.trim() !== ''){
+                const formData = {
+                    numero:state.numero,
+                    expediente:state.expediente,
+                    salaTja:state.salaTja,
+                    actor:state.actor,
+                    demandadas:state.demandadas,
+                    materia:state.materia,
+                    domicilio:state.domicilio,
+                    actoImpugnado:state.actoImpugnado,
+                    estatusJuridico:state.estatusJuridico,
+                    fecha:state.fecha
+                };
                 console.log(formData);
 
                 setErrorMsg('');
+                
+
+                const logData = {usuario:session.nombre, fecha: new Date().toString(), accion: "Creó un expediente.", folio: state.numero, area: "Juicio de Nulidad"}
+
+                await axios.post(logURI, logData, {
+                headers:{
+                    'Content-Type': 'application/json',
+                    token: localStorage.getItem('JWT_token')
+                }
+                });
+                
                 await axios.post(URI, formData, {
                     headers: {
                         'Content-Type': 'application/json',
@@ -61,9 +83,11 @@ function CrearExpediente() {
                 });
         } else {
             setErrorMsg("Por favor, ingrese un nombre para el expediente");
+            console.log("entro al error")
         }
     } catch (error) {
         error.response && setErrorMsg(error.response.data);
+        console.log("entro al error")
     }}
     
     if(session != null)
@@ -75,11 +99,17 @@ function CrearExpediente() {
                 <div>
                     <form onSubmit={handleOnSubmit}>
                         {errorMsg && <p>{errorMsg}</p>}
-                        <input type="text" name="nombre" onChange={handleInputChange} value={state.nombre} placeholder="Nombre del expediente" />
+                        
                         <input type="text" name="numero" onChange={handleInputChange} value={state.numero} placeholder="Numero del expediente" />
                         <input type="text" name="expediente" onChange={handleInputChange} value={state.expediente} placeholder="Expediente" />
+                        <input type="text" name="salaTja" onChange={handleInputChange} value={state.salaTja} placeholder="Sala del TJA" />
                         <input type="text" name="actor" onChange={handleInputChange} value={state.actor} placeholder="Actor" />
-                        <input type="text" name="estatus" onChange={handleInputChange} value={state.estatus} placeholder="Estatus" />
+                        <input type="text" name="demandadas" onChange={handleInputChange} value={state.demandadas} placeholder="Demandadas" />
+                        <input type="text" name="materia" onChange={handleInputChange} value={state.materia} placeholder="Materia" />
+                        <input type="text" name="domicilio" onChange={handleInputChange} value={state.domicilio} placeholder="Domicilio" />
+                        <input type="text" name="actoImpugnado" onChange={handleInputChange} value={state.actoImpugnado} placeholder="Acto Impugnado" />
+                        <input type="text" name="estatusJuridico" onChange={handleInputChange} value={state.estatusJuridico} placeholder="Estatus Juridico" />
+                        
                         <button type="submit">Crear Expediente</button>
                     </form>
                 </div>
