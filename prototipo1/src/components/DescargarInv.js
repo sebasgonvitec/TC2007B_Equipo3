@@ -101,6 +101,7 @@ function DescargarInv(){
 
     const BotonSubir = (props) => {
         const { dataItem } = props;
+        dataItem.area = "investigacion"; //añadir area
         return(
             <td>
                 <Link to='/descargarArchivo'>

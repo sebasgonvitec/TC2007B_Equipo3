@@ -98,103 +98,112 @@ app.get("/login", (req, res)=>{
 //Endpoint para extraer expedientes de collecion nulidad
 app.get("/nulidad", function(req, res){
     jwt.verify(req.headers.token, "secretKey", (err, userId) => {
-        if(err){
-            res.json(null) 
-        }
-        else {
-            console.log(userId)
-            db.collection("nulidad").find({}).toArray(function(err, result){
-                if(err){
-                    handleError(res, err.message, "Failed to get nulidad");
-                }else{
-                    res.status(200).json(result);
-                    
-                }
-            });
+        db.collection("usuarios").find({usuario: userId.usuario}).toArray(function(error, result){
+            if(err || error || result[0].nulidad === "false"){
+                res.json(null) 
+            }
+            else {
+                console.log(userId)
+                db.collection("nulidad").find({}).toArray(function(err, result){
+                    if(err){
+                        handleError(res, err.message, "Failed to get nulidad");
+                    }else{
+                        res.status(200).json(result);
+                        
+                    }
+                });
+    
+            }
 
-        }
+        })  
     })    
 })
 
 //Endpoint para crear expedientes de collecion nulidad
 app.post("/crearExpedienteNul", function(req, res){
     jwt.verify(req.headers.token, "secretKey", (err, userId) => {
-        if(err){
-            res.json(null)
-        }
-        else { 
-            console.log(req.body);
-            let aInsertar = {
-                numero:req.body.numero,
-                expediente:req.body.expediente,
-                salaTja:req.body.salaTja,
-                demandadas:req.body.demandadas,
-                actor:req.body.actor,
-                domicilio:req.body.domicilio,
-                materia:req.body.materia,
-                estatusJuridico:req.body.estatusJuridico,
-                actoImpugando:req.body.actoImpugando,
-                fecha:req.body.fecha
-            };
-            db.collection("nulidad").insertOne(aInsertar, function(err, result){
-            if(err){
-                handleError(res, err.message, "Failed to create new expediente");
-            }else{
-                res.status(200).json(result);
+        db.collection("usuarios").find({usuario: userId.usuario}).toArray(function(error, result){
+            if(err || error || result[0].nulidad == "false"){
+                res.json(null)
             }
-        })
-        }   
+            else { 
+              let aInsertar = {
+                  numero:req.body.numero,
+                  expediente:req.body.expediente,
+                  salaTja:req.body.salaTja,
+                  demandadas:req.body.demandadas,
+                  actor:req.body.actor,
+                  domicilio:req.body.domicilio,
+                  materia:req.body.materia,
+                  estatusJuridico:req.body.estatusJuridico,
+                  actoImpugando:req.body.actoImpugando,
+                  fecha:req.body.fecha
+                };
+                db.collection("nulidad").insertOne(aInsertar, function(err, result){
+                if(err){
+                    handleError(res, err.message, "Failed to create new expediente");
+                }else{
+                    res.status(200).json(result);
+                }
+            })
+            }   
+        }) 
+           
     });
 });
 
 //Endpoint para extraer expedientes de collecion investigacion
 app.get("/investigacion", function(req, res){
     jwt.verify(req.headers.token, "secretKey", (err, userId) => {
-        if(err){
-            res.json(null) 
-        }
-        else {
-            console.log(userId)
-            db.collection("investigacion").find({}).toArray(function(err, result){
-                if(err){
-                    handleError(res, err.message, "Failed to get Carpetas de Investigación");
-                }else{
-                    res.status(200).json(result);
-                    
-                }
-            });
-
-        }
+        db.collection("usuarios").find({usuario: userId.usuario}).toArray(function(error, result){
+            if(err || error || result[0].investigacion == "false"){
+                res.json(null) 
+            }
+            else {
+                console.log(userId)
+                db.collection("investigacion").find({}).toArray(function(err, result){
+                    if(err){
+                        handleError(res, err.message, "Failed to get Carpetas de Investigación");
+                    }else{
+                        res.status(200).json(result);
+                        
+                    }
+                });
+    
+            }
+        })
     })    
 })
 
 //Endpoint para crear expedientes de collecion investigacion
 app.post("/crearExpedienteInv", function(req, res){
     jwt.verify(req.headers.token, "secretKey", (err, userId) => {
-        if(err){
-            res.json(null)
-        }
-        else { 
-            let aInsertar = {
-                numero:req.body.numero,
-                eco:req.body.eco,
-                carpeta_inv:req.body.carpeta_inv,
-                denunciante:req.body.carpeta_inv,
-                imputado:req.body.imputado,
-                delito:req.body.delito,
-                lugarHechos:req.body.lugarHechos,
-                objetoDelito:req.body.objetoDelito,
-                estado:req.body.estado,
-                fecha:req.body.fecha,
-            };
-            db.collection("investigacion").insertOne(aInsertar, function(err, result){
-            if(err){
-                handleError(res, err.message, "Failed to create new expediente");
-            }else{
-                res.status(200).json(result);
+        db.collection("usuarios").find({usuario: userId.usuario}).toArray(function(error, result){
+            if(err || error || result[0].investigacion == "false"){
+                res.json(null)
             }
-            });
-        }   
+            else { 
+                let aInsertar = {
+                  numero:req.body.numero,
+                  eco:req.body.eco,
+                  carpeta_inv:req.body.carpeta_inv,
+                  denunciante:req.body.carpeta_inv,
+                  imputado:req.body.imputado,
+                  delito:req.body.delito,
+                  lugarHechos:req.body.lugarHechos,
+                  objetoDelito:req.body.objetoDelito,
+                  estado:req.body.estado,
+                  fecha:req.body.fecha,
+                };
+                db.collection("investigacion").insertOne(aInsertar, function(err, result){
+                if(err){
+                    handleError(res, err.message, "Failed to create new expediente");
+                }else{
+                    res.status(200).json(result);
+                }
+                });
+            }   
+        })
     });
 });
 
@@ -231,20 +240,25 @@ app.get("/descargarArchivos/download", async (req, res) => {
                     let temporal = __dirname + "/.temp/" + req.query.nombre + ".pdf";
                     let inputFS = fs.createReadStream(__dirname + result.path)
                     let outputFS = fs.createWriteStream(temporal)
-        
-                    let key = "abcabcabcabcabcabcabcabcabcabc12" //Not to be done, key usually goes encrypted as well 32 bytes(256 bits) 
-                    let iv = "abcabcabcabcabc1" //(initialization vector) 16 bytes
-        
-                    let cipher = crypto.createDecipheriv("aes-256-cbc", key, iv)
-                    inputFS.pipe(cipher).pipe(outputFS)
-                    outputFS.on("finish", ()=>{
-                        console.log(temporal);
-                        res.set({
-                            'Content-Type': 'application/pdf'
-                        })
-                        res.download(temporal, function(err){
-                            if(err) throw err;
-                            fs.unlinkSync(temporal);
+
+                    //Obtener llave de la DB
+                    db.collection("roles").findOne({rol:req.query.area}, (err, resultQuery)=>{
+                        fs.readFile("../Cert/app.key", (err, decryptKey)=>{
+                            key=Buffer.from(crypto.privateDecrypt(decryptKey, Buffer.from(resultQuery.llave, "hex")))
+                            iv=Buffer.from(crypto.privateDecrypt(decryptKey, Buffer.from(resultQuery.iv, "hex")))
+
+                            let cipher = crypto.createDecipheriv("aes-256-cbc", key, iv)
+                            inputFS.pipe(cipher).pipe(outputFS)
+                            outputFS.on("finish", ()=>{
+                                console.log(temporal);
+                                res.set({
+                                    'Content-Type': 'application/pdf'
+                                })
+                                res.download(temporal, function(err){
+                                    if(err) throw err;
+                                    fs.unlinkSync(temporal);
+                                })
+                            })
                         })
                     })
                 }
@@ -264,117 +278,134 @@ app.post("/subirArchivo", uploads.single("archivo"), (req, res)=>{
             let inputFS = fs.createReadStream(__dirname + "/.temp/" + req.file.filename)
             let outputFS = fs.createWriteStream(__dirname + "/.storage/" + req.body.nombre)
 
-            let key = "abcabcabcabcabcabcabcabcabcabc12" //Not to be done, key usually goes encrypted as well 32 bytes(256 bits) 
-            let iv = "abcabcabcabcabc1"
+            //Obtener llave de la DB
+            db.collection("roles").findOne({rol:req.body.area}, (err, resultQuery)=>{
+                fs.readFile("../Cert/app.key", (err, decryptKey)=>{
+                    let key=Buffer.from(crypto.privateDecrypt(decryptKey, Buffer.from(resultQuery.llave, "hex")))
+                    let iv=Buffer.from(crypto.privateDecrypt(decryptKey, Buffer.from(resultQuery.iv, "hex")))
 
-            let cipher = crypto.createCipheriv("aes-256-cbc", key, iv)
-            inputFS.pipe(cipher).pipe(outputFS)
-            outputFS.on("finish", ()=>{
-                fs.unlinkSync(__dirname + "/.temp/" + req.file.filename)
-                let aInsertar = {nombre:req.body.nombre, folio:req.body.folio, path: rutaDefinitiva, fecha: req.body.fecha, expediente: req.body.expediente, expedienteNom: req.body.expedienteNom, usuario: req.body.usuario}
-                console.log(req.body);
-                db.collection("archivos").insertOne(aInsertar, (err, res)=>{
-                    if(err) throw err;
-                console.log(res);
-                });
-            });
-    res.status(200).json({message:"Archivo subido correctamente"});
+                    let cipher = crypto.createCipheriv("aes-256-cbc", key, iv)
+                    inputFS.pipe(cipher).pipe(outputFS)
+
+                    outputFS.on("finish", ()=>{
+                        fs.unlinkSync(__dirname + "/.temp/" + req.file.filename)
+                        let aInsertar = {nombre:req.body.nombre, folio:req.body.folio, path: rutaDefinitiva, fecha: req.body.fecha, expediente: req.body.expediente, expedienteNom: req.body.expedienteNom, usuario: req.body.usuario}
+                        console.log(req.body);
+                        db.collection("archivos").insertOne(aInsertar, (err, res)=>{
+                            if(err) throw err;
+                        console.log(res);
+                        });
+                    });
+                })
+            })
+
+            res.status(200).json({message:"Archivo subido correctamente"});
         }
     });
 })
 
 app.get("/tablaCuentas", function(req, res) {
     jwt.verify(req.headers.token, "secretKey", (err, userId) => {
-        if(err){
-            res.json(null)
-        }else{
-            db.collection("usuarios").find({}, { projection: { password: 0} }).toArray(function(err, result){
-                if(err) {
-                    handleError(res, err.message, "Failed to get accounts");
-                }
-                else {
-                    res.status(200).send(result);
-                }
-            })
-        }
+        db.collection("usuarios").find({usuario: userId.usuario}).toArray(function(error, result){
+            if(err || error || result[0].admin == null){
+                res.json(null)
+            }else{
+                db.collection("usuarios").find({}, { projection: { password: 0} }).toArray(function(err, result){
+                    if(err) {
+                        handleError(res, err.message, "Failed to get accounts");
+                    }
+                    else {
+                        res.status(200).send(result);
+                    }
+                })
+            }
+        })  
     });
 });
 
 app.delete("/borrarCuenta", function(req, res) {
     jwt.verify(req.headers.token, "secretKey", (err, userId) => {
-        if(err){
-            res.json(null)
-        }else{
-            db.collection("usuarios").deleteOne({"_id": mongo.ObjectId(req.query.id)}, (err, result) => {
-                if (err) throw err;
-            })
-        }
+        db.collection("usuarios").find({usuario: userId.usuario}).toArray(function(error, result){
+            if(err || error || result[0].admin == null){
+                res.json(null)
+            }else{
+                db.collection("usuarios").deleteOne({"_id": mongo.ObjectId(req.query.id)}, (err, result) => {
+                    if (err) throw err;
+                })
+            }
+        })
     });
 })
  
 app.post("/crearCuenta", (req, res)=>{
     jwt.verify(req.headers.token, "secretKey", (err, userId) => {
-        if(err){
-            res.json({msg: "No tiene los permisos, saquese alv"})
-        }else {
-            let user=req.body.usuario;
-            let pass=req.body.password;
-            let area=req.body.area;
-            let name=req.body.nombre;
-            let nulidad=req.body.nulidad;
-            let investigacion=req.body.investigacion;
-            let otros=req.body.otros;
-
-            console.log("usuario recibido");
-
-            db.collection("usuarios").findOne({usuario:user}, (err, result)=>{
-            if(result!=null){
-                console.log("El usuario ya existe")
-                throw new Error('El usuario ya existe')
-            }
+        db.collection("usuarios").find({usuario: userId.usuario}).toArray(function(error, result){
+            if(err || error || result[0].admin == null){
+                res.json({msg: "No tiene los permisos, saquese alv"})
+            }else {
+                let user=req.body.usuario;
+                let pass=req.body.password;
+                let area=req.body.area;
+                let name=req.body.nombre;
+                let nulidad=req.body.nulidad;
+                let investigacion=req.body.investigacion;
+                let otros=req.body.otros;
     
-            else{
-                bcrypt.hash(pass, 10, (err, hash)=>{
-                let aAgregar={usuario:user, password:hash, nombre:name, area:area, nulidad:nulidad, investigacion:investigacion, otros:otros}
-                db.collection("usuarios").insertOne(aAgregar, (err, result)=>{
-                    if (err) throw err;
-                    console.log("Usuario agregado")
-                    });
-                });
+                console.log("usuario recibido");
+    
+                db.collection("usuarios").findOne({usuario:user}, (err, result)=>{
+                if(result!=null){
+                    console.log("El usuario ya existe")
+                    throw new Error('El usuario ya existe')
                 }
-            })
-        }
+        
+                else{
+                    bcrypt.hash(pass, 10, (err, hash)=>{
+                    let aAgregar={usuario:user, password:hash, nombre:name, area:area, nulidad:nulidad, investigacion:investigacion, otros:otros}
+                    db.collection("usuarios").insertOne(aAgregar, (err, result)=>{
+                        if (err) throw err;
+                        console.log("Usuario agregado")
+                        });
+                    });
+                    }
+                })
+            }
+        })    
     });
 });
 
 //Obtener usuario por id
 app.get("/editarUsuario", (req, res)=>{
     jwt.verify(req.headers.token, "secretKey", (err, userId) => {
-        if(err){
-            res.json(null)
-        }else{
-            db.collection("usuarios").findOne({"_id": mongo.ObjectId(req.query.id)}, (err, result)=>{
-                if(err) throw err;
-                res.status(200).send(result);
-            })
-        }
+        db.collection("usuarios").find({usuario: userId.usuario}).toArray(function(error, result){
+            if(err || error || result[0].admin == null){
+                res.json(null)
+            }else{
+                db.collection("usuarios").findOne({"_id": mongo.ObjectId(req.query.id)}, (err, result)=>{
+                    if(err) throw err;
+                    res.status(200).send(result);
+                })
+            }
+        })
     });
 });
 
 //Actualizar usuario seleccionado
 app.post("/editarUsuario", (req, res)=>{
     jwt.verify(req.headers.token, "secretKey", (err, userId) => {
-        if(err){
-            res.json(null)
-        }else{
-            bcrypt.hash(req.body.password, 10, (err, hash)=>{
-                const updateData = { $set: { usuario:req.body.usuario, password:hash, nombre:req.body.nombre, area:req.body.area, nulidad:req.body.nulidad, investigacion:req.body.investigacion, otros:req.body.otros } };
-                db.collection("usuarios").updateOne({"_id": mongo.ObjectId(req.query.id)}, updateData, (err, result)=>{
-                    if(err) throw err;
-                    res.status(200).send(result);
-                });
-            })
-        }
+        db.collection("usuarios").find({usuario: userId.usuario}).toArray(function(error, result){
+            if(err || error || result[0].admin == null){
+                res.json(null)
+            }else{
+                bcrypt.hash(req.body.password, 10, (err, hash)=>{
+                    const updateData = { $set: { usuario:req.body.usuario, password:hash, nombre:req.body.nombre, area:req.body.area, nulidad:req.body.nulidad, investigacion:req.body.investigacion, otros:req.body.otros } };
+                    db.collection("usuarios").updateOne({"_id": mongo.ObjectId(req.query.id)}, updateData, (err, result)=>{
+                        if(err) throw err;
+                        res.status(200).send(result);
+                    });
+                })
+            }
+        })   
     });
 });
 
@@ -408,6 +439,23 @@ app.delete("/borrarArchivo", function(req, res) {
         }
     });
 })
+
+
+//endpoint para configurar inicialmente las llaves de los roles
+// app.get("/keySetup", (req, res)=>{
+//     let roles=["nulidad", "investigacion", "otros"]
+//     let privKey=fs.readFileSync("../Cert/app.key")
+
+//     for(i=0; i<roles.length; i++){
+//         let key=crypto.publicEncrypt(privKey, Buffer.from(crypto.randomBytes(16).toString("hex"))).toString("hex")
+//         let iv=crypto.publicEncrypt(privKey, Buffer.from(crypto.randomBytes(8).toString("hex"))).toString("hex")
+//         let aInsertar={rol: roles[i], llave: key, iv: iv}
+//         db.collection("roles").insertOne(aInsertar, (err, result)=>{
+//             if (err) throw err;
+//         })
+//     }
+//     res.send({msg:"key setup exitoso!"})
+// })
 
 
 https.createServer({

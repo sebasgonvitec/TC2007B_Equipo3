@@ -68,10 +68,11 @@ const SubirArchivo = () => {
                     formData.append('nombre', state.nombre + `_${day}_${month}_${year}`);
                     formData.append('folio', state.folio);
                     formData.append('fecha', `${day}/${month}/${year}`);
-                    formData.append('expediente', upload._id);
+                    formData.append('expediente', (upload.area != null ? upload._id: "000000000000000000000000"));
                     formData.append('expedienteNom', upload.nombre);
                     formData.append('usuario', session._id);
-
+                    formData.append('area', (upload.area != null ? upload.area: "otros"));
+                    
                     setErrorMsg('');
                     await axios.post(URI, formData, {
                         headers: {

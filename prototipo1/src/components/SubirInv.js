@@ -100,6 +100,8 @@ function SubirInv() {
     // Componente de boton para acciones en cada fila
     const MyCommandCell = (props) => {
         const { dataItem } = props;
+        dataItem.area = "investigacion"; //añadir area
+
         return(
             <td>
                 <Link to='/subirArchivo'>
