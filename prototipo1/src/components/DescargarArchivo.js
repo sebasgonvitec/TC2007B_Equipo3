@@ -179,7 +179,7 @@ function DescargarArchivo(){
                             <GridColumn field="nombre" title="Nombre" />
                             <GridColumn field="folio" title="Folio" />
                             <GridColumn field="fecha" title="Fecha" />
-                            <GridColumn cell={MyCommandCell} width="300px" filterable={false}/>
+                            <GridColumn cell={MyCommandCell} filterable={false}/>
 
                         </Grid>   
                     </IntlProvider>

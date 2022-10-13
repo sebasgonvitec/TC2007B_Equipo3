@@ -145,7 +145,7 @@ function SubirInv() {
                             <GridColumn field="actor" title="Actor" />
                             <GridColumn field="estatus" title="Estatus" />
                             <GridColumn field="fecha" title="Fecha"/>
-                            <GridColumn cell={MyCommandCell}  width="100px" filterable={false}/>
+                            <GridColumn cell={MyCommandCell} filterable={false}/>
 
                         </Grid>   
                     </IntlProvider>

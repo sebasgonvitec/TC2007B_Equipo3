@@ -6,9 +6,7 @@
     flex-direction: column;
     padding: 2vw;
     
-     
-    margin-left: auto;
-    margin-right: auto;
+    margin: 1vw auto 0 auto;
 }
 
 #desciption{
@@ -19,23 +17,7 @@
 
 }
 
-#nombre{
-    margin-top: 1vw;
-    width: 31vw;
-    padding: 0.5vw;
-    border: 1px solid #BCBABA;
-    border-radius: 8px;
-}
-
-#usuarioR{
-    margin-top: 1vw;
-    width: 31vw;
-    padding: 0.5vw;
-    border: 1px solid #BCBABA;
-    border-radius: 8px;
-}
-
-#passwordR{
+#inputR{
     margin-top: 1vw;
     width: 31vw;
     padding: 0.5vw;

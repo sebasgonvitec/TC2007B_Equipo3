@@ -91,11 +91,11 @@ function CrearExpedienteInv() {
                     <form id="formCrearExp" onSubmit={handleOnSubmit}>
                         <div id="tituloCrearExp">Ingresa los datos</div>
                         {errorMsg && <p>{errorMsg}</p>}
-                        <input type="text" name="nombre" onChange={handleInputChange} value={state.nombre} placeholder="Nombre del expediente" />
-                        <input type="text" name="numero" onChange={handleInputChange} value={state.numero} placeholder="Numero del expediente" />
-                        <input type="text" name="carpeta_inv" onChange={handleInputChange} value={state.carpeta_inv} placeholder="Expediente" />
-                        <input type="text" name="denunciante" onChange={handleInputChange} value={state.denunciante} placeholder="Denunciante" />
-                        <input type="text" name="estatus" onChange={handleInputChange} value={state.estatus} placeholder="Estatus" />
+                        <input type="text" name="nombre" onChange={handleInputChange} value={state.nombre} placeholder="Nombre del expediente" id="inputCE"/>
+                        <input type="text" name="numero" onChange={handleInputChange} value={state.numero} placeholder="Numero del expediente" id="inputCE"/>
+                        <input type="text" name="carpeta_inv" onChange={handleInputChange} value={state.carpeta_inv} placeholder="Expediente" id="inputCE"/>
+                        <input type="text" name="denunciante" onChange={handleInputChange} value={state.denunciante} placeholder="Denunciante" id="inputCE"/>
+                        <input type="text" name="estatus" onChange={handleInputChange} value={state.estatus} placeholder="Estatus" id="inputCE"/>
                         <button id="btnCrearExp" type="submit">Crear Expediente</button>
                     </form>
                     <div className="colorBoxExp" style={{background:'#FFA928'}}>

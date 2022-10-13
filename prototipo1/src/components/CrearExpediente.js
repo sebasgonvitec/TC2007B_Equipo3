@@ -90,11 +90,11 @@ function CrearExpediente() {
                     <form id="formCrearExp" onSubmit={handleOnSubmit} >
                         <div id="tituloCrearExp">Ingresa los datos</div>
                         {errorMsg && <p>{errorMsg}</p>}
-                        <input type="text" name="nombre" onChange={handleInputChange} value={state.nombre} placeholder="Nombre del expediente" />
-                        <input type="text" name="numero" onChange={handleInputChange} value={state.numero} placeholder="Numero del expediente" />
-                        <input type="text" name="expediente" onChange={handleInputChange} value={state.expediente} placeholder="Expediente" />
-                        <input type="text" name="actor" onChange={handleInputChange} value={state.actor} placeholder="Actor" />
-                        <input type="text" name="estatus" onChange={handleInputChange} value={state.estatus} placeholder="Estatus" />
+                        <input type="text" name="nombre" onChange={handleInputChange} value={state.nombre} placeholder="Nombre del expediente" id="inputCE" />
+                        <input type="text" name="numero" onChange={handleInputChange} value={state.numero} placeholder="Numero del expediente" id="inputCE"/>
+                        <input type="text" name="expediente" onChange={handleInputChange} value={state.expediente} placeholder="Expediente" id="inputCE"/>
+                        <input type="text" name="actor" onChange={handleInputChange} value={state.actor} placeholder="Actor"id="inputCE" />
+                        <input type="text" name="estatus" onChange={handleInputChange} value={state.estatus} placeholder="Estatus" id="inputCE"/>
                         <button id="btnCrearExp" type="submit">Crear Expediente</button>
                     </form>
                     <div className='colorBoxExp' style={{background:'#45B2E6'}}>

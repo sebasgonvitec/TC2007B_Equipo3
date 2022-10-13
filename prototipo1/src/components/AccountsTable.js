@@ -10,6 +10,10 @@ import { useNavigate, Navigate } from 'react-router-dom';
 import { useContext } from "react";
 import SessionContext from "../SessionContext";
 import ReloadAlert from './Reload';
+import { Link } from "react-router-dom"
+
+import Name from "./Name"
+import { BsChevronLeft } from "react-icons/bs";
 
 const URI = 'https://localhost/tablaCuentas'
 const URI_delete = 'https://localhost/borrarCuenta'
@@ -127,29 +131,39 @@ const AccountsTable = () => {
     if(session != null)
     {
         return(
-            <LocalizationProvider language="es-ES"> 
-                <IntlProvider locale="es">
+            <body style={{marginTop: "2vw", marginRight:"5.8vw", marginBottom:"5vw", marginLeft:"5.8vw"}}>
+                <Name 
+                    titulo="Tabla de Usuarios"
+                />
+                <Link to={"/portalAdmin"}  className="btnBack" style={{color: "#8B2E87", marginBottom:"2vw"}}>
+                    <BsChevronLeft style={{width:"2.5vw", height:"auto"}}/>
+                    <div>Volver</div>
 
-                    <Grid
-                        data={result}
-                        filterable={true}
-                        onDataStateChange={onDataStateChange}
-                        filterOperators={filterOperators}
-                        {...dataState}
-                    
-                    >
-                        <GridColumn field="usuario" title="Usuario" />
-                        <GridColumn field="nombre" title="Nombre" />
-                        <GridColumn field="area" title="Area" />
-                        <GridColumn field="nulidad" title="Juicios de Nulidad"/>
-                        <GridColumn field="investigacion" title="Carpetas de Investigacion"/>
-                        <GridColumn field="otros" title="Expedientes Otros"/>
-                        <GridColumn title="Editar Usuario" cell={EditButton} filterable={false}/>
-                        <GridColumn title="Borrar Usuario" cell={DeleteButton} filterable={false}/>
+                </Link>
+                <LocalizationProvider language="es-ES"> 
+                    <IntlProvider locale="es">
 
-                    </Grid>   
-                </IntlProvider>
-            </LocalizationProvider>
+                        <Grid
+                            data={result}
+                            filterable={true}
+                            onDataStateChange={onDataStateChange}
+                            filterOperators={filterOperators}
+                            {...dataState}
+                        
+                        >
+                            <GridColumn field="usuario" title="Usuario" />
+                            <GridColumn field="nombre" title="Nombre" />
+                            <GridColumn field="area" title="Area" />
+                            <GridColumn field="nulidad" title="Juicios de Nulidad"/>
+                            <GridColumn field="investigacion" title="Carpetas de Investigacion"/>
+                            <GridColumn field="otros" title="Expedientes Otros"/>
+                            <GridColumn title="Editar Usuario" cell={EditButton} filterable={false}/>
+                            <GridColumn title="Borrar Usuario" cell={DeleteButton} filterable={false}/>
+
+                        </Grid>   
+                    </IntlProvider>
+                </LocalizationProvider>
+            </body>
         );
     }
     else {

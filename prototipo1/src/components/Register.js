@@ -6,10 +6,12 @@ import { useContext } from "react";
 import { Navigate } from 'react-router-dom';
 import SessionContext from "../SessionContext";
 import ReloadAlert from "./Reload";
-import "./styleComponents/Register.css"
+import { Link } from "react-router-dom"
 
+import "./styleComponents/Register.css"
 import Name from "./Name"
 import BackgroundRegister from "../img/backgroundRegister.png"
+import { BsChevronLeft } from "react-icons/bs";
 
 const URI = "https://localhost/crearCuenta";
 
@@ -77,14 +79,19 @@ const Register = () => {
                     <Name
                         titulo="Registrar Cuenta"
                     />
+                    <Link to={"/portalAdmin"}  className="btnBack" style={{color: "#8B2E87"}}>
+                        <BsChevronLeft style={{width:"2.5vw", height:"auto"}}/>
+                        <div>Volver</div>
+
+                    </Link>
                 </div>
 
                 <form id="formRegister" onSubmit={handleOnSubmit}>
                     <p id="desciption"> Ingresa los datos para registrar una cuenta nueva </p>
-                    <input type="text" name="nombre" onChange={handleInputChange} value={state.nombre} placeholder="Nombre Completo" id="nombre" required/><br/>
-                    <input type="text" name="area" onChange={handleInputChange} value={state.area} placeholder="Area" id="area" required/><br/>
-                    <input type="text" name="usuario" onChange={handleInputChange} value={state.usuario} placeholder="Usuario" id="usuarioR" required/><br/>
-                    <input type="password" name="password" onChange={handleInputChange} value={state.password} placeholder="Contraseña" id="passwordR" required/><br/>
+                    <input type="text" name="nombre" onChange={handleInputChange} value={state.nombre} placeholder="Nombre Completo" id="inputR" required/><br/>
+                    <input type="text" name="area" onChange={handleInputChange} value={state.area} placeholder="Area" id="inputR" required/><br/>
+                    <input type="text" name="usuario" onChange={handleInputChange} value={state.usuario} placeholder="Usuario" id="inputR" required/><br/>
+                    <input type="password" name="password" onChange={handleInputChange} value={state.password} placeholder="Contraseña" id="inputR" required/><br/>
                     <h4>Privilegios:</h4>
                     <div className="privilegios">
                         <label id="labelForm">

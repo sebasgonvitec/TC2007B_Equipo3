@@ -147,7 +147,7 @@ function Descargar(){
                             <GridColumn field="actor" title="Actor" />
                             <GridColumn field="estatus" title="Estatus"/>
                             <GridColumn field="fecha" title="Fecha"/>
-                            <GridColumn cell={BotonSubir}  width="100px" filterable={false}/>
+                            <GridColumn cell={BotonSubir} filterable={false}/>
 
                         </Grid>   
                     </IntlProvider>
