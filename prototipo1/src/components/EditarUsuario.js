@@ -3,7 +3,10 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { parsePath, useLocation } from "react-router-dom";
 import ReloadAlert from "./Reload";
+import { useContext } from "react";
+import SessionContext from "../SessionContext";
 
+const { session } = useContext(SessionContext);
 const URI = 'https://localhost/editarUsuario';
 
 function EditarUsuario(){
@@ -68,6 +71,15 @@ function EditarUsuario(){
                     nulidad:userData.nulidad,
                     investigacion:userData.investigacion,
                     otros:userData.otros,};
+
+                const logData = {usuario:session.nombre, fecha: new Date().toString(), accion: "Editó un usuario", folio: userData.usuario, area: "N/A"}
+
+                    await axios.post(logURI, logData, {
+                    headers:{
+                        'Content-Type': 'application/json',
+                        token: localStorage.getItem('JWT_token')
+                    }
+                    });
 
                 console.log(formData);
 
