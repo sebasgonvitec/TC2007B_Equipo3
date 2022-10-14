@@ -19,7 +19,7 @@ function EditarUsuario(){
     const [userData, setUserData] = useState({});
 
     useEffect( () => {
-        getData()
+        getData();
     }, []);
 
     const getData = async () => {
@@ -35,8 +35,10 @@ function EditarUsuario(){
         }).then((res) =>{
             if(res.data !== null){
                 setUserData(res.data);
+                console.log(userData);
             }else{
                 setUserData(null);
+                console.log("No se encontró el usuario");
             }}).catch((error) => {
                 console.log(error);
             }
@@ -60,6 +62,7 @@ function EditarUsuario(){
         });
         console.log(userData);
     }
+
     const handleOnSubmit = async (event) => {
         event.preventDefault();
         try{
@@ -75,12 +78,12 @@ function EditarUsuario(){
 
                 const logData = {usuario:session.nombre, fecha: new Date().toString(), accion: "Editó un usuario", folio: userData.usuario, area: "N/A"}
 
-                    await axios.post(logURI, logData, {
+                await axios.post(logURI, logData, {
                     headers:{
                         'Content-Type': 'application/json',
                         token: localStorage.getItem('JWT_token')
                     }
-                    });
+                });
 
                 console.log(formData);
 
@@ -112,9 +115,9 @@ function EditarUsuario(){
                     <input type="text" name="area" value={userData.area} onChange={handleInputChange} />
                     
                     <h4>Privilegios:</h4>
-                    <input type="checkbox" name="nulidad" onChange={handleInputChangeCheckbox} />Juicio de Nulidad<br/>
-                    <input type="checkbox" name="investigacion" onChange={handleInputChangeCheckbox} />Carpeta de Investigacion<br/>
-                    <input type="checkbox" name="otros"  onChange={handleInputChangeCheckbox} />Expedientes Otros<br/>
+                    <input type="checkbox" name="nulidad" onChange={handleInputChangeCheckbox} checked={userData.nulidad == 'true'}/>Juicio de Nulidad<br/>
+                    <input type="checkbox" name="investigacion" onChange={handleInputChangeCheckbox} checked={userData.investigacion == 'true'} />Carpeta de Investigacion<br/>
+                    <input type="checkbox" name="otros"  onChange={handleInputChangeCheckbox} checked={userData.otros == 'true'}/>Expedientes Otros<br/>
 
                     <h4>Cambio de Contraseña</h4>
                     <p>Ingrese una la contraseña solo si desea cambiarla</p>

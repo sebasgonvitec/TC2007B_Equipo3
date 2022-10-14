@@ -76,7 +76,7 @@ function DescargarArchivo(){
         setDataState(event.dataState);
         setResult(process(data, event.dataState));
     }
-    const downloadFile2 = (id, nombre, folio, expediente) =>{
+    const downloadFile2 = (id, nombre, folio, expedienteNom) =>{
         
         
         
@@ -90,7 +90,7 @@ function DescargarArchivo(){
             params: { id: id, nombre: nombre, area: download.area} // important
         }).then((res)=>{
             
-            const logData = {usuario:session.nombre, fecha: new Date().toString(), accion: "Descargó un archivo.", folio: folio, area: expediente}
+            const logData = {usuario:session.nombre, fecha: new Date().toString(), accion: "Descargó un archivo.", folio: folio, area: expedienteNom}
 
             axios.post(logURI, logData, {
             headers:{
@@ -153,7 +153,7 @@ function DescargarArchivo(){
             <td>
                 <button id="btnAbrir" onClick={(e) => {
                     e.preventDefault();
-                    downloadFile2(dataItem._id, dataItem.nombre, dataItem.folio, dataItem.expediente);
+                    downloadFile2(dataItem._id, dataItem.nombre, dataItem.folio, dataItem.expedienteNom);
                     }}>Descargar</button>
             </td>
         );

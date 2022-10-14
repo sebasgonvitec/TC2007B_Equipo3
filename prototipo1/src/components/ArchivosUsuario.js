@@ -37,6 +37,17 @@ const ArchivosUsuario = () => {
         setData(res.data)
     }
 
+    // const eraseData = async () =>{
+    //     const res = await axios({
+    //         url: URI_delete,
+    //         method: 'DELETE',
+    //         params: { id: dataItem._id, nombre: dataItem.nombre}, // important
+    //         headers: { token: localStorage.getItem('JWT_token')}
+    //     }).then((res) => {
+    //         console.log(res);
+    //         getData()});
+    // }
+
     //Estados de la data en la tabla al momento de utilizar filtros
     const [dataState, setDataState] = React.useState()
     const [result, setResult] = React.useState(data);
@@ -105,8 +116,10 @@ const ArchivosUsuario = () => {
                         method: 'DELETE',
                         params: { id: dataItem._id, nombre: dataItem.nombre}, // important
                         headers: { token: localStorage.getItem('JWT_token')}
-                    })
-                   getData(); //Actualizar eliminacion
+                    });
+                    console.log("Archivo borrado");
+                    console.log("Getting new data")
+                    getData(); //Actualizar eliminacion
 
                 }}>Borrar</button>
             </td>
