@@ -1,7 +1,11 @@
 import './styleComponents/Footer.css'
 import logoAOFooter from '../img/logo_footer.svg'
+import { useContext } from "react";
+import SessionContext from "../SessionContext";
 
 function Footer(){
+    const { session } = useContext(SessionContext);
+    if(session != null){
     return(
         <div className="footer">
             <img img src={logoAOFooter} alt="LogoFooter" className="logoFooter"/>
@@ -13,7 +17,11 @@ function Footer(){
                 <div>Tel: (55) 5 276 6700</div>
             </p>
         </div>
-    );
+    ); } else{
+        return(
+            <span></span>
+        );
+    }
 }
 
 export default Footer

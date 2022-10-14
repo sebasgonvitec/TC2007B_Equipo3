@@ -11,10 +11,11 @@ import BackgroundRegister from "../img/backgroundRegister.png"
 import { AiOutlineUserAdd } from "react-icons/ai";
 import { TbActivity } from "react-icons/tb";
 import { AiOutlineUserSwitch } from "react-icons/ai";
+import { BiLogOut } from "react-icons/bi";
 
 function PortalAdmin(){
 
-    const { session } = useContext(SessionContext);
+    const { updateSession, session } = useContext(SessionContext);
     const navigate = useNavigate();
 
     ReloadAlert();
@@ -24,10 +25,19 @@ function PortalAdmin(){
         return(
             <body style={{backgroundImage: `url(${BackgroundRegister})`, height: "100%"}}>
                 <div style={{marginLeft:"5.8vw", marginRight:"5.8vw"}}>
-                    <Name 
-                        titulo="Portal de Administrador"
-                        descripcion="Selecciona una de las opciones para comenzar"
-                    />
+
+                    <div className="headerAdmin">
+                        <Name 
+                            titulo="Portal de Administrador"
+                            descripcion="Selecciona una de las opciones para comenzar"
+                        />
+
+                        <div onClick={() => {
+                            updateSession(null); //borrar registro del front
+                            navigate("/login");
+                        }}> <BiLogOut className="iconLogout" title="Cerrar sesion" />
+                        </div><br/>
+                    </div>
 
                     <div id="optionsContainer">
                         <div className="options" >
@@ -47,7 +57,7 @@ function PortalAdmin(){
                         </div>
                     </div>
                 </div>
-                <div style={{height: "5vw"}}></div>
+                <div style={{height: "7vw"}}></div>
             </body>
         );
     }

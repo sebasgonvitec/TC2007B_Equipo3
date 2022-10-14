@@ -1,0 +1,40 @@
+.editarForm{
+    width: 50%;
+    border-radius: 10px;
+    margin: 2vw auto 0 auto;
+    padding: 2vw;
+    background: #F2F2F2;
+}
+
+.datosContainer{
+    display: flex;
+    flex-direction: row;
+    margin-top: 1vw;
+}
+
+.datosEditar{
+    display: flex;
+    flex-direction: column;
+}
+
+#inputEU{
+    width: 20vw;
+    margin: 1vw 7vw 1vw 0;
+    padding: 0.5vw;
+    border: 1px solid #dbdbdb;
+    border-radius: 8px;
+}
+
+#inputCheckEU{
+    margin-bottom: 2.6vw;
+}
+
+.btnContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#btnGuardar:hover{
+    background: #66C214;
+}
