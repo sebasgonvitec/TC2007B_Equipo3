@@ -143,7 +143,7 @@ app.post("/crearExpedienteNul", function(req, res){
                 if(err){
                     handleError(res, err.message, "Failed to create new expediente");
                 }else{
-                    res.status(200).json(result);
+                    res.status(200).json({msg: "Expediente creado"});
                 }
             })
             }   
@@ -196,11 +196,11 @@ app.post("/crearExpedienteInv", function(req, res){
                   fecha:req.body.fecha,
                 };
                 db.collection("investigacion").insertOne(aInsertar, function(err, result){
-                if(err){
-                    handleError(res, err.message, "Failed to create new expediente");
-                }else{
-                    res.status(200).json(result);
-                }
+                    if(err){
+                        handleError(res, err.message, "Failed to create new expediente");
+                    }else{
+                        res.status(200).json({msg: "Expediente creado"});
+                    }
                 });
             }   
         })
@@ -292,14 +292,17 @@ app.post("/subirArchivo", uploads.single("archivo"), (req, res)=>{
                         let aInsertar = {nombre:req.body.nombre, folio:req.body.folio, path: rutaDefinitiva, fecha: req.body.fecha, expediente: req.body.expediente, expedienteNom: req.body.expedienteNom, usuario: req.body.usuario}
                         console.log(req.body);
                         db.collection("archivos").insertOne(aInsertar, (err, res)=>{
-                            if(err) throw err;
-                        console.log(res);
+                            if(err) {
+                                throw err
+                            }else{
+                                console.log(res);
+                            }
                         });
                     });
                 })
             })
 
-            res.status(200).json({message:"Archivo subido correctamente"});
+            res.status(200).json({msg:"Archivo subido correctamente"});
         }
     });
 })
@@ -332,6 +335,7 @@ app.delete("/borrarCuenta", function(req, res) {
                 db.collection("usuarios").deleteOne({"_id": mongo.ObjectId(req.query.id)}, (err, result) => {
                     if (err) throw err;
                 })
+                res.json({msg: "Cuenta eliminada correctamente"})
             }
         })
     });
@@ -440,7 +444,8 @@ app.delete("/borrarArchivo", function(req, res) {
             fs.unlinkSync(__dirname + "/.storage/" + req.query.nombre)
             db.collection("archivos").deleteOne({"_id": mongo.ObjectId(req.query.id)}, (err, result) => {
                 if (err) {throw err}
-            })
+            });
+            res.json({msg: "Archivo eliminado correctamente"})
         }
     });
 })

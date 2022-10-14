@@ -6,13 +6,14 @@ import Dropzone from 'react-dropzone';
 //import '../components/styleComponents/Subir.css';
 import SessionContext from "../SessionContext";
 import ReloadAlert from "./Reload";
-import { Navigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
 import { Link } from "react-router-dom"
 
 import Name from "./Name"
 import InfoArchivo from "./InfoArchivo";
 import "./styleComponents/SubirArchivo.css"
 import { BsChevronLeft } from "react-icons/bs";
+import swal from "sweetalert";
 
 
 let URI = 'https://localhost/subirArchivo?';
@@ -32,6 +33,8 @@ const SubirArchivo = () => {
     const { upload } = useContext(UploadContext);
 
     const { session } = useContext(SessionContext);
+    
+    const navigate = useNavigate();
 
     const [archivo, setArchivo] = useState(null);
     const [state, setState] = useState({
@@ -78,7 +81,7 @@ const SubirArchivo = () => {
                     formData.append('folio', state.folio);
                     formData.append('fecha', `${day}/${month}/${year}`);
                     formData.append('expediente', (upload.area != null ? upload._id: "000000000000000000000000"));
-                    formData.append('expedienteNom', upload.nombre);
+                    formData.append('expedienteNom', upload.expedienteNom);
                     formData.append('usuario', session._id);
                     formData.append('area', (upload.area != null ? upload.area: "otros"));
                     
@@ -98,12 +101,21 @@ const SubirArchivo = () => {
                             'Content-Type': 'multipart/form-data',
                             token: localStorage.getItem('JWT_token')
                         }
+                    }).then(res => {
+                        if(res.data.msg == "Archivo subido correctamente"){
+                            swal(res.data.msg, "", "success").then(()=>{
+                                navigate(-1);
+                        })}else{
+                            swal("Error al subir el archivo", "Intentelo nuevamente", "error")
+                        }
                     });
                 } else {
                     setErrorMsg("Seleccione un archivo");
+                    swal("Seleccione un archivo", "", "warning")
                 }
             } else {
                 setErrorMsg("Por favor llene todos los campos");
+                swal("Por favor llene todos los campos", "", "warning")
             }
         } catch (error) {
             error.response && setErrorMsg(error.response.data);
@@ -135,7 +147,7 @@ const SubirArchivo = () => {
                 </div>
 
                 <form id="formSubirArchivo" onSubmit={handleOnSubmit}>
-                    {errorMsg && <p>{errorMsg}</p>}
+                    {/* {errorMsg && <p>{errorMsg}</p>} */}
                     
                     <div className="formCont"> 
                         <p className="tituloSubir"> Ingresa los datos</p>

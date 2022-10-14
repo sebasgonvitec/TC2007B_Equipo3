@@ -46,8 +46,8 @@ function DescargarArchivo(){
         getData()
     }, [])
 
-    console.log(download._id)
-    console.log(download.area)
+    //console.log(download._id)
+    //console.log(download.area)
 
     const getData = async () => {
         const config = {

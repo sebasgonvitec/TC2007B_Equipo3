@@ -117,8 +117,13 @@ const ArchivosUsuario = () => {
                         method: 'DELETE',
                         params: { id: dataItem._id, nombre: dataItem.nombre}, // important
                         headers: { token: localStorage.getItem('JWT_token')}
+                    }).then((res)=>{
+                        if(res.data.msg == "Archivo eliminado correctamente"){
+                            swal("Archivo eliminado", "El archivo ha sido eliminado correctamente", "success");
+                        }else{
+                            swal("Error al eliminar el archivo", "Intente nuevamente", "error");
+                        }
                     });
-                    swal("Archivo Eliminado", "El archivo se ha eliminado correctamente", "success");
                     getData(); //Actualizar eliminacion
 
                 }}>Borrar</button>

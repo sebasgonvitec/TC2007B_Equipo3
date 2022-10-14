@@ -2,7 +2,7 @@ import React from "react";
 import { useContext } from "react";
 import axios from "axios";
 import { useState } from "react";
-import { Navigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
 import SessionContext from "../SessionContext";
 import ReloadAlert from "./Reload";
 import { Link } from "react-router-dom"
@@ -11,6 +11,7 @@ import "./styleComponents/CrearExpediente.css"
 import Name from "./Name"
 import { BsArchive } from "react-icons/bs";
 import { BsChevronLeft } from "react-icons/bs";
+import swal from "sweetalert";
 
 
 const URI = "https://localhost/crearExpedienteInv";
@@ -26,7 +27,8 @@ function CrearExpedienteInv() {
     ReloadAlert();
     
     const { session } = useContext(SessionContext);
-
+    const navigate = useNavigate();
+    
     const [state, setState] = useState({
         numero: "",
         eco: "",
@@ -82,12 +84,25 @@ function CrearExpedienteInv() {
                         'Content-Type': 'application/json',
                         token: localStorage.getItem('JWT_token'),
                     }
+                }).then(res=>{
+                    if(res.data.msg == "Expediente creado"){
+                        swal(res.data.msg, "", "success").then(()=>{
+                            navigate(-1);
+                        })
+                    }else{
+                        swal("Error al crear el expediente", "", "error").then(()=>{
+                            navigate(-1);
+                        })
+                    }
                 });
-        } else {
-            setErrorMsg("Por favor, ingrese un nombre para el expediente");
+            } else {
+                setErrorMsg("Por favor, ingrese un nombre para el expediente");
+                swal("Por favor, ingrese un numero para el expediente", "", "warning")
         }
     } catch (error) {
         error.response && setErrorMsg(error.response.data);
+        swal("Error al crear el expediente", "Intentelo nuevamente", "error")
+        console.log("entro al error")
     }}
     
     if(session != null)

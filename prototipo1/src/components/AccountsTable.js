@@ -14,6 +14,7 @@ import { Link } from "react-router-dom"
 
 import Name from "./Name"
 import { BsChevronLeft } from "react-icons/bs";
+import swal from 'sweetalert';
 
 const URI = 'https://localhost/tablaCuentas'
 const URI_delete = 'https://localhost/borrarCuenta'
@@ -44,7 +45,7 @@ const AccountsTable = () => {
     //Estados de la data en la tabla al momento de utilizar filtros
     const [dataState, setDataState] = React.useState()
     const [result, setResult] = React.useState(data);
-    console.log(result)
+    //console.log(result)
     useEffect(() => { setResult(data)}, [data] )
    
 
@@ -121,7 +122,13 @@ const AccountsTable = () => {
                         method: 'DELETE',
                         params: { id: dataItem._id}, // important
                         headers: { token: localStorage.getItem('JWT_token')}
-                    })
+                    }).then(res => {
+                        if(res.data.msg == "Cuenta eliminada correctamente"){
+                            swal("Cuenta eliminada", "La cuenta ha sido eliminada correctamente", "success");
+                        }else{
+                            swal("Error", "No se pudo eliminar la cuenta", "error");
+                        }
+                    });
                     getData(); //Actualizar eliminacion
                 }}>Borrar</button>
             </td>
