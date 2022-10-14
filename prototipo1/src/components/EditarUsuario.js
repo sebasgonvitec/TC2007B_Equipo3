@@ -26,7 +26,7 @@ function EditarUsuario(){
     const [userData, setUserData] = useState({});
 
     useEffect( () => {
-        getData()
+        getData();
     }, []);
 
     const getData = async () => {
@@ -42,8 +42,10 @@ function EditarUsuario(){
         }).then((res) =>{
             if(res.data !== null){
                 setUserData(res.data);
+                console.log(userData);
             }else{
                 setUserData(null);
+                console.log("No se encontró el usuario");
             }}).catch((error) => {
                 console.log(error);
             }
@@ -67,6 +69,7 @@ function EditarUsuario(){
         });
         console.log(userData);
     }
+
     const handleOnSubmit = async (event) => {
         event.preventDefault();
         try{
@@ -82,12 +85,12 @@ function EditarUsuario(){
 
                 const logData = {usuario:session.nombre, fecha: new Date().toString(), accion: "Editó un usuario", folio: userData.usuario, area: "N/A"}
 
-                    await axios.post(logURI, logData, {
+                await axios.post(logURI, logData, {
                     headers:{
                         'Content-Type': 'application/json',
                         token: localStorage.getItem('JWT_token')
                     }
-                    });
+                });
 
                 console.log(formData);
 
@@ -134,9 +137,9 @@ function EditarUsuario(){
                             
                             <div className="privilegiosEU">
                                 <h3 style={{marginBottom:"2vw"}} >Privilegios:</h3>
-                                <input type="checkbox" name="nulidad" onChange={handleInputChangeCheckbox} id="inputCheckEU" />Juicio de Nulidad<br/>
-                                <input type="checkbox" name="investigacion" onChange={handleInputChangeCheckbox} id="inputCheckEU" />Carpeta de Investigacion<br/>
-                                <input type="checkbox" name="otros"  onChange={handleInputChangeCheckbox} id="inputCheckEU" />Expedientes Otros<br/>
+                                <input type="checkbox" name="nulidad" onChange={handleInputChangeCheckbox} id="inputCheckEU" checked={userData.nulidad == 'true'}/>Juicio de Nulidad<br/>
+                                <input type="checkbox" name="investigacion" onChange={handleInputChangeCheckbox} id="inputCheckEU" checked={userData.investigacion == 'true'}/>Carpeta de Investigacion<br/>
+                                <input type="checkbox" name="otros"  onChange={handleInputChangeCheckbox} id="inputCheckEU" checked={userData.otros == 'true'}/>Expedientes Otros<br/>
                             </div>
                         </div>
                         
