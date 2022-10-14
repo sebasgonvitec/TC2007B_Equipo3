@@ -11,6 +11,7 @@ import LogoAo from "../img/logo_ao.png"
 import BackgroundLogin from "../img/backgroundLogin.png"
 import ImgLogin from "../img/imgLogin.jpeg"
 import "./styleComponents/Login.css"
+import swal from "sweetalert";
 
 const URI = "https://localhost/login";
 
@@ -50,25 +51,29 @@ const Login = () => {
                     }
                 }).then((res) => {
                     //console.log(res.data);
-                    //updateSession(res.data); //store token
-                    localStorage.setItem('JWT_token', res.data);
-                    axios({
-                        method: 'get',
-                        url: URI,
-                        headers: {
-                            'Content-Type': 'application/json',
-                            token: localStorage.getItem('JWT_token'),
-                        },
-                        params: { usuario:state.usuario } 
-                    }).then((res) => {
-                        //console.log(res.data);
-                        updateSession(res.data);
-                        if(res.data.admin == 'true'){
-                            navigate('/portalAdmin');
-                        }else{
-                            navigate("/home");
-                        } //store user info
-                    });
+                    if(res.data.msg == "Credenciales Incorrectas"){
+                        swal(res.data.msg, "Intente de nuevo", "error");
+                    }else{
+                        localStorage.setItem('JWT_token', res.data);//store token
+                        axios({
+                            method: 'get',
+                            url: URI,
+                            headers: {
+                                'Content-Type': 'application/json',
+                                token: localStorage.getItem('JWT_token'),
+                            },
+                            params: { usuario:state.usuario } 
+                        }).then((res) => {
+                            //console.log(res.data);
+                            updateSession(res.data); //store user data
+                            if(res.data.admin == 'true'){
+                                navigate('/portalAdmin');
+                            }else{
+                                navigate("/home");
+                            } //store user info
+                        });
+                    }
+                    
                 });
 
                 

@@ -66,12 +66,12 @@ app.post("/login", (req, res)=>{
             // res.json(result) // si las credenciales son correctas, regresar info del usuario
           }else{
             console.log("Credenciales Incorrectas")
-            res.json(null) //indicar en front credenciales incorrectas
+            res.json({msg: "Credenciales Incorrectas"}) //indicar en front credenciales incorrectas
           }
         })
       }else{
         console.log("Credenciales Incorrectas")
-        res.json(null) //indicar en front credenciales incorrectas
+        res.json({msg: "Credenciales Incorrectas"}) //indicar en front credenciales incorrectas
       }
     })
 });
@@ -341,7 +341,7 @@ app.post("/crearCuenta", (req, res)=>{
     jwt.verify(req.headers.token, "secretKey", (err, userId) => {
         db.collection("usuarios").find({usuario: userId.usuario}).toArray(function(error, result){
             if(err || error || result[0].admin == null){
-                res.json({msg: "No tiene los permisos, saquese alv"})
+                res.json({msg: "No tiene los permisos necesarios para realizar esta acción"})
             }else {
                 let user=req.body.usuario;
                 let pass=req.body.password;
@@ -356,15 +356,17 @@ app.post("/crearCuenta", (req, res)=>{
                 db.collection("usuarios").findOne({usuario:user}, (err, result)=>{
                 if(result!=null){
                     console.log("El usuario ya existe")
-                    throw new Error('El usuario ya existe')
+                    res.json({msg: "El usuario ya existe"})
                 }
-        
                 else{
                     bcrypt.hash(pass, 10, (err, hash)=>{
                     let aAgregar={usuario:user, password:hash, nombre:name, area:area, nulidad:nulidad, investigacion:investigacion, otros:otros}
                     db.collection("usuarios").insertOne(aAgregar, (err, result)=>{
-                        if (err) throw err;
-                        console.log("Usuario agregado")
+                        if (err) {throw err;}
+                        else{
+                            console.log("Usuario agregado")
+                            res.json({msg: "Usuario creado correctamente"})
+                        }
                         });
                     });
                     }
@@ -400,8 +402,11 @@ app.post("/editarUsuario", (req, res)=>{
                 bcrypt.hash(req.body.password, 10, (err, hash)=>{
                     const updateData = { $set: { usuario:req.body.usuario, password:hash, nombre:req.body.nombre, area:req.body.area, nulidad:req.body.nulidad, investigacion:req.body.investigacion, otros:req.body.otros } };
                     db.collection("usuarios").updateOne({"_id": mongo.ObjectId(req.query.id)}, updateData, (err, result)=>{
-                        if(err) throw err;
-                        res.status(200).send(result);
+                        if(err) {
+                            throw err
+                        }else{
+                            res.status(200).json({msg: "Usuario actualizado correctamente"});
+                        }
                     });
                 })
             }

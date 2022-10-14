@@ -11,6 +11,7 @@ import { useContext } from "react";
 import SessionContext from "../SessionContext";
 
 import "./styleComponents/ArchivosUsuario.css"
+import swal from 'sweetalert';
 
 const URI = 'https://localhost/archivosUsuario'
 const URI_delete = 'https://localhost/borrarArchivo'
@@ -51,7 +52,7 @@ const ArchivosUsuario = () => {
     //Estados de la data en la tabla al momento de utilizar filtros
     const [dataState, setDataState] = React.useState()
     const [result, setResult] = React.useState(data);
-    console.log(result)
+    //console.log(result)
     useEffect(() => { setResult(data)}, [data] )
    
 
@@ -106,7 +107,7 @@ const ArchivosUsuario = () => {
     // Componente de boton para editar cuenta
     const DeleteButton = (props) => {
         const { dataItem } = props;
-        console.log(dataItem);
+        //console.log(dataItem);
         return(
             <td>
                 <button id="btnBorrar" onClick={(e) => {
@@ -117,8 +118,7 @@ const ArchivosUsuario = () => {
                         params: { id: dataItem._id, nombre: dataItem.nombre}, // important
                         headers: { token: localStorage.getItem('JWT_token')}
                     });
-                    console.log("Archivo borrado");
-                    console.log("Getting new data")
+                    swal("Archivo Eliminado", "El archivo se ha eliminado correctamente", "success");
                     getData(); //Actualizar eliminacion
 
                 }}>Borrar</button>
