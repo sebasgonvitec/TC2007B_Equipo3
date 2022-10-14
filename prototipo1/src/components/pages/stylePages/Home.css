@@ -82,3 +82,22 @@
     height: auto;
 }
 
+.iconLogout{
+    width: 2.7vw;
+    height: auto;
+    color: #8B2E87;
+    margin: 3vw 0 0 35vw;
+}
+
+.iconLogout:hover{
+    cursor: pointer;
+    color: #db2923;
+}
+
+.headerAdmin{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+

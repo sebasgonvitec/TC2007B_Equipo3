@@ -13,6 +13,8 @@ import SessionContext from "../SessionContext";
 import { useNavigate, Navigate } from 'react-router-dom';
 import ReloadAlert from "./Reload";
 
+import Name from "./Name"
+import { BsChevronLeft } from "react-icons/bs";
 const URI = 'https://localhost/bitacora';
 
 function Bitacora() {
@@ -101,28 +103,34 @@ function Bitacora() {
     if(session != null)
     {
         return (
-            <div>
-            <h1>Bitácora de Actividad</h1>
-            <p></p>
-            <LocalizationProvider language="es-ES"> 
-                <IntlProvider locale="es">
+            <div style={{marginLeft:"5.8vw", marginRight:"5.8vw", marginBottom:"5vw"}}>
+                <Name 
+                    titulo="Bitácora de Actividad"
+                />
+                <Link to={"/portalAdmin"}  className="btnBack" style={{color: "#8B2E87", marginBottom:"2vw"}}>
+                    <BsChevronLeft style={{width:"2.5vw", height:"auto"}}/>
+                    <div>Volver</div>
+                </Link>
 
-                    <Grid
-                        data={result}
-                        filterable={true}
-                        onDataStateChange={onDataStateChange}
-                        filterOperators={filterOperators}
-                        {...dataState}
-                    >
-                        <GridColumn field="fecha" title="Fecha y Hora" />
-                        <GridColumn field="usuario" title="Usuario" />
-                        <GridColumn field="accion" title="Acción" />
-                        <GridColumn field="folio" title="Folio" />
-                        <GridColumn field="area" title="Área" />
+                <LocalizationProvider language="es-ES"> 
+                    <IntlProvider locale="es">
 
-                    </Grid>   
-                </IntlProvider>
-            </LocalizationProvider>
+                        <Grid
+                            data={result}
+                            filterable={true}
+                            onDataStateChange={onDataStateChange}
+                            filterOperators={filterOperators}
+                            {...dataState}
+                        >
+                            <GridColumn field="fecha" title="Fecha y Hora" />
+                            <GridColumn field="usuario" title="Usuario" />
+                            <GridColumn field="accion" title="Acción" />
+                            <GridColumn field="folio" title="Folio" />
+                            <GridColumn field="area" title="Área" />
+
+                        </Grid>   
+                    </IntlProvider>
+                </LocalizationProvider>
             </div>
 
         );

@@ -82,7 +82,7 @@ const Login = () => {
     }
 
     return(
-        <body style={{backgroundImage: `url(${BackgroundLogin})` }}>
+        <body style={{backgroundImage: `url(${BackgroundLogin})`, backgroundSize:"cover" }}>
             {/* <Name
                 titulo="Inicia tu sesión"
             /> */}
