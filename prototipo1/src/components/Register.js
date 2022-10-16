@@ -3,7 +3,7 @@ import React from "react";
 import axios from "axios";
 import { useState } from "react"
 import { useContext } from "react";
-import { Navigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
 import SessionContext from "../SessionContext";
 import ReloadAlert from "./Reload";
 import { Link } from "react-router-dom"
@@ -12,6 +12,7 @@ import "./styleComponents/Register.css"
 import Name from "./Name"
 import BackgroundRegister from "../img/backgroundRegister.png"
 import { BsChevronLeft } from "react-icons/bs";
+import swal from 'sweetalert';
 
 const URI = "https://localhost/crearCuenta";
 
@@ -20,6 +21,7 @@ const Register = () => {
     ReloadAlert();
 
     const { session } = useContext(SessionContext);
+    const navigate = useNavigate();
 
     const [state, setState] = useState({
         usuario: "",
@@ -38,7 +40,7 @@ const Register = () => {
             ...state,
             [event.target.name]: event.target.value,
         });
-        console.log(state.nombre);
+        //console.log(state.nombre);
     }
 
     const handleOnSubmit = async (event) => {
@@ -61,6 +63,17 @@ const Register = () => {
                     headers: {
                         'Content-Type': 'application/json',
                         token: localStorage.getItem('JWT_token'),
+                    }
+                }).then((res) => {
+                    console.log(res.data);
+                    if(res.data.msg === "Usuario creado correctamente"){
+                        swal(res.data.msg, "Recuerde guardar bien sus credenciales", "success").then(() => {
+                            navigate("/portalAdmin");
+                        })
+                        //alert("Usuario creado");
+                        //window.location.reload();
+                    }else{
+                        swal("El usuario ya existe", "Intente cambiar las credenciales", "error")
                     }
                 })
                   

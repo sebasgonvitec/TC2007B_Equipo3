@@ -66,12 +66,12 @@ app.post("/login", (req, res)=>{
             // res.json(result) // si las credenciales son correctas, regresar info del usuario
           }else{
             console.log("Credenciales Incorrectas")
-            res.json(null) //indicar en front credenciales incorrectas
+            res.json({msg: "Credenciales Incorrectas"}) //indicar en front credenciales incorrectas
           }
         })
       }else{
         console.log("Credenciales Incorrectas")
-        res.json(null) //indicar en front credenciales incorrectas
+        res.json({msg: "Credenciales Incorrectas"}) //indicar en front credenciales incorrectas
       }
     })
 });
@@ -143,7 +143,7 @@ app.post("/crearExpedienteNul", function(req, res){
                 if(err){
                     handleError(res, err.message, "Failed to create new expediente");
                 }else{
-                    res.status(200).json(result);
+                    res.status(200).json({msg: "Expediente creado"});
                 }
             })
             }   
@@ -187,7 +187,7 @@ app.post("/crearExpedienteInv", function(req, res){
                   numero:req.body.numero,
                   eco:req.body.eco,
                   carpeta_inv:req.body.carpeta_inv,
-                  denunciante:req.body.carpeta_inv,
+                  denunciante:req.body.denunciante,
                   imputado:req.body.imputado,
                   delito:req.body.delito,
                   lugarHechos:req.body.lugarHechos,
@@ -196,11 +196,11 @@ app.post("/crearExpedienteInv", function(req, res){
                   fecha:req.body.fecha,
                 };
                 db.collection("investigacion").insertOne(aInsertar, function(err, result){
-                if(err){
-                    handleError(res, err.message, "Failed to create new expediente");
-                }else{
-                    res.status(200).json(result);
-                }
+                    if(err){
+                        handleError(res, err.message, "Failed to create new expediente");
+                    }else{
+                        res.status(200).json({msg: "Expediente creado"});
+                    }
                 });
             }   
         })
@@ -209,7 +209,7 @@ app.post("/crearExpedienteInv", function(req, res){
 
 
 //Mostrar archivos de un expediente en especifico
-// La coleccion "pruebaUpload" almacena todos los archivos de todos los expedientes
+// La coleccion "archivos" almacena todos los archivos de todos los expedientes
 app.get("/descargarArchivos", function(req, res){
     jwt.verify(req.headers.token, "secretKey", (err, userId) => {
         if(err){
@@ -292,14 +292,17 @@ app.post("/subirArchivo", uploads.single("archivo"), (req, res)=>{
                         let aInsertar = {nombre:req.body.nombre, folio:req.body.folio, path: rutaDefinitiva, fecha: req.body.fecha, expediente: req.body.expediente, expedienteNom: req.body.expedienteNom, usuario: req.body.usuario}
                         console.log(req.body);
                         db.collection("archivos").insertOne(aInsertar, (err, res)=>{
-                            if(err) throw err;
-                        console.log(res);
+                            if(err) {
+                                throw err
+                            }else{
+                                console.log(res);
+                            }
                         });
                     });
                 })
             })
 
-            res.status(200).json({message:"Archivo subido correctamente"});
+            res.status(200).json({msg:"Archivo subido correctamente"});
         }
     });
 })
@@ -332,6 +335,7 @@ app.delete("/borrarCuenta", function(req, res) {
                 db.collection("usuarios").deleteOne({"_id": mongo.ObjectId(req.query.id)}, (err, result) => {
                     if (err) throw err;
                 })
+                res.json({msg: "Cuenta eliminada correctamente"})
             }
         })
     });
@@ -341,7 +345,7 @@ app.post("/crearCuenta", (req, res)=>{
     jwt.verify(req.headers.token, "secretKey", (err, userId) => {
         db.collection("usuarios").find({usuario: userId.usuario}).toArray(function(error, result){
             if(err || error || result[0].admin == null){
-                res.json({msg: "No tiene los permisos, saquese alv"})
+                res.json({msg: "No tiene los permisos necesarios para realizar esta acción"})
             }else {
                 let user=req.body.usuario;
                 let pass=req.body.password;
@@ -356,15 +360,17 @@ app.post("/crearCuenta", (req, res)=>{
                 db.collection("usuarios").findOne({usuario:user}, (err, result)=>{
                 if(result!=null){
                     console.log("El usuario ya existe")
-                    throw new Error('El usuario ya existe')
+                    res.json({msg: "El usuario ya existe"})
                 }
-        
                 else{
                     bcrypt.hash(pass, 10, (err, hash)=>{
                     let aAgregar={usuario:user, password:hash, nombre:name, area:area, nulidad:nulidad, investigacion:investigacion, otros:otros}
                     db.collection("usuarios").insertOne(aAgregar, (err, result)=>{
-                        if (err) throw err;
-                        console.log("Usuario agregado")
+                        if (err) {throw err;}
+                        else{
+                            console.log("Usuario agregado")
+                            res.json({msg: "Usuario creado correctamente"})
+                        }
                         });
                     });
                     }
@@ -400,8 +406,11 @@ app.post("/editarUsuario", (req, res)=>{
                 bcrypt.hash(req.body.password, 10, (err, hash)=>{
                     const updateData = { $set: { usuario:req.body.usuario, password:hash, nombre:req.body.nombre, area:req.body.area, nulidad:req.body.nulidad, investigacion:req.body.investigacion, otros:req.body.otros } };
                     db.collection("usuarios").updateOne({"_id": mongo.ObjectId(req.query.id)}, updateData, (err, result)=>{
-                        if(err) throw err;
-                        res.status(200).send(result);
+                        if(err) {
+                            throw err
+                        }else{
+                            res.status(200).json({msg: "Usuario actualizado correctamente"});
+                        }
                     });
                 })
             }
@@ -435,7 +444,8 @@ app.delete("/borrarArchivo", function(req, res) {
             fs.unlinkSync(__dirname + "/.storage/" + req.query.nombre)
             db.collection("archivos").deleteOne({"_id": mongo.ObjectId(req.query.id)}, (err, result) => {
                 if (err) {throw err}
-            })
+            });
+            res.json({msg: "Archivo eliminado correctamente"})
         }
     });
 })
@@ -502,6 +512,9 @@ app.post("/registrarActividad", function(req, res){
 //             if (err) throw err;
 //         })
 //     }
+
+//     TODO: Agregar usuario admin
+
 //     res.send({msg:"key setup exitoso!"})
 // })
 

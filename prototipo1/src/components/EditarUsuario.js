@@ -6,11 +6,13 @@ import ReloadAlert from "./Reload";
 import { useContext } from "react";
 import SessionContext from "../SessionContext";
 import { Link } from "react-router-dom"
+import { useNavigate } from 'react-router-dom';
 
 import Name from "./Name"
 import "./styleComponents/EditarUsuario.css"
 import { BsChevronLeft } from "react-icons/bs";
 import BackgroundRegister from "../img/backgroundRegister.png"
+import swal from "sweetalert";
 
 
 const URI = 'https://localhost/editarUsuario';
@@ -24,6 +26,8 @@ function EditarUsuario(){
     const { session } = useContext(SessionContext);
     const user = state.dataItem; 
     const [userData, setUserData] = useState({});
+
+    const navigate = useNavigate();
 
     useEffect( () => {
         getData();;
@@ -43,10 +47,8 @@ function EditarUsuario(){
             if(res.data !== null){
                 setUserData(res.data);
                 console.log(userData);
-                console.log(userData);
             }else{
                 setUserData(null);
-                console.log("No se encontró el usuario");
                 console.log("No se encontró el usuario");
             }}).catch((error) => {
                 console.log(error);
@@ -60,7 +62,6 @@ function EditarUsuario(){
             ...userData,
             [event.target.name]: event.target.value,
         });
-        console.log(userData);
     }
 
     const handleInputChangeCheckbox = (event) =>{
@@ -69,7 +70,7 @@ function EditarUsuario(){
             ...userData,
             [event.target.name]: event.target.checked.toString(),
         });
-        console.log(userData);
+        //console.log(userData);
     }
 
 
@@ -95,7 +96,7 @@ function EditarUsuario(){
                     }
                 });
 
-                console.log(formData);
+                //console.log(formData);
 
                 await axios.post(URI, formData, {
                     headers: {
@@ -105,8 +106,12 @@ function EditarUsuario(){
                     params: { id:user._id }
                 }).then((res) => {
                     console.log(res.data);
+                    swal(res.data.msg, "", "success").then(() =>{
+                        navigate(-1);
+                    });
                 }).catch((error) => {
                     console.log(error);
+                    swal("Error al editar usuario", "", "error")
                 });
             }else{
                 console.log('Favor de llenar todos los campos');

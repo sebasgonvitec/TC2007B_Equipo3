@@ -2,7 +2,7 @@ import React from "react";
 import { useContext } from "react";
 import axios from "axios";
 import { useState } from "react";
-import { Navigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
 import SessionContext from "../SessionContext";
 import ReloadAlert from "./Reload";
 import { Link } from "react-router-dom"
@@ -11,6 +11,7 @@ import "./styleComponents/CrearExpediente.css"
 import Name from "./Name"
 import { BsArchive } from "react-icons/bs";
 import { BsChevronLeft } from "react-icons/bs";
+import swal from "sweetalert";
 
 
 const URI = "https://localhost/crearExpedienteInv";
@@ -26,7 +27,8 @@ function CrearExpedienteInv() {
     ReloadAlert();
     
     const { session } = useContext(SessionContext);
-
+    const navigate = useNavigate();
+    
     const [state, setState] = useState({
         numero: "",
         eco: "",
@@ -52,7 +54,7 @@ function CrearExpedienteInv() {
     const handleOnSubmit = async (event) => {
         event.preventDefault();
         try{
-            if(state.nombre.trim() !== ''){
+            if(state.numero.trim() !== ''){
                 const formData = {
                     numero:state.numero,
                     eco:state.eco,
@@ -65,6 +67,7 @@ function CrearExpedienteInv() {
                     estado:state.estado,
                     fecha:state.fecha,
                 };
+                console.log(formData);
 
                 setErrorMsg('');
                 
@@ -82,12 +85,25 @@ function CrearExpedienteInv() {
                         'Content-Type': 'application/json',
                         token: localStorage.getItem('JWT_token'),
                     }
+                }).then(res=>{
+                    if(res.data.msg === "Expediente creado"){
+                        swal(res.data.msg, "", "success").then(()=>{
+                            navigate(-1);
+                        })
+                    }else{
+                        swal("Error al crear el expediente", "", "error").then(()=>{
+                            navigate(-1);
+                        })
+                    }
                 });
-        } else {
-            setErrorMsg("Por favor, ingrese un nombre para el expediente");
+            } else {
+                setErrorMsg("Por favor, ingrese un nombre para el expediente");
+                swal("Por favor, ingrese un numero para el expediente", "", "warning")
         }
     } catch (error) {
         error.response && setErrorMsg(error.response.data);
+        swal("Error al crear el expediente", "Intentelo nuevamente", "error")
+        console.log("entro al error")
     }}
     
     if(session != null)
@@ -110,15 +126,15 @@ function CrearExpedienteInv() {
                     <form id="formCrearExp" onSubmit={handleOnSubmit}>
                         <div id="tituloCrearExp">Ingresa los datos</div>
                         {errorMsg && <p>{errorMsg}</p>}
-                        <input type="text" name="numero" onChange={handleInputChange} value={state.numero} placeholder="Numero del expediente" id="inputCE"/>
+                        <input type="text" name="numero" onChange={handleInputChange} value={state.numero} placeholder="Numero del expediente" id="inputCE" required/>
                         <input type="text" name="eco" onChange={handleInputChange} value={state.eco} placeholder="ECO" id="inputCE"/>
-                        <input type="text" name="carpeta_inv" onChange={handleInputChange} value={state.carpeta_inv} placeholder="Carpeta de Investigacion" id="inputCE"/>
+                        <input type="text" name="carpeta_inv" onChange={handleInputChange} value={state.carpeta_inv} placeholder="Carpeta de Investigacion" id="inputCE" required/>
                         <input type="text" name="denunciante" onChange={handleInputChange} value={state.denunciante} placeholder="Denunciante" id="inputCE"/>
                         <input type="text" name="imputado" onChange={handleInputChange} value={state.imputado} placeholder="Imputado" id="inputCE"/>
                         <input type="text" name="delito" onChange={handleInputChange} value={state.delito} placeholder="Delito" id="inputCE"/>
                         <input type="text" name="lugarHechos" onChange={handleInputChange} value={state.lugarHechos} placeholder="Lugar de los hechos" id="inputCE"/>
                         <input type="text" name="objetoDelito" onChange={handleInputChange} value={state.objetoDelito} placeholder="Objeto del delito" id="inputCE" />
-                        <input type="text" name="estado" onChange={handleInputChange} value={state.estado} placeholder="Estado" id="inputCE"/>
+                        <input type="text" name="estado" onChange={handleInputChange} value={state.estado} placeholder="Estado" id="inputCE" required/>
 
                         <button id="btnCrearExp" type="submit">Crear Expediente</button>
                     </form>

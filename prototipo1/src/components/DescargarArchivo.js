@@ -1,3 +1,17 @@
+/*
+ * Componente Descarga de Archivos
+ *  
+ * Autores:
+ * - Andreína Isabel Sanánez
+ * - Sebastián González
+ * - Francisco Salcedo
+ * - Regina Rodríguez
+ * - Andrea Diego
+ * 
+ * 10/6/2022 
+ * 
+ */
+
 import React from "react";
 import axios from 'axios';
 import { useState, useEffect } from "react";
@@ -8,8 +22,6 @@ import {IntlProvider, LocalizationProvider,loadMessages} from "@progress/kendo-r
 import esMessages from "../language/es.json";
 import { useContext } from "react";
 import DownloadContext from "../DownloadContext";
-import { filterBy } from "@progress/kendo-data-query";
-// import downloadjs from 'downloadjs';
 import fileDownload from 'js-file-download';
 import SessionContext from "../SessionContext";
 import ReloadAlert from "./Reload";
@@ -21,13 +33,9 @@ import Name from "./Name"
 import InfoArchivo from "./InfoArchivo";
 import { BsChevronLeft } from "react-icons/bs";
 
-
-
-
 let URI = 'https://localhost/descargarArchivos/download'
 let URI_TEST = 'https://localhost/descargarArchivos'
 const logURI = "https://localhost/registrarActividad";
-
 
 function DescargarArchivo(){
 
@@ -39,32 +47,32 @@ function DescargarArchivo(){
 
     const { session } = useContext(SessionContext);
 
-    const [errorMsg, setErrorMsg] = useState('');
-
     const [data, setData] = useState([]);
     useEffect( () => {
-        getData()
+        const getData = async () => {
+            const config = {
+                params: { expediente: download._id },
+                headers:{
+                  token: localStorage.getItem('JWT_token'),
+                }
+            };
+            await axios.get(URI_TEST, config).then((res) => {
+                if(res.data !== null){
+                    setData(res.data)   
+                }
+                else {
+                    navigate('/login')
+                }
+            })
+        };
+
+        getData();
     }, [])
 
-    console.log(download._id)
-    console.log(download.area)
+    //console.log(download._id)
+    //console.log(download.area)
 
-    const getData = async () => {
-        const config = {
-            params: { expediente: download._id },
-            headers:{
-              token: localStorage.getItem('JWT_token'),
-            }
-        };
-        await axios.get(URI_TEST, config).then((res) => {
-            if(res.data !== null){
-                setData(res.data)   
-            }
-            else {
-                navigate('/login')
-            }
-        })
-    }
+    
 
     //Estados de la data en la tabla al momento de utilizar filtros
     const [dataState, setDataState] = React.useState()
@@ -177,14 +185,16 @@ function DescargarArchivo(){
                     marginTop: "1.5vw", 
                     marginBottom: "3vw"}}>
                     <InfoArchivo
-                        nombre = {<span> {download.nombre} </span>}
-                        numero = {<span> {download.numero} </span>}
-                        expediente = {<span> {download.expediente} </span>}
-                        actor = {<span> {download.actor} </span>}
+                        expediente = {download.expediente}
+                        carpeta_inv = {download.carpeta_inv}
+                        numero = {download.numero}
+                        fecha = {download.fecha}
+                        estatusJuridico = {download.estatusJuridico}
+                        estado = {download.estado}
                     />
                 </div>
 
-                {errorMsg && <div className="error">{errorMsg}</div>}
+                {/* {errorMsg && <div className="error">{errorMsg}</div>} */}
                 <LocalizationProvider language="es-ES"> 
                     <IntlProvider locale="es">
 

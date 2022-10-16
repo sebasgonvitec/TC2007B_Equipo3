@@ -106,7 +106,7 @@ function Subir() {
         const { dataItem } = props;
         dataItem.area = "nulidad"; //añadir area
 
-        console.log(dataItem)
+        //console.log(dataItem)
         return(
             <td>
                 <Link to='/subirArchivo'>
