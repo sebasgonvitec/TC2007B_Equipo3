@@ -209,7 +209,7 @@ app.post("/crearExpedienteInv", function(req, res){
 
 
 //Mostrar archivos de un expediente en especifico
-// La coleccion "pruebaUpload" almacena todos los archivos de todos los expedientes
+// La coleccion "archivos" almacena todos los archivos de todos los expedientes
 app.get("/descargarArchivos", function(req, res){
     jwt.verify(req.headers.token, "secretKey", (err, userId) => {
         if(err){
@@ -512,6 +512,9 @@ app.post("/registrarActividad", function(req, res){
 //             if (err) throw err;
 //         })
 //     }
+
+//     TODO: Agregar usuario admin
+
 //     res.send({msg:"key setup exitoso!"})
 // })
 

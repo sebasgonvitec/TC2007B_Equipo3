@@ -86,7 +86,7 @@ function CrearExpedienteInv() {
                         token: localStorage.getItem('JWT_token'),
                     }
                 }).then(res=>{
-                    if(res.data.msg == "Expediente creado"){
+                    if(res.data.msg === "Expediente creado"){
                         swal(res.data.msg, "", "success").then(()=>{
                             navigate(-1);
                         })

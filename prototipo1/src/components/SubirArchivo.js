@@ -102,7 +102,7 @@ const SubirArchivo = () => {
                             token: localStorage.getItem('JWT_token')
                         }
                     }).then(res => {
-                        if(res.data.msg == "Archivo subido correctamente"){
+                        if(res.data.msg === "Archivo subido correctamente"){
                             swal(res.data.msg, "", "success").then(()=>{
                                 navigate(-1);
                         })}else{
