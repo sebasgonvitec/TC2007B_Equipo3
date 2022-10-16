@@ -267,6 +267,7 @@ app.get("/descargarArchivos/download", async (req, res) => {
     });
 });
 
+//Subir archivos al sistema
 app.post("/subirArchivo", uploads.single("archivo"), (req, res)=>{
     jwt.verify(req.headers.token, "secretKey", (err, userId) => {
         if(err){
@@ -307,6 +308,7 @@ app.post("/subirArchivo", uploads.single("archivo"), (req, res)=>{
     });
 })
 
+//Obtener informacion de todos los usuarios
 app.get("/tablaCuentas", function(req, res) {
     jwt.verify(req.headers.token, "secretKey", (err, userId) => {
         db.collection("usuarios").find({usuario: userId.usuario}).toArray(function(error, result){
@@ -326,6 +328,7 @@ app.get("/tablaCuentas", function(req, res) {
     });
 });
 
+//Borrar una cuenta de usuario
 app.delete("/borrarCuenta", function(req, res) {
     jwt.verify(req.headers.token, "secretKey", (err, userId) => {
         db.collection("usuarios").find({usuario: userId.usuario}).toArray(function(error, result){
@@ -341,6 +344,7 @@ app.delete("/borrarCuenta", function(req, res) {
     });
 })
  
+//Crear una cuenta de usuario
 app.post("/crearCuenta", (req, res)=>{
     jwt.verify(req.headers.token, "secretKey", (err, userId) => {
         db.collection("usuarios").find({usuario: userId.usuario}).toArray(function(error, result){
@@ -396,7 +400,7 @@ app.get("/editarUsuario", (req, res)=>{
     });
 });
 
-//Actualizar usuario seleccionado
+//Editar usuario seleccionado
 app.post("/editarUsuario", (req, res)=>{
     jwt.verify(req.headers.token, "secretKey", (err, userId) => {
         db.collection("usuarios").find({usuario: userId.usuario}).toArray(function(error, result){
@@ -451,7 +455,6 @@ app.delete("/borrarArchivo", function(req, res) {
 })
 
 // Endpoint para extraer bitacora de actividad
-
 app.get("/bitacora", function(req, res){
     jwt.verify(req.headers.token, "secretKey", (err, userId) => {
         if(err){
@@ -473,7 +476,6 @@ app.get("/bitacora", function(req, res){
 })
 
 // Endpoint para crear registros de actividad
-
 app.post("/registrarActividad", function(req, res){
     jwt.verify(req.headers.token, "secretKey", (err, userId) => {
         if(err){

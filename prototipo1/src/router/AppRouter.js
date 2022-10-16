@@ -2,33 +2,32 @@ import './App.css';
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 
 //componentes
-import HeaderGina from "../components/HeaderGina";
-import Footer from "../components/Footer";
+import HeaderGina from "../features/components/HeaderGina";
+import Footer from "../features/components/Footer";
 
 //paginas
-import App from "../components/App";
-import Subir from "../components/Subir";
-import { Descargar } from "../components/Descargar";
-import DescargarArchivo from "../components/DescargarArchivo";
-import SubirArchivo from "../components/SubirArchivo";
-import CrearExpediente from "../components/CrearExpediente";
-import Register from "../components/Register";
-import Login from '../components/Login';
-import Profile from '../components/Profile';
-import AccountsTable from '../components/AccountsTable';
-import { DownloadProvider } from "../DownloadContext";
-import { UploadProvider } from "../UploadContext";
-import { SessionProvider } from '../SessionContext';
+import Subir from "../features/subir/Subir";
+import { Descargar } from "../features/descargar/Descargar";
+import DescargarArchivo from "../features/descargar/DescargarArchivo";
+import SubirArchivo from "../features/subir/SubirArchivo";
+import CrearExpediente from "../features/subir/CrearExpediente";
+import Register from "../features/admin/Register";
+import Login from '../features/Login';
+import Profile from '../features/usuario/Profile';
+import AccountsTable from '../features/admin/AccountsTable';
+import { DownloadProvider } from "../context/DownloadContext";
+import { UploadProvider } from "../context/UploadContext";
+import { SessionProvider } from '../context/SessionContext';
 
-import Home from "../components/pages/Home";
-import UploadMain from "../components/pages/UploadMain";
-import SearchMain from "../components/pages/SearchMain";
-import CrearExpedienteInv from '../components/CrearExpedienteInv';
-import SubirInv from '../components/SubirInv';
-import DescargarInv from '../components/DescargarInv';
-import PortalAdmin from '../components/PortalAdmin';
-import EditarUsuario from '../components/EditarUsuario';
-import Bitacora from '../components/Bitacora';
+import Home from "../features/Home";
+import UploadMain from "../features/subir/UploadMain";
+import SearchMain from "../features/descargar/SearchMain";
+import CrearExpedienteInv from '../features/subir/CrearExpedienteInv';
+import SubirInv from '../features/subir/SubirInv';
+import DescargarInv from '../features/descargar/DescargarInv';
+import PortalAdmin from '../features/admin/PortalAdmin';
+import EditarUsuario from '../features/admin/EditarUsuario';
+import Bitacora from '../features/admin/Bitacora';
 
 
 function AppRouter() {
