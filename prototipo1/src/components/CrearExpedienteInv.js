@@ -54,7 +54,7 @@ function CrearExpedienteInv() {
     const handleOnSubmit = async (event) => {
         event.preventDefault();
         try{
-            if(state.nombre.trim() !== ''){
+            if(state.numero.trim() !== ''){
                 const formData = {
                     numero:state.numero,
                     eco:state.eco,
@@ -67,6 +67,7 @@ function CrearExpedienteInv() {
                     estado:state.estado,
                     fecha:state.fecha,
                 };
+                console.log(formData);
 
                 setErrorMsg('');
                 
@@ -125,15 +126,15 @@ function CrearExpedienteInv() {
                     <form id="formCrearExp" onSubmit={handleOnSubmit}>
                         <div id="tituloCrearExp">Ingresa los datos</div>
                         {errorMsg && <p>{errorMsg}</p>}
-                        <input type="text" name="numero" onChange={handleInputChange} value={state.numero} placeholder="Numero del expediente" id="inputCE"/>
+                        <input type="text" name="numero" onChange={handleInputChange} value={state.numero} placeholder="Numero del expediente" id="inputCE" required/>
                         <input type="text" name="eco" onChange={handleInputChange} value={state.eco} placeholder="ECO" id="inputCE"/>
-                        <input type="text" name="carpeta_inv" onChange={handleInputChange} value={state.carpeta_inv} placeholder="Carpeta de Investigacion" id="inputCE"/>
+                        <input type="text" name="carpeta_inv" onChange={handleInputChange} value={state.carpeta_inv} placeholder="Carpeta de Investigacion" id="inputCE" required/>
                         <input type="text" name="denunciante" onChange={handleInputChange} value={state.denunciante} placeholder="Denunciante" id="inputCE"/>
                         <input type="text" name="imputado" onChange={handleInputChange} value={state.imputado} placeholder="Imputado" id="inputCE"/>
                         <input type="text" name="delito" onChange={handleInputChange} value={state.delito} placeholder="Delito" id="inputCE"/>
                         <input type="text" name="lugarHechos" onChange={handleInputChange} value={state.lugarHechos} placeholder="Lugar de los hechos" id="inputCE"/>
                         <input type="text" name="objetoDelito" onChange={handleInputChange} value={state.objetoDelito} placeholder="Objeto del delito" id="inputCE" />
-                        <input type="text" name="estado" onChange={handleInputChange} value={state.estado} placeholder="Estado" id="inputCE"/>
+                        <input type="text" name="estado" onChange={handleInputChange} value={state.estado} placeholder="Estado" id="inputCE" required/>
 
                         <button id="btnCrearExp" type="submit">Crear Expediente</button>
                     </form>

@@ -138,11 +138,13 @@ const SubirArchivo = () => {
                 </div>
 
                 <div style={{marginTop: "1vw", marginRight: "auto", marginLeft: "auto"}}>
-                    <InfoArchivo
-                        nombre = {<span> {upload.nombre} </span>}
-                        numero = {<span> {upload.numero} </span>}
-                        expediente = {<span> {upload.expediente} </span>}
-                        actor = {<span> {upload.actor} </span>}
+                <InfoArchivo
+                        expediente = {upload.expediente}
+                        carpeta_inv = {upload.carpeta_inv}
+                        numero = {upload.numero}
+                        fecha = {upload.fecha}
+                        estatusJuridico = {upload.estatusJuridico}
+                        estado = {upload.estado}
                     />
                 </div>
 

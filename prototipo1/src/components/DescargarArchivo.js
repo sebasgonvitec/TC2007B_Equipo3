@@ -177,10 +177,12 @@ function DescargarArchivo(){
                     marginTop: "1.5vw", 
                     marginBottom: "3vw"}}>
                     <InfoArchivo
-                        nombre = {<span> {download.nombre} </span>}
-                        numero = {<span> {download.numero} </span>}
-                        expediente = {<span> {download.expediente} </span>}
-                        actor = {<span> {download.actor} </span>}
+                        expediente = {download.expediente}
+                        carpeta_inv = {download.carpeta_inv}
+                        numero = {download.numero}
+                        fecha = {download.fecha}
+                        estatusJuridico = {download.estatusJuridico}
+                        estado = {download.estado}
                     />
                 </div>
 

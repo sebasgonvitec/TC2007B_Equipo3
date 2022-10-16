@@ -187,7 +187,7 @@ app.post("/crearExpedienteInv", function(req, res){
                   numero:req.body.numero,
                   eco:req.body.eco,
                   carpeta_inv:req.body.carpeta_inv,
-                  denunciante:req.body.carpeta_inv,
+                  denunciante:req.body.denunciante,
                   imputado:req.body.imputado,
                   delito:req.body.delito,
                   lugarHechos:req.body.lugarHechos,
