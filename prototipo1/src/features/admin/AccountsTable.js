@@ -137,12 +137,14 @@ const AccountsTable = () => {
                         headers: { token: localStorage.getItem('JWT_token')}
                     }).then(res => {
                         if(res.data.msg == "Cuenta eliminada correctamente"){
-                            swal("Cuenta eliminada", "La cuenta ha sido eliminada correctamente", "success");
+                            swal("Cuenta eliminada", "La cuenta ha sido eliminada correctamente", "success")
+                            getData();
                         }else{
                             swal("Error", "No se pudo eliminar la cuenta", "error");
                         }
                     });
-                    getData(); //Actualizar eliminacion
+                    //getData(); //Actualizar eliminacion
+                    
                 }}>Borrar</button>
             </td>
         );

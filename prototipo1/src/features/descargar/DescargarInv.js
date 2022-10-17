@@ -156,11 +156,11 @@ function DescargarInv(){
                             {...dataState}
                         
                         >
-                            <GridColumn field="nombre" title="Nombre" />
                             <GridColumn field="numero" title="Número" />
                             <GridColumn field="carpeta_inv" title="Carpeta de Investigacion" />
                             <GridColumn field="denunciante" title="Denunciante" />
-                            <GridColumn field="estatus" title="Estatus"/>
+                            <GridColumn field="lugarHechos" title="Lugar de los hechos" />
+                            <GridColumn field="estado" title="Ultimo estado procesal"/>
                             <GridColumn field="fecha" title="Fecha"/>
                             <GridColumn cell={BotonSubir} filterable={false}/>
 

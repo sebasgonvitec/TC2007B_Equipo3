@@ -122,11 +122,12 @@ const ArchivosUsuario = () => {
                     }).then((res)=>{
                         if(res.data.msg == "Archivo eliminado correctamente"){
                             swal("Archivo eliminado", "El archivo ha sido eliminado correctamente", "success");
+                            getData();
                         }else{
                             swal("Error al eliminar el archivo", "Intente nuevamente", "error");
                         }
                     });
-                    getData(); //Actualizar eliminacion
+                    //getData(); //Actualizar eliminacion
 
                 }}>Borrar</button>
             </td>

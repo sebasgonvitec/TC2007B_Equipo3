@@ -57,7 +57,7 @@ function SearchMain(){
                             </div>
                         }
                         titulo="JUICIO DE NULIDAD"
-                        descripcion="Pequeña descripcion en este espacio que pueda describir de lo que se trata esta seccion"
+                        descripcion="En esta sección podrás buscar los expedientes de la categoría Juicio de Nulidad"
                         onClick={
                             () => {
                                 if(session.nulidad === "true"){
@@ -76,7 +76,7 @@ function SearchMain(){
                             </div>
                         }
                         titulo="CARPETA DE INVESTIGACIÓN"
-                        descripcion="Pequeña descripcion en este espacio que pueda describir de lo que se trata esta seccion"
+                        descripcion="En esta sección podrás buscar los expedientes de la categoría Carpeta de Investigación"
                         onClick={
                             () => {
                                 if(session.investigacion === "true"){
@@ -95,7 +95,7 @@ function SearchMain(){
                             </div>
                         }
                         titulo="OTROS"
-                        descripcion="Pequeña descripcion en este espacio que pueda describir de lo que se trata esta seccion"
+                        descripcion="En esta sección podrás buscar los archivos que no corresponden a ningún expediente"
                         onClick={
                             () => {
                                 if(session.otros === "true"){
