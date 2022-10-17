@@ -14,7 +14,7 @@
 import React from "react";
 import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import { useNavigate, Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 import "@progress/kendo-theme-material/dist/all.css";
 import { Grid, GridColumn } from "@progress/kendo-react-grid";
@@ -37,7 +37,7 @@ const ArchivosUsuario = () => {
 
     const [data, setData] = useState([]);
     useEffect( () => {
-        getData()
+        getData();
     }, [])
 
     //Funcion para obtener los datos de la DB
@@ -121,7 +121,7 @@ const ArchivosUsuario = () => {
                         params: { id: dataItem._id, nombre: dataItem.nombre}, // important
                         headers: { token: localStorage.getItem('JWT_token')}
                     }).then((res)=>{
-                        if(res.data.msg == "Archivo eliminado correctamente"){
+                        if(res.data.msg === "Archivo eliminado correctamente"){
                             swal("Archivo eliminado", "El archivo ha sido eliminado correctamente", "success");
                             getData();
                         }else{
@@ -129,7 +129,7 @@ const ArchivosUsuario = () => {
                         }
                     });
 
-                    const logData = {usuario:session.nombre, fecha: new Date().toLocaleString(), accion: "Borró un archivo", folio: dataItem.folio, area: dataItem.expedienteNom}
+                    const logData = {usuario:session.nombre, fecha: new Date().toLocaleString(), accion: "Borró un archivo", folio: dataItem.folio, area: dataItem.expedienteNom !== null ? dataItem.expedienteNom: "Sin Expediente"}
 
                     await axios.post(logURI, logData, {
                         headers:{

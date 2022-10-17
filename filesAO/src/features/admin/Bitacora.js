@@ -133,8 +133,12 @@ function Bitacora() {
                             filterable={true}
                             onDataStateChange={onDataStateChange}
                             filterOperators={filterOperators}
-                            pageable={true}
-                            total={data.length}
+                            // pageable={true}
+                            // total={result.length}
+                            pageable={{
+                                buttonCount: 10,
+                                pageSizes: true
+                                }}
                             {...dataState}
                         >
                             <GridColumn field="fecha" title="Fecha y Hora" />

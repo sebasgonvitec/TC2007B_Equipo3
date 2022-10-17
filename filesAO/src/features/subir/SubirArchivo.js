@@ -56,7 +56,7 @@ const SubirArchivo = () => {
         //archivoPrueba: "",
     });
 
-    const[errorMsg, setErrorMsg] = useState("");
+    const[setErrorMsg] = useState("");
     const dropRef = useRef();
 
     //Updates state on input changes
@@ -94,7 +94,7 @@ const SubirArchivo = () => {
                     formData.append('folio', state.folio);
                     formData.append('fecha', `${day}/${month}/${year}`);
                     formData.append('expediente', (upload.area != null ? upload._id: "000000000000000000000000"));
-                    formData.append('expedienteNom', (upload.expediente != null ? upload.expediente : "Sin Expediente"));
+                    formData.append('expedienteNom', (upload.expediente != null ? upload.expediente : (upload.carpeta_inv != null ? upload.carpeta_inv : "Sin Expediente") ));
                     formData.append('usuario', session._id);
                     formData.append('area', (upload.area != null ? upload.area: "otros"));
                     

@@ -138,7 +138,7 @@ const AccountsTable = () => {
                         params: { id: dataItem._id}, // important
                         headers: { token: localStorage.getItem('JWT_token')}
                     }).then(res => {
-                        if(res.data.msg == "Cuenta eliminada correctamente"){
+                        if(res.data.msg === "Cuenta eliminada correctamente"){
                             swal("Cuenta eliminada", "La cuenta ha sido eliminada correctamente", "success")
                             getData();
                         }else{
@@ -177,12 +177,12 @@ const AccountsTable = () => {
                     <IntlProvider locale="es">
 
                         <Grid
+                            pageable={true}
+                            total={data.length}
                             data={result}
                             filterable={true}
                             onDataStateChange={onDataStateChange}
                             filterOperators={filterOperators}
-                            pageable={true}
-                            total={data.length}
                             {...dataState}
                         
                         >

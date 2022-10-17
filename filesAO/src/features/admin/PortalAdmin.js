@@ -54,23 +54,32 @@ function PortalAdmin(){
 
                     <div id="optionsContainer">
                         <div className="options" >
-                            <Link to={"/registro"}  className="btn" style={{background: "#8B2E87"}}>
-                                <AiOutlineUserAdd className="icono"/>
-                                <div>Registro de Usuarios</div>
+                            
+                            <Link to={"/registro"}  className="btnLink">
+                                <button id="btnIcon" style={{background:"#8B2E87"}}>
+                                    <AiOutlineUserAdd className="icono"/>
+                                    <div className="txtIcon">Registro de Usuarios</div>
+                                </button>
                             </Link>
-                            <Link to={"/bitacora"}  className="btn" style={{background: "#45B2E6"}}>
-                                <TbActivity className="icono"/>
-                                <div>Bitacora de Actividad</div>
+
+                            <Link to={"/bitacora"}  className="btnLink">
+                                <button id="btnIcon" style={{background:"#45B2E6"}}>
+                                    <TbActivity className="icono"/>
+                                    <div className="txtIcon">Bitacora de Actividad</div>
+                                </button>
                             </Link>
-                            <Link to={"/tablaUsuarios"}  className="btn" style={{background: "#FFA928"}}>
-                                <AiOutlineUserSwitch className="icono"/>
-                                <div>Editar usuarios</div>
+
+                            <Link to={"/tablaUsuarios"}  className="btnLink">
+                                <button id="btnIcon" style={{background:"#FFA928"}}>
+                                    <AiOutlineUserSwitch className="icono"/>
+                                    <div className="txtIcon">Editar usuarios</div>
+                                </button>
                             </Link>
                             
                         </div>
                     </div>
                 </div>
-                <div style={{height: "7vw"}}></div>
+                <div style={{height: "9vw"}}></div>
             </body>
         );
     }
