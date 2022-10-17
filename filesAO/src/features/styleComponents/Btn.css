@@ -1,0 +1,17 @@
+.button{
+    width: 9.1vw;
+    height: 3vw;
+    border-radius: 10px;
+    font-size:1vw;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #226CAD;
+    color: white;
+    cursor:pointer;
+}
+
+.button:hover{
+    background: #45B2E6;
+}

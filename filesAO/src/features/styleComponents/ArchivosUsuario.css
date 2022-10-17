@@ -1,0 +1,18 @@
+
+#btnBorrar{
+    width: auto;
+    padding: 0.5vw 2.1vw 0.5vw 2.1vw;
+}
+
+#btnBorrar:hover{
+    background: #db2923;
+}
+
+#btnEditar{
+    width: auto;
+    padding: 0.5vw 2.1vw 0.5vw 2.1vw;
+}
+
+#btnEditar:hover{
+    background: #efa544;
+}

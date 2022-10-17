@@ -1,0 +1,9 @@
+#btnAbrir{
+    border-radius: 10px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+#btnAbrir:hover{
+    background: #8B2E87;
+}

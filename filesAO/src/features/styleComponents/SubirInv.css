@@ -1,0 +1,20 @@
+#btnAbrir{
+    border-radius: 10px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+#btnSubInv{
+    border-radius: 10px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    margin: 15px;
+}
+
+#btnSubInv:hover{
+    background: #8B2E87;
+}
+
+#btnAbrir:hover{
+    background: #8B2E87;
+}
