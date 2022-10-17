@@ -97,7 +97,7 @@ function DescargarArchivo(){
             params: { id: id, nombre: nombre, area: download.area} // important
         }).then((res)=>{
             
-            const logData = {usuario:session.nombre, fecha: new Date().toString(), accion: "Descargó un archivo.", folio: folio, area: expedienteNom}
+            const logData = {usuario:session.nombre, fecha: new Date().toLocaleString(), accion: "Descargó un archivo.", folio: folio, area: expedienteNom}
 
             axios.post(logURI, logData, {
             headers:{

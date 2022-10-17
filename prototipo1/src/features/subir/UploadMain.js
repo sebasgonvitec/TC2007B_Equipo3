@@ -59,7 +59,7 @@ function UploadMain(){
                             </div>
                         }
                         titulo="JUICIO DE NULIDAD"
-                        descripcion="Pequeña descripcion en este espacio que pueda describir de lo que se trata esta seccion"
+                        descripcion="En esta sección podrás subir archivos a los expedientes de la categoría Juicio de Nulidad"
                         onClick={
                             () => {
                                 if(session.nulidad === "true"){
@@ -78,7 +78,7 @@ function UploadMain(){
                             </div>
                         }
                         titulo="CARPETA DE INVESTIGACIÓN"
-                        descripcion="Pequeña descripcion en este espacio que pueda describir de lo que se trata esta seccion"
+                        descripcion="En esta sección podrás subir archivos a los expedientes de la categoría Carpeta de Investigación"
                         onClick={
                             () => {
                                 if(session.investigacion === "true"){
@@ -97,7 +97,7 @@ function UploadMain(){
                             </div>
                         }
                         titulo="OTROS"
-                        descripcion="Pequeña descripcion en este espacio que pueda describir de lo que se trata esta seccion"
+                        descripcion="En esta sección podrás subir archivos que no corresponden a ningún exppediente"
                         onClick={
                             () => {
                                 if(session.otros === "true"){

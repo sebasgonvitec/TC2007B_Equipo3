@@ -100,7 +100,7 @@ function EditarUsuario(){
                     investigacion:userData.investigacion,
                     otros:userData.otros,};
 
-                const logData = {usuario:session.nombre, fecha: new Date().toString(), accion: "Editó un usuario", folio: userData.usuario, area: "N/A"}
+                const logData = {usuario:session.nombre, fecha: new Date().toLocaleString(), accion: "Editó un usuario", folio: userData.usuario, area: "N/A"}
 
                 await axios.post(logURI, logData, {
                     headers:{

@@ -29,6 +29,7 @@ import swal from 'sweetalert';
 
 const URI = 'https://localhost/archivosUsuario'
 const URI_delete = 'https://localhost/borrarArchivo'
+const logURI = 'https://localhost/registrarActividad';
 
 const ArchivosUsuario = () => {
 
@@ -112,9 +113,9 @@ const ArchivosUsuario = () => {
         //console.log(dataItem);
         return(
             <td>
-                <button id="btnBorrar" onClick={(e) => {
+                <button id="btnBorrar" onClick={async (e) => {
                     e.preventDefault();
-                    axios({
+                    await axios({
                         url: URI_delete,
                         method: 'DELETE',
                         params: { id: dataItem._id, nombre: dataItem.nombre}, // important
@@ -125,6 +126,15 @@ const ArchivosUsuario = () => {
                             getData();
                         }else{
                             swal("Error al eliminar el archivo", "Intente nuevamente", "error");
+                        }
+                    });
+
+                    const logData = {usuario:session.nombre, fecha: new Date().toLocaleString(), accion: "Borró un archivo", folio: dataItem.folio, area: dataItem.expedienteNom}
+
+                    await axios.post(logURI, logData, {
+                        headers:{
+                            'Content-Type': 'application/json',
+                            token: localStorage.getItem('JWT_token')
                         }
                     });
                     //getData(); //Actualizar eliminacion

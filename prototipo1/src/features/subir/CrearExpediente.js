@@ -83,7 +83,7 @@ function CrearExpediente() {
                 //console.log(formData);
                 
 
-                const logData = {usuario:session.nombre, fecha: new Date().toString(), accion: "Creó un expediente.", folio: state.numero, area: "Juicio de Nulidad"}
+                const logData = {usuario:session.nombre, fecha: new Date().toLocaleString(), accion: "Creó un expediente.", folio: state.numero, area: "Juicio de Nulidad"}
 
                 await axios.post(logURI, logData, {
                 headers:{

@@ -138,8 +138,8 @@ function Bitacora() {
                             <GridColumn field="fecha" title="Fecha y Hora" />
                             <GridColumn field="usuario" title="Usuario" />
                             <GridColumn field="accion" title="Acción" />
-                            <GridColumn field="folio" title="Folio" />
-                            <GridColumn field="area" title="Área" />
+                            <GridColumn field="folio" title="Objeto" />
+                            <GridColumn field="area" title="Área/Expediente" />
 
                         </Grid>   
                     </IntlProvider>

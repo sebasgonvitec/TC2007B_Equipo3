@@ -155,11 +155,11 @@ function Subir() {
                             filterOperators={filterOperators}
                             {...dataState}
                         >
-                            <GridColumn field="nombre" title="Nombre" />
                             <GridColumn field="numero" title="Número" />
                             <GridColumn field="expediente" title="Expediente" />
                             <GridColumn field="actor" title="Actor" />
-                            <GridColumn field="estatus" title="Estatus" />
+                            <GridColumn field="domicilio" title="Domicilio" />
+                            <GridColumn field="estatusJuridico" title="Estatus"/>
                             <GridColumn field="fecha" title="Fecha"/>
                             <GridColumn cell={MyCommandCell} filterable={false}/>
 

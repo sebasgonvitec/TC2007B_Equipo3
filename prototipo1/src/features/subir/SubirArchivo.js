@@ -94,13 +94,14 @@ const SubirArchivo = () => {
                     formData.append('folio', state.folio);
                     formData.append('fecha', `${day}/${month}/${year}`);
                     formData.append('expediente', (upload.area != null ? upload._id: "000000000000000000000000"));
-                    formData.append('expedienteNom', upload.expedienteNom);
+                    formData.append('expedienteNom', (upload.expediente != null ? upload.expediente : upload.carpeta_inv));
                     formData.append('usuario', session._id);
                     formData.append('area', (upload.area != null ? upload.area: "otros"));
                     
                     setErrorMsg('');
                     
-                    const logData = {usuario:session.nombre, fecha: new Date().toString(), accion: "Subió un archivo.", folio: state.folio, area: upload.nombre}
+                    console.log(upload.expediente);
+                    const logData = {usuario:session.nombre, fecha: new Date().toLocaleString(), accion: "Subió un archivo.", folio: state.folio, area: (upload.expediente != null ? upload.expediente : upload.carpeta_inv)}
 
                     await axios.post(logURI, logData, {
                     headers:{

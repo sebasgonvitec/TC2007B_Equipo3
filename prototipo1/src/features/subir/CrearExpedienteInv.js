@@ -79,11 +79,11 @@ function CrearExpedienteInv() {
                     estado:state.estado,
                     fecha:state.fecha,
                 };
-                console.log(formData);
+                //console.log(formData);
 
                 setErrorMsg('');
                 
-                const logData = {usuario:session.nombre, fecha: new Date().toString(), accion: "Creó un expediente.", folio: state.numero, area: "Carpeta de Investigación"};
+                const logData = {usuario:session.nombre, fecha: new Date().toLocaleString(), accion: "Creó un expediente.", folio: state.numero, area: "Carpeta de Investigación"};
 
                 await axios.post(logURI, logData, {
                 headers:{

@@ -31,6 +31,7 @@ import swal from 'sweetalert';
 
 const URI = 'https://localhost/tablaCuentas'
 const URI_delete = 'https://localhost/borrarCuenta'
+const logURI = 'https://localhost/registrarActividad';
 
 const AccountsTable = () => {
 
@@ -46,6 +47,7 @@ const AccountsTable = () => {
 
     //Funcion para obtener los datos de la DB
     const getData = async () => {
+
         const res = await axios.get(URI, {
             headers: {
                 'Content-Type': 'application/json',
@@ -144,6 +146,15 @@ const AccountsTable = () => {
                         }
                     });
                     //getData(); //Actualizar eliminacion
+                    const logData = {usuario:session.nombre, fecha: new Date().toLocaleString(), accion: "Se eliminó un usuario", folio: dataItem.usuario, area: "Gestión de usuarios"};
+
+                    axios.post(logURI, logData, {
+                        headers:{
+                            'Content-Type': 'application/json',
+                            token: localStorage.getItem('JWT_token')
+                        }
+                    });
+            
                     
                 }}>Borrar</button>
             </td>
