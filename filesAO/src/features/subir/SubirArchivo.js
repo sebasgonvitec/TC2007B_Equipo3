@@ -18,7 +18,7 @@ import { useNavigate, Navigate, Link } from 'react-router-dom';
 
 import UploadContext  from "../../context/UploadContext";
 import Dropzone from 'react-dropzone';
-//import '../components/styleComponents/Subir.css';
+// import '../components/styleComponents/Subir.css';
 import SessionContext from "../../context/SessionContext";
 import ReloadAlert from "../components/Reload";
 import Name from "../components/Name"
@@ -29,7 +29,7 @@ import { BsChevronLeft } from "react-icons/bs";
 import swal from "sweetalert";
 
 
-let URI = 'https://localhost/subirArchivo?';
+let URI = 'https://localhost/subirArchivo';
 const logURI = "https://localhost/registrarActividad";
 
 
@@ -56,7 +56,6 @@ const SubirArchivo = () => {
         //archivoPrueba: "",
     });
 
-    const[setErrorMsg] = useState("");
     const dropRef = useRef();
 
     //Updates state on input changes
@@ -88,6 +87,7 @@ const SubirArchivo = () => {
         try{
             if(state.nombre.trim() !== '' && state.folio.trim() !== ''){
                 if(archivo){
+                    console.log("Subiendo archivo...")
                     const formData = new FormData();
                     formData.append('archivo', archivo);
                     formData.append('nombre', state.nombre + `_${day}_${month}_${year}`);
@@ -98,7 +98,7 @@ const SubirArchivo = () => {
                     formData.append('usuario', session._id);
                     formData.append('area', (upload.area != null ? upload.area: "otros"));
                     
-                    setErrorMsg('');
+                    //setErrorMsg('');
                     
                     console.log(upload.expediente);
                     const logData = {usuario:session.nombre, fecha: new Date().toLocaleString(), accion: "Subió un archivo.", folio: state.folio, area: (upload.expediente != null ? upload.expediente : upload.carpeta_inv)}
@@ -116,6 +116,7 @@ const SubirArchivo = () => {
                             token: localStorage.getItem('JWT_token')
                         }
                     }).then(res => {
+                        console.log(res);
                         if(res.data.msg === "Archivo subido correctamente"){
                             swal(res.data.msg, "", "success").then(()=>{
                                 navigate(-1);
@@ -124,15 +125,18 @@ const SubirArchivo = () => {
                         }
                     });
                 } else {
-                    setErrorMsg("Seleccione un archivo");
+                    console.log("Error: seleccione un archivo")
+                    //setErrorMsg("Seleccione un archivo");
                     swal("Seleccione un archivo", "", "warning")
                 }
             } else {
-                setErrorMsg("Por favor llene todos los campos");
+                console.log("Error: llene todos los campos")
+                //setErrorMsg("Por favor llene todos los campos");
                 swal("Por favor llene todos los campos", "", "warning")
             }
         } catch (error) {
-            error.response && setErrorMsg(error.response.data);
+            //error.response && setErrorMsg(error.response.data);
+            console.log("Error en try" + error)
         }
     };
 

@@ -54,11 +54,6 @@ app.post("/login", (req, res)=>{
 
     db.collection("usuarios").findOne({usuario:user}, (err, result)=>{
       if(result!=null){
-
-        // bcrypt.hash(pass, 10, (err, hash)=>{
-        //     console.log(result.password)
-        //     console.log(hash)
-        // })
         bcrypt.compare(pass, result.password, (err, resultB)=>{
           if(resultB){
             let token = jwt.sign({
@@ -67,8 +62,6 @@ app.post("/login", (req, res)=>{
                 iat: Math.floor(Date.now())
               },'secretKey')
             res.json(token)
-            // res.cookie("token", token)
-            // res.json(result) // si las credenciales son correctas, regresar info del usuario
           }else{
             console.log("Credenciales Incorrectas")
             res.json({msg: "Credenciales Incorrectas"}) //indicar en front credenciales incorrectas
@@ -122,7 +115,7 @@ app.get("/nulidad", function(req, res){
 
         })  
     })    
-})
+});
 
 //Endpoint para crear expedientes de collecion nulidad
 app.post("/crearExpedienteNul", function(req, res){
@@ -178,7 +171,7 @@ app.get("/investigacion", function(req, res){
             }
         })
     })    
-})
+});
 
 //Endpoint para crear expedientes de collecion investigacion
 app.post("/crearExpedienteInv", function(req, res){
@@ -274,11 +267,14 @@ app.get("/descargarArchivos/download", async (req, res) => {
 
 //Subir archivos al sistema
 app.post("/subirArchivo", uploads.single("archivo"), (req, res)=>{
+    console.log("Entraste al endpoint wuu")
     jwt.verify(req.headers.token, "secretKey", (err, userId) => {
         if(err){
             res.json(null)
+            console.log("Error del token: " + err);
         }else
         {
+            console.log("Entrooooo")
             console.log(__dirname + "/.storage/" + req.body.nombre);
             let rutaDefinitiva = "/.storage/" + req.body.nombre;
             let inputFS = fs.createReadStream(__dirname + "/.temp/" + req.file.filename)
@@ -299,7 +295,8 @@ app.post("/subirArchivo", uploads.single("archivo"), (req, res)=>{
                         console.log(req.body);
                         db.collection("archivos").insertOne(aInsertar, (err, res)=>{
                             if(err) {
-                                throw err
+                                console.log("Error al insertar: " + err);
+                                //throw err
                             }else{
                                 console.log(res);
                             }
@@ -311,7 +308,7 @@ app.post("/subirArchivo", uploads.single("archivo"), (req, res)=>{
             res.status(200).json({msg:"Archivo subido correctamente"});
         }
     });
-})
+});
 
 //Obtener informacion de todos los usuarios
 app.get("/tablaCuentas", function(req, res) {
@@ -347,7 +344,7 @@ app.delete("/borrarCuenta", function(req, res) {
             }
         })
     });
-})
+});
  
 //Crear una cuenta de usuario
 app.post("/crearCuenta", (req, res)=>{
@@ -457,7 +454,7 @@ app.delete("/borrarArchivo", function(req, res) {
             res.json({msg: "Archivo eliminado correctamente"})
         }
     });
-})
+});
 
 // Endpoint para extraer bitacora de actividad
 app.get("/bitacora", function(req, res){
@@ -478,7 +475,7 @@ app.get("/bitacora", function(req, res){
 
         }
     })
-})
+});
 
 // Endpoint para crear registros de actividad
 app.post("/registrarActividad", function(req, res){
@@ -507,44 +504,44 @@ app.post("/registrarActividad", function(req, res){
 
 
 //endpoint para configurar inicialmente las llaves de los roles
-// app.get("/keySetup", (req, res)=>{
-//     let roles=["nulidad", "investigacion", "otros"]
-//     let privKey=fs.readFileSync("../Cert/app.key")
+app.get("/keySetup", (req, res)=>{
+    let roles=["nulidad", "investigacion", "otros"]
+    let privKey=fs.readFileSync("../Cert/app.key")
 
-//     //Inicializar cuenta admin inicial
-//     let password = "1337";
+    //Inicializar cuenta admin inicial
+    let password = "1337";
 
-//     bcrypt.hash(password, 10, (err, hash)=>{
-//         let defaultCredentials = {
-//             usuario: "AdminUser",
-//             password: hash,
-//             nombre: "Andre",
-//             area: "miArea",
-//             nulidad: "false",
-//             investigacion: "false",
-//             otros: "false",
-//             admin: "true"
-//         }
+    bcrypt.hash(password, 10, (err, hash)=>{
+        let defaultCredentials = {
+            usuario: "AdminUser",
+            password: hash,
+            nombre: "Andre",
+            area: "miArea",
+            nulidad: "false",
+            investigacion: "false",
+            otros: "false",
+            admin: "true"
+        }
 
-//         db.collection("usuarios").insertOne(defaultCredentials, (err, result)=>{
-//             if (err) {throw err;}
-//             else{
-//                 console.log("Usuario agregado")
-//             }
-//             });
-//         });
+        db.collection("usuarios").insertOne(defaultCredentials, (err, result)=>{
+            if (err) {throw err;}
+            else{
+                console.log("Usuario agregado")
+            }
+            });
+        });
 
-//     for(i=0; i<roles.length; i++){
-//         let key=crypto.publicEncrypt(privKey, Buffer.from(crypto.randomBytes(16).toString("hex"))).toString("hex")
-//         let iv=crypto.publicEncrypt(privKey, Buffer.from(crypto.randomBytes(8).toString("hex"))).toString("hex")
-//         let aInsertar={rol: roles[i], llave: key, iv: iv}
-//         db.collection("roles").insertOne(aInsertar, (err, result)=>{
-//             if (err) throw err;
-//         })
-//     }
+    for(i=0; i<roles.length; i++){
+        let key=crypto.publicEncrypt(privKey, Buffer.from(crypto.randomBytes(16).toString("hex"))).toString("hex")
+        let iv=crypto.publicEncrypt(privKey, Buffer.from(crypto.randomBytes(8).toString("hex"))).toString("hex")
+        let aInsertar={rol: roles[i], llave: key, iv: iv}
+        db.collection("roles").insertOne(aInsertar, (err, result)=>{
+            if (err) throw err;
+        })
+    }
 
-//     res.send({msg:"key setup exitoso!"})
-// })
+    res.send({msg:"key setup exitoso!"})
+})
 
 
 https.createServer({
