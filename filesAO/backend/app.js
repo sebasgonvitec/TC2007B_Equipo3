@@ -504,44 +504,44 @@ app.post("/registrarActividad", function(req, res){
 
 
 //endpoint para configurar inicialmente las llaves de los roles
-app.get("/keySetup", (req, res)=>{
-    let roles=["nulidad", "investigacion", "otros"]
-    let privKey=fs.readFileSync("../Cert/app.key")
+// app.get("/keySetup", (req, res)=>{
+//     let roles=["nulidad", "investigacion", "otros"]
+//     let privKey=fs.readFileSync("../Cert/app.key")
 
-    //Inicializar cuenta admin inicial
-    let password = "1337";
+//     //Inicializar cuenta admin inicial
+//     let password = "1337";
 
-    bcrypt.hash(password, 10, (err, hash)=>{
-        let defaultCredentials = {
-            usuario: "AdminUser",
-            password: hash,
-            nombre: "Andre",
-            area: "miArea",
-            nulidad: "false",
-            investigacion: "false",
-            otros: "false",
-            admin: "true"
-        }
+//     bcrypt.hash(password, 10, (err, hash)=>{
+//         let defaultCredentials = {
+//             usuario: "AdminUser",
+//             password: hash,
+//             nombre: "Andre",
+//             area: "miArea",
+//             nulidad: "false",
+//             investigacion: "false",
+//             otros: "false",
+//             admin: "true"
+//         }
 
-        db.collection("usuarios").insertOne(defaultCredentials, (err, result)=>{
-            if (err) {throw err;}
-            else{
-                console.log("Usuario agregado")
-            }
-            });
-        });
+//         db.collection("usuarios").insertOne(defaultCredentials, (err, result)=>{
+//             if (err) {throw err;}
+//             else{
+//                 console.log("Usuario agregado")
+//             }
+//             });
+//         });
 
-    for(i=0; i<roles.length; i++){
-        let key=crypto.publicEncrypt(privKey, Buffer.from(crypto.randomBytes(16).toString("hex"))).toString("hex")
-        let iv=crypto.publicEncrypt(privKey, Buffer.from(crypto.randomBytes(8).toString("hex"))).toString("hex")
-        let aInsertar={rol: roles[i], llave: key, iv: iv}
-        db.collection("roles").insertOne(aInsertar, (err, result)=>{
-            if (err) throw err;
-        })
-    }
+//     for(i=0; i<roles.length; i++){
+//         let key=crypto.publicEncrypt(privKey, Buffer.from(crypto.randomBytes(16).toString("hex"))).toString("hex")
+//         let iv=crypto.publicEncrypt(privKey, Buffer.from(crypto.randomBytes(8).toString("hex"))).toString("hex")
+//         let aInsertar={rol: roles[i], llave: key, iv: iv}
+//         db.collection("roles").insertOne(aInsertar, (err, result)=>{
+//             if (err) throw err;
+//         })
+//     }
 
-    res.send({msg:"key setup exitoso!"})
-})
+//     res.send({msg:"key setup exitoso!"})
+// })
 
 
 https.createServer({
