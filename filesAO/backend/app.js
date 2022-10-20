@@ -274,7 +274,6 @@ app.post("/subirArchivo", uploads.single("archivo"), (req, res)=>{
             console.log("Error del token: " + err);
         }else
         {
-            console.log("Entrooooo")
             console.log(__dirname + "/.storage/" + req.body.nombre);
             let rutaDefinitiva = "/.storage/" + req.body.nombre;
             let inputFS = fs.createReadStream(__dirname + "/.temp/" + req.file.filename)
