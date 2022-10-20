@@ -33,7 +33,7 @@ function Home(){
     if(session != null)
     {
         return(
-            <body style={{marginBottom:"5vw"}}>
+            <div style={{marginBottom:"5vw"}}>
                 <div className="banner">
                     <img src={ImgBackground} alt="imgBackground" style={{width: '100%'}}/>
                     <div className="contentBanner">
@@ -46,23 +46,23 @@ function Home(){
                     </div>
                 </div>
     
-                <div id="optionsContainer">
+                <div data-testid="optionContainers" id="optionsContainer">
                     <div className="options" >
-                        <Link to={"/searchmain"}  className="btnLink">
+                        <Link to={"/searchmain"}  className="btnLink" data-testid="search">
                             <button id="btnIcon" style={{background:"#8B2E87"}}>
                                 <BiSearch className="icono"/>
                                 <div className="txtIcon">Buscar</div>
                             </button>
                         </Link>
     
-                        <Link to={"/uploadmain"} className="btnLink">
+                        <Link to={"/uploadmain"} className="btnLink" data-testid="upload">
                             <button id="btnIcon" style={{background:"#45B2E6"}}>
                                 <BsUpload className="icono"/>
                                 <div className="txtIcon">Subir</div>
                             </button>
                             
                         </Link>
-                        <Link to={"/perfil"} className="btnLink">
+                        <Link to={"/perfil"} className="btnLink" data-testid="profile">
                             <button id="btnIcon" style={{background:"#FFA928"}}>
                                 <CgProfile className="icono"/>
                                 <div className="txtIcon">Perfil</div>
@@ -71,7 +71,7 @@ function Home(){
                     </div>
                     <p style={{paddingBottom: "2vw"}}>¡Haz click en una de las opciones para comenzar!</p>               
                 </div>  
-            </body>
+            </div>
         );
     }
     else {

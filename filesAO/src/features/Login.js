@@ -29,7 +29,6 @@ const URI = "https://localhost/login";
 const Login = () => {
     
     const { updateSession } = useContext(SessionContext);
-    const { session } = useContext(SessionContext);
 
     const navigate = useNavigate();
 
@@ -98,7 +97,7 @@ const Login = () => {
     }
 
     return(
-        <body style={{backgroundImage: `url(${BackgroundLogin})`, backgroundSize:"cover" }}>
+        <div style={{backgroundImage: `url(${BackgroundLogin})`, backgroundSize:"cover" }}>
             {/* <Name
                 titulo="Inicia tu sesión"
             /> */}
@@ -116,7 +115,7 @@ const Login = () => {
                     <img src={ImgLogin} alt="ImgLogin" style={{maxWidth: '100%', height: 'auto'}} />
                 </div>
             </div>
-        </body>
+        </div>
     );
 }
 

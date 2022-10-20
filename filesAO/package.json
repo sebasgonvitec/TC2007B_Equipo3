@@ -17,11 +17,10 @@
     "@progress/kendo-react-intl": "^5.7.0",
     "@progress/kendo-react-treeview": "^5.7.0",
     "@progress/kendo-theme-material": "^5.8.1",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.27.2",
     "downloadjs": "^1.4.7",
+    "enzyme": "^3.11.0",
     "js-file-download": "^0.4.12",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -56,5 +55,12 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@types/enzyme": "^3.10.12",
+    "jest-dom": "^4.0.0",
+    "react-test-renderer": "^18.2.0"
   }
 }

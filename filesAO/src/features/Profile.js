@@ -1,13 +1,13 @@
 import React from "react";
-import SessionContext from "../../SessionContext";
+import SessionContext from "../context/SessionContext";
 // import axios from "axios";
 import { useContext } from "react";
 import ArchivosUsuario from "./usuario/ArchivosUsuario";
 import { useNavigate, Navigate } from 'react-router-dom';
-import ReloadAlert from "../Reload";
+import ReloadAlert from "./components/Reload";
 
 import "./styleComponents/Profile.css"
-import Name from "../Name"
+import Name from "./components/Name"
 import { CgProfile } from "react-icons/cg";
 
 
